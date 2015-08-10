@@ -2,210 +2,210 @@
 //Import Decorate Files
 
 //		Former Human with Pistol
-#include "D_FHPIST"
+#include "actors/STANDARD/D_FHPIST.txt"
 //		Former Human with Battle Rifle
-#include "D_FHRFLE"
-#include "D_FHRFL2"
-#include "D_FHRFL3"
+#include "actors/STANDARD/D_FHRFLE.txt"
+#include "actors/STANDARD/D_FHRFL2.txt"
+#include "actors/STANDARD/D_FHRFL3.txt"
 
 //		Elite Former Human with Combat Pistol
-#include "D_EFHCPI"
+#include "actors/NIGHTMAR/D_EFHCPI.txt"
 //		Elite Former Human with Handcannon
-#include "D_EFHHCA"
+#include "actors/NIGHTMAR/D_EFHHCA.txt"
 //		Elite Former Human with Uzi
-#include "D_EFHUZI"
+#include "actors/NIGHTMAR/D_EFHUZI.txt"
 //		Elite Former Human with Battle Rifle
-#include "D_EFHRFL"
-#include "D_EFHRF2"
+#include "actors/NIGHTMAR/D_EFHRFL.txt"
+#include "actors/NIGHTMAR/D_EFHRF2.txt"
 
 //		Former Human Sergeant with Shotgun
-#include "D_FSSHOT"
+#include "actors/STANDARD/D_FSSHOT.txt"
 //		Former Human Sergeant with Combat Shotgun
-#include "D_FSCSHO"
+#include "actors/STANDARD/D_FSCSHO.txt"
 
 //		Elite Former Human Sergeant with Double Shotgun
-#include "D_EFSDBL"
+#include "actors/NIGHTMAR/D_EFSDBL.txt"
 //		Elite Former Human Sergeant with Plasma Shotgun
-#include "D_EFSPLS"
+#include "actors/NIGHTMAR/D_EFSPLS.txt"
 //		Elite Former Human Sergeant with Assault Shotgun
-#include "D_EFSASS"
+#include "actors/NIGHTMAR/D_EFSASS.txt"
 
 //		Former Human Commando with Chaingun
-#include "D_FCCHAI"
+#include "actors/STANDARD/D_FCCHAI.txt"
 //		Former Human Commando with Battle Rifle
-#include "D_FCRFLE"
+#include "actors/STANDARD/D_FCRFLE.txt"
 
 //		Elite Former Human Commando with Minigun
-#include "D_EFCMIN"
+#include "actors/NIGHTMAR/D_EFCMIN.txt"
 //		Elite Former Human Commando with Laser Rifle
-//#include "D_EFCLAS"
+//#include "actors/NIGHTMAR/D_EFCLAS.txt"
 
 //		Former Human Captain with Plasma Rifle
-#include "D_FXPLAS"
+#include "actors/STANDARD/D_FXPLAS.txt"
 
 //		Elite Former Human Captain with Tristar Blaster
-#include "D_EFXTRI"
+#include "actors/NIGHTMAR/D_EFXTRI.txt"
 //		Elite Former Human Captain with Missile Launcher
-//#include "D_EFXMIS"
+//#include "actors/NIGHTMAR/D_EFXMIS.txt"
 //		Elite Former Human Captain with Napalm Launcher
-//#include "D_EFXNAP"
+//#include "actors/NIGHTMAR/D_EFXNAP.txt"
 
 //		Former Cyborg with Battle Rifle
-#include "D_CHRFLE"
+#include "actors/CYBERNET/D_CHRFLE.txt"
 //		Former Cyborg Sergeant with Battle Rifle
-//#include "D_CHSHOT"
+//#include "actors/CYBERNET/D_CHSHOT.txt"
 //		Former Cyborg Commando with twin Chainguns
-//#include "D_CHCHGN"
+//#include "actors/CYBERNET/D_CHCHGN.txt"
 
 //		Former Assault Trooper
-#include "D_AFATRO"
+#include "actors/ARMAGEDD/D_AFATRO.txt"
 //		Former Overwatch
-#include "D_AFOVER"
+#include "actors/ARMAGEDD/D_AFOVER.txt"
 //		Former Shocktrooper
-#include "D_AFSHKT"
+#include "actors/ARMAGEDD/D_AFSHKT.txt"
 //		Corrupted UAC Defence Drone
-#include "D_ADRONE"
+#include "actors/ARMAGEDD/D_ADRONE.txt"
 
 
 
 //		Imp
-#include "D_IMP"
+#include "actors/STANDARD/D_IMP.txt"
 //		Nightmare Imp
-#include "D_NIMP"
+#include "actors/NIGHTMAR/D_NIMP.txt"
 //		Cyber-Imp
-#include "D_CIMP"
+#include "actors/CYBERNET/D_CIMP.txt"
 //		The Watcher
-//#include "D_AIMP"
+//#include "actors/ARMAGEDD/D_AIMP.txt"
 
 //		Demon
-#include "D_DEMON"
+#include "actors/STANDARD/D_DEMON.txt"
 //		Nightmare Demon
-#include "D_NDEMON"
+#include "actors/NIGHTMAR/D_NDEMON.txt"
 //		Mech Demon
-#include "D_CDEMON"
+#include "actors/CYBERNET/D_CDEMON.txt"
 //		Mech-strosity
-#include "D_ADEMON"
+#include "actors/ARMAGEDD/D_ADEMON.txt"
 
 //		Spectre
-#include "D_SPECTR"
+#include "actors/STANDARD/D_SPECTR.txt"
 //		Nightmare Spectre
-#include "D_NSPECT"
+#include "actors/NIGHTMAR/D_NSPECT.txt"
 //		Mechtre
-#include "D_CSPECT"
+#include "actors/CYBERNET/D_CSPECT.txt"
 //		Rift Demon
-//#include "D_ASPECT"
+//#include "actors/ARMAGEDD/D_ASPECT.txt"
 
 //		Lost Soul
-#include "D_LSOUL"
+#include "actors/STANDARD/D_LSOUL.txt"
 //		Nightmare Soul
-#include "D_NSOUL"
+#include "actors/NIGHTMAR/D_NSOUL.txt"
 //		Hellmine
-#include "D_CSOUL"
+#include "actors/CYBERNET/D_CSOUL.txt"
 //		The Hungry
-#include "D_ASOUL"
+#include "actors/ARMAGEDD/D_ASOUL.txt"
 
 //		Cacodemon
-#include "D_CACODE"
+#include "actors/STANDARD/D_CACODE.txt"
 //		Nightmare Cacodemon
-#include "D_NCACOD"
+#include "actors/NIGHTMAR/D_NCACOD.txt"
 //		Cyber-Cacodemon
-//#include "D_CCACOD"
+//#include "actors/CYBERNET/D_CCACOD.txt"
 //		Abyssal Cacodemon
-//#include "D_ACACOD"
+//#include "actors/ARMAGEDD/D_ACACOD.txt"
 
 //		Hell Knight
-#include "D_HKNIGH"
+#include "actors/STANDARD/D_HKNIGH.txt"
 //		Nightmare Knight
-#include "D_NKNIGH"
+#include "actors/NIGHTMAR/D_NKNIGH.txt"
 //		Cybruiser
-#include "D_CKNIGH"
+#include "actors/CYBERNET/D_CKNIGH.txt"
 //		Crusader of Ruination
-//#include "D_AKNIGH"
+//#include "actors/ARMAGEDD/D_AKNIGH.txt"
 
 //		Baron of Hell
-#include "D_BARONO"
+#include "actors/STANDARD/D_BARONO.txt"
 //		Baron of Nightmares
-#include "D_NBARON"
+#include "actors/NIGHTMAR/D_NBARON.txt"
 //		Techno-lord
-#include "D_CBARON"
+#include "actors/CYBERNET/D_CBARON.txt"
 //		Lord of the Abyss
-//#include "D_ABARON"
+//#include "actors/ARMAGEDD/D_ABARON.txt"
 
 //		Arachnotron
-#include "D_ARACHN"
+#include "actors/STANDARD/D_ARACHN.txt"
 //		Nightmare Arachnotron
-#include "D_NARACH"
+#include "actors/NIGHTMAR/D_NARACH.txt"
 //		Arachnoentinel
-#include "D_CARACH"
+#include "actors/CYBERNET/D_CARACH.txt"
 //		Arachnomaster
-//#include "D_AARACH"
+//#include "actors/ARMAGEDD/D_AARACH.txt"
 
 //		Pain Elemental
-#include "D_PAINEL"
+#include "actors/STANDARD/D_PAINEL.txt"
 //		Nightmare Elemental
-#include "D_NPAINE"
+#include "actors/NIGHTMAR/D_NPAINE.txt"
 //		Machine Elemental
-//#include "D_CPAINE"
+//#include "actors/CYBERNET/D_CPAINE.txt"
 //		Hellstorm Elemental
-#include "D_APAINE"
+#include "actors/ARMAGEDD/D_APAINE.txt"
 
 //		Revenant
-#include "D_REVENA"
+#include "actors/STANDARD/D_REVENA.txt"
 //		Nightmare Revenant
-#include "D_NREVEN"
+#include "actors/NIGHTMAR/D_NREVEN.txt"
 //		Heavy Revenant
-#include "D_CREVEN"
+#include "actors/CYBERNET/D_CREVEN.txt"
 //		Revenihilator
-#include "D_AREVEN"
+#include "actors/ARMAGEDD/D_AREVEN.txt"
 //		Reveknight
-//#include "D_AREVE2"
+//#include "actors/ARMAGEDD/D_AREVE2.txt"
 
 //		Mancubus
-#include "D_MANCUB"
+#include "actors/STANDARD/D_MANCUB.txt"
 //		Nightmare Mancubus
-#include "D_NMANCU"
+#include "actors/NIGHTMAR/D_NMANCU.txt"
 //		Volacubus
-#include "D_CMANCU"
+#include "actors/CYBERNET/D_CMANCU.txt"
 //		Magmabus
-#include "D_AMANCU"
+#include "actors/ARMAGEDD/D_AMANCU.txt"
 
 //		Archvile
-#include "D_ARCHVI"
+#include "actors/STANDARD/D_ARCHVI.txt"
 //		Nightmare Archvile
-#include "D_NARCHV"
+#include "actors/NIGHTMAR/D_NARCHV.txt"
 //		Techvile
-#include "D_CARCHV"
+#include "actors/CYBERNET/D_CARCHV.txt"
 //		Lordvile
-//#include "D_AARCHV"
+//#include "actors/ARMAGEDD/D_AARCHV.txt"
 
 //		Spider Mastermind
-#include "D_SPIDER"
+#include "actors/STANDARD/D_SPIDER.txt"
 //		Nightmare Mastermind
-#include "D_NSPIDM"
+#include "actors/NIGHTMAR/D_NSPIDM.txt"
 //		Spider Overmind
-#include "D_CSPIDM"
+#include "actors/CYBERNET/D_CSPIDM.txt"
 //		Supreme Overmind
-//#include "D_ASPIDM"
+//#include "actors/ARMAGEDD/D_ASPIDM.txt"
 
 //		Cyberdemon
-#include "D_CYBERD"
+#include "actors/STANDARD/D_CYBERD.txt"
 //		Nightmare Cyberdemon
-#include "D_NCYBER"
+#include "actors/NIGHTMAR/D_NCYBER.txt"
 //		Cyberdemon Mk.II
-//#include "D_CCYBER"
+//#include "actors/CYBERNET/D_CCYBER.txt"
 //		Cyber-Riftlord
-//#include "D_ACYBER"
+//#include "actors/ARMAGEDD/D_ACYBER.txt"
 
 //		ALTERNATE BOSSES
 //		Agony Elemental
-#include "D_AGONYE"
+#include "actors/STANDARD/D_AGONYE.txt"
 
 //		Bruiser Brothers
-//#include "D_BRUISE"
+//#include "actors/STANDARD/D_BRUISE.txt"
 
 //		MEGABOSSES
 //		Gluttony Elemental
-#include "D_GLUTOE"
+#include "actors/MEGABOSS/D_GLUTOE.txt"
 
 //-------------------------------------------------------------------
 //		DAMAGE TYPES
