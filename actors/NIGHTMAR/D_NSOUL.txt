@@ -1,0 +1,137 @@
+
+// NIGHTMARE SOUL
+//
+ACTOR RLNightmareLostSoul : LostSoul 16524
+{
+  Health 50
+  DamageFactor "Bullet", 0.25
+  DamageFactor "Fire", 0.50
+  DamageFactor "Melee", 0.25
+  DamageFactor "Crush", 10
+  DamageType "Melee"
+  PainType "BluntMelee"
+  DeathType "BluntMelee"
+  Species "RLLostSoul"
+  +NOBLOOD
+  +DONTHARMSPECIES
+  +NOINFIGHTING
+  renderstyle Add
+  Alpha 0.4
+  PainSound "nightmaresoul/pain"
+  DeathSound "nightmaresoul/death"
+  ActiveSound "nightmaresoul/active"
+  Obituary "%o screamed as the Nightmare Soul struck %h."
+  Tag "Nightmare Soul"
+  States
+  {
+  Spawn:
+    NSOL ABCD 3 Bright A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory("PowerRLNightmareSoulCommand", 1, "CommandMissile")
+    NSOL A 3 Bright A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLNightmareSoulCommand", 1, "CommandMissile")
+    NSOL B 3 Bright A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLNightmareSoulCommand", 1, "CommandMissile")
+    NSOL C 3 Bright A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLNightmareSoulCommand", 1, "CommandMissile")
+    NSOL D 3 Bright A_Chase
+    Loop
+  Missile:
+    TNT1 A 0 A_Jump(64, "Command")
+    TNT1 A 0 A_Jump(128, "See")
+    NSOL E 10 Bright A_FaceTarget
+    NSOL F 4 Bright A_SkullAttack
+    NSOL EF 4 Bright
+    Goto Missile+5
+  Command:
+    TNT1 A 0 A_PlaySound("skull/melee", CHAN_VOICE)
+    NSOL PQ 4 Bright A_FaceTarget
+    TNT1 A 0 A_RadiusGive ("PowerRLNightmareSoulCommand", 2048, RGF_MONSTERS | RGF_GIVESELF, 1)
+    NSOL RQ 4 Bright A_FaceTarget
+    TNT1 A 0 A_PlaySound("skull/melee", CHAN_VOICE)
+    NSOL PQRQP 4 Bright A_FaceTarget
+    Goto CommandMissile
+  CommandMissile:
+    TNT1 A 0 A_JumpIfInventory("PowerRLNightmareSoulCommand", 1, 1)
+    Goto CommandMissile1
+    NSOL E 1 Bright A_FaceTarget
+    Goto CommandMissile
+  CommandMissile1:
+    TNT1 A 0 A_FaceTarget
+	TNT1 A 0 A_SkullAttack
+    NSOL FFFF 1 Bright A_FaceTarget
+    Goto Missile+2
+  Pain:
+    NSOL G 3 Bright
+    NSOL G 3 Bright A_Pain
+    Goto See
+  Death:
+    NSOL G 3 Bright
+    NSOL H 3 Bright A_ScreamAndUnblock
+    NSOL IJKLMNO 3 Bright
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    NSOL N -1
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR PowerRLNightmareSoulCommand : Powerup
+{
+	Powerup.Duration 40
+   +INVENTORY.UNTOSSABLE
+}
+
+ACTOR RLDRPGSummonedNightmareLostSoul : RLNightmareLostSoul
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  }
+}
+
+ACTOR RLCCNightmareLostSoul : RLNightmareLostSoul
+{
+  +TOUCHY
+  States
+  {
+  See:
+    NSOL ABCD 3 Bright
+    Loop
+  Missile:
+    NSOL E 10 Bright
+    NSOL F 4 Bright
+    NSOL EF 4 Bright
+    Goto Missile+2
+  Melee:
+    NSOL PQRQPQRQP 4 Bright
+    Goto See
+  }
+}

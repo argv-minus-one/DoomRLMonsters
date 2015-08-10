@@ -1,0 +1,352 @@
+
+// BARON OF NIGHTMARES
+//
+ACTOR RLNightmareBaronOfHell : BaronOfHell 16527
+{
+  Health 1250
+  Mass 1500
+  GibHealth -75
+  Bloodcolor "DarkGreen"
+  DamageFactor "Plasma", 0.75
+  DamageFactor "Crush", 10
+  Species "RLHellNoble"
+  +DONTHARMSPECIES
+  +MISSILEMORE
+  SeeSound "nightmarebaron/sight"
+  ActiveSound "nightmarebaron/active"
+  PainSound "nightmarebaron/pain"
+  DeathSound "nightmarebaron/death"
+  CrushPainSound "rlmonsters/crush"
+  Obituary "%o was eradicated by a Baron of Nightmares."
+  HitObituary "%o was smashed apart by a Baron of Nightmares."
+  Tag "Baron of Nightmares"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory ("RLMonsterInitializerToken", 1, 3)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLHellNobleToken", 1)
+    NBAR BD 10 A_Look
+    Goto Spawn+3
+  See:
+    NBAR AABBCCDD 3 A_Chase
+    Loop
+  Melee:
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "MissileContinue")
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLCacodemonToken", 1, "HatredOn")
+	Goto HatredOff
+  MissileContinue:
+    TNT1 A 0 A_Jump (100, "ExplodoMissile")
+    TNT1 A 0 A_Jump (48, "Command")
+    NBAR EF 8 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    NBAR G 8 A_CustomComboAttack("RLNightmareBaronOfHellPlasmaBall", 32, 24 * random(1, 4), "baron/melee")
+    Goto See
+  SummonMissile:
+    NBAR G 8 A_CustomComboAttack("RLSummonNightmareBaronOfHellPlasmaBall", 32, 24 * random(1, 4), "baron/melee")
+    Goto See
+  ExplodoMissile:
+    NBAR EEF 10 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonExplodoMissile")
+    NBAR G 20 A_CustomComboAttack("RLNightmareBaronOfHellExplodingBall", 32, 38 * random(1, 4), "baron/melee")
+    Goto See
+  SummonExplodoMissile:
+    NBAR G 20 A_CustomComboAttack("RLSummonNightmareBaronOfHellExplodingBall", 32, 38 * random(1, 4), "baron/melee")
+    Goto See
+  HatredOn:
+    TNT1 A 0 A_JumpIfInventory ("PowerRLMonsterInfightCooldownToken", 1, 3)
+    TNT1 A 0 A_PlaySound ("nightmarebaron/sight", CHAN_VOICE, 1, 0, 0.7)
+    TNT1 A 0 A_GiveInventory ("PowerRLMonsterInfightCooldownToken", 1)
+    TNT1 A 0 A_ChangeFlag ("NOFEAR", 1)
+    TNT1 A 0 A_ChangeFlag ("NOTARGETSWITCH", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEEVENMORE", 1)
+    Goto MissileContinue
+  HatredOff:
+    TNT1 A 0 A_ChangeFlag ("NOFEAR", 0)
+    TNT1 A 0 A_ChangeFlag ("NOTARGETSWITCH", 0)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 0)
+    TNT1 A 0 A_ChangeFlag ("MISSILEEVENMORE", 0)
+    Goto MissileContinue
+  Command:
+    NBAR E 4 A_FaceTarget
+    TNT1 A 0 A_PlaySound("nightmarebaron/sight", CHAN_VOICE)
+    NBAR E 4 A_FaceTarget
+    TNT1 A 0 A_RadiusGive ("PowerRLNightmareBaronCommand", 1024, RGF_MONSTERS | RGF_GIVESELF, 1)
+    Goto CommandMissile
+  CommandMissile:
+    TNT1 A 0 A_JumpIfInventory("PowerRLNightmareBaronCommand", 1, 1)
+    Goto CommandMissile1
+    NBAR E 1 A_FaceTarget
+    Goto CommandMissile
+  CommandMissile1:
+    NBAR EF 4 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonCommandMissile")
+    NBAR G 4 A_CustomComboAttack("RLNightmareBaronOfHellPlasmaBall", 32, 24 * random(1, 4), "baron/melee")
+    TNT1 A 0 A_MonsterRefire (0, "See")
+    Goto CommandMissile1
+  SummonCommandMissile:
+    NBAR G 4 A_CustomComboAttack("RLSummonNightmareBaronOfHellPlasmaBall", 32, 24 * random(1, 4), "baron/melee")
+    TNT1 A 0 A_MonsterRefire (0, "See")
+    Goto CommandMissile1
+  Pain:
+    NBAR H 2
+    NBAR H 2 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_BossDeath
+    NBAR H 2
+    NBAR H 28 A_Scream
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 4
+    TNT1 AA 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 4 A_NoBlocking
+    TNT1 AAA 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 3
+    TNT1 AA 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 3
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 3
+    TNT1 AA 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 3
+    TNT1 AA 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 3
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronExplosion", random(-12, 12), random(-12, 12), random(5, 60), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    NBAR H 8
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronFlames", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 AAAAAA 0 A_SpawnItemEx ("RLNightmareBaronFlames2", random(-6, 6), random(-6, 6), 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronExplosion2", 0, 0, 32, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A -1
+    Stop
+  Raise:
+    Stop
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedMediumGreen",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_BossDeath
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLNightmareBaronFlames
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTONAUTOMAP
+  RenderStyle Add
+  Alpha 0.98
+  Scale 1.6
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_PlaySound("vile/firecrkl", 7)
+    NBAX ABCDEFGH 3 Bright
+    Stop
+  }
+}
+
+ACTOR RLNightmareBaronFlames2 : RLNightmareBaronFlames
+{
+  Scale 1.2
+  States
+  {
+  Spawn:
+    NBAX ABCDEFGH 2 Bright
+    Stop
+  }
+}
+
+ACTOR RLNightmareBaronExplosion
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  RenderStyle Add
+  Alpha 0.98
+  Scale 0.6
+  DamageType "Plasma"
+  PainType "HellNobleFire"
+  DeathType "HellNobleFire"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_PlaySound("rlmonsters/smallexp", 5)
+    TNT1 A 0 A_Explode (20, 64)
+    NBAB CDE 3 Bright
+    Stop
+  }
+}
+
+ACTOR RLNightmareBaronExplosion2 : RLNightmareBaronExplosion
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  RenderStyle Add
+  Alpha 0.98
+  Scale 1.4
+  DamageType "Plasma"
+  PainType "HellNobleFire"
+  DeathType "HellNobleFire"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_PlaySound("rlmonsters/largeexp", 6)
+    TNT1 A 0 A_Explode (60, 128)
+    NBAB C 8 Bright
+    NBAB D 6 Bright
+    NBAB E 4 Bright
+    Stop
+  }
+}
+
+ACTOR RLNightmareBaronOfHellPlasmaBall : BaronBall
+{
+   +THRUGHOST
+   Decal "Scorch"
+   DamageType "Plasma"
+   PainType "HellNobleFire"
+   DeathType "HellNobleFire"
+   Damage (30 * random(1, 3))
+   Speed 20
+   FastSpeed 30
+   Scale 0.6
+   SeeSound "rlmonsters/baronball"
+   DeathSound "rlmonsters/baronballhit"
+  States
+  {
+  Spawn:
+    NBAB AB 4 Bright
+    Loop
+  Death:
+    NBAB B 8 Bright
+    NBAB C 6 Bright
+    NBAB D 4 Bright
+    Stop
+  }
+}
+
+ACTOR RLSummonNightmareBaronOfHellPlasmaBall : RLNightmareBaronOfHellPlasmaBall
+{
+   +MTHRUSPECIES
+}
+
+ACTOR RLNightmareBaronOfHellExplodingBall : BaronBall
+{
+   +THRUGHOST
+   +THRUACTORS
+   Decal "BFGLightning"
+   DamageType "Plasma"
+   PainType "HellNobleFire"
+   DeathType "HellNobleFire"
+   Damage (0)
+   Speed 15
+   FastSpeed 25
+   SeeSound "rlmonsters/baronball"
+   DeathSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItemEx ("RLNightmareBaronExplosion", frandom(-8,8), frandom(-8,8), frandom(-4,4), 0, 0, 0, 0, SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_Jump (20, 1)
+    Loop
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronExplosion2", frandom(-3,3), frandom(-3,3), frandom(-1,1), 0, 0, 0, 0, SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    Loop
+  Death:
+    TNT1 A 0
+    Stop
+  }
+}
+
+ACTOR RLSummonNightmareBaronOfHellExplodingBall : RLNightmareBaronOfHellExplodingBall
+{
+   +MTHRUSPECIES
+}
+
+ACTOR PowerRLNightmareBaronCommand : Powerup
+{
+	Powerup.Duration -2
+   +INVENTORY.UNTOSSABLE
+}
+
+ACTOR RLNightmareBaronOfHellReborn : RLNightmareBaronOfHell
+{
+  +LOOKALLAROUND
+  +NOPAIN
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory("RLResurrectionComplete", 1, "SpawnNormal")
+    TNT1 A 0 A_GiveInventory ("RLHellNobleToken", 1)
+    BARO ONMLKJI 5
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareBaronFlames", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_GiveInventory("RLResurrectionComplete", 1)
+  SpawnNormal:
+    NBAR AB 10 A_Look
+    Loop
+  }
+}
+
+ACTOR RLDRPGSummonedNightmareBaronOfHell : RLNightmareBaronOfHell
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCNightmareBaronOfHell : RLNightmareBaronOfHell
+{
+  +TOUCHY
+  States
+  {
+  Spawn:
+    NBAR BD 10 A_Look
+    Loop
+  See:
+    NBAR AABBCCDD 3
+    Loop
+  Melee:
+    Stop
+  Missile:
+    NBAR EF 8
+    NBAR G 8
+    Goto See
+  Death:
+    NBAR H 2
+    NBAR H 1 A_Scream
+    NBAR H 1 A_NoBlocking
+    NBAR H 8
+    NBAX ABCDEFGH 3 Bright
+    Stop
+  }
+}

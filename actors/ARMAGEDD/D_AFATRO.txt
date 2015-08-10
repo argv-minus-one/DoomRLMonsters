@@ -1,0 +1,214 @@
+
+// FORMER ASSAULT TROOPER
+//
+ACTOR RLFormerAssaultTrooper 16552
+{
+  Health 60
+  Radius 20
+  Height 56
+  Mass 100
+  Speed 8
+  PainChance 190
+  PainThreshold 4
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.85
+  Monster
+  +FLOORCLIP
+  +AVOIDMELEE
+  SeeSound "eliteformer/sight"
+  PainSound "eliteformer/pain"
+  DeathSound "eliteformer/death"
+  ActiveSound "eliteformer/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was eliminated by a Former Assault Trooper."
+  DropItem "RLClip" 128
+  DropItem "RLClip" 128
+  DropItem "RLBattleRiflePickup"
+  Tag "Former Assault Trooper"
+  States
+  {
+  Spawn:
+    AFM1 AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    AFM1 AABBCCDD 3 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    AFM1 AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    AFM1 BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    AFM1 CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    AFM1 DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    TNT1 A 0 A_JumpIfCloser (220, 7)
+    AFM1 EEEEEEEEEE 1 A_FaceTarget (10)
+  MissileCheck:
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser (700, 1)
+	Goto MissileSnipe
+    TNT1 A 0 A_JumpIfCloser (220, 1)
+	Goto MissileBurst
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifle", CHAN_WEAPON, 1, 0, 0.7)
+    AFM1 F 3 Bright A_CustomBulletAttack (30, 5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    AFM1 E 1 A_MonsterRefire(80, "Overwatch")
+    Goto MissileCheck
+  MissileBurst:
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifle", CHAN_WEAPON, 1, 0, 0.7)
+    AFM1 F 3 Bright A_CustomBulletAttack (22.5, 2.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    AFM1 E 1 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifle", CHAN_WEAPON, 1, 0, 0.7)
+    AFM1 F 3 Bright A_CustomBulletAttack (22.5, 2.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    AFM1 E 1 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifle", CHAN_WEAPON, 1, 0, 0.7)
+    AFM1 F 3 Bright A_CustomBulletAttack (22.5, 2.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    AFM1 E 1 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifle", CHAN_WEAPON, 1, 0, 0.7)
+    AFM1 F 3 Bright A_CustomBulletAttack (22.5, 2.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    AFM1 E 1 A_FaceTarget
+    AFM1 EEEEEEEEEE 1 A_FaceTarget (10)
+    AFM1 E 1 A_MonsterRefire(0, "Overwatch")
+    Goto MissileCheck
+  MissileSnipe:
+    TNT1 A 0 A_Jump (256,1,10,15,20,25)
+    AFM1 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 A_FaceTarget (10)
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifle", CHAN_WEAPON, 1, 0, 0.7)
+    AFM1 F 3 Bright A_CustomBulletAttack (16, 0, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    AFM1 E 1 A_MonsterRefire(0, "Overwatch")
+    Goto MissileCheck
+  Overwatch:
+    TNT1 A 0 A_JumpIfInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20, "Reload")
+    TNT1 A 0 A_Chase ("", "Missile", CHF_DONTMOVE)
+    AFM1 E 5 A_FaceTarget (10)
+    TNT1 A 0 A_Chase ("", "Missile", CHF_DONTMOVE)
+    AFM1 E 5 A_FaceTarget (10)
+    TNT1 A 0 A_Jump (200, 1)
+    Goto Overwatch
+    TNT1 A 0
+    Goto See
+  Reload:
+    AFM1 EE 4
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadout", 7)
+    AFM1 EEEEEEEE 4
+    AFM1 E 2
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadin", 7)
+    TNT1 A 0 A_TakeInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20)
+    AFM1 EE 5 A_FaceTarget
+    AFM1 E 6 A_FaceTarget
+    Goto See
+  Pain:
+    AFM1 G 3
+    AFM1 G 3 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    AFM1 H 5
+    AFM1 I 5 A_Scream
+    AFM1 J 5 A_NoBlocking
+    AFM1 K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    AFM1 L 5
+    AFM1 M -1
+    Stop
+  XDeath:
+    AFM1 N 5
+    AFM1 O 5 A_XScream
+    AFM1 P 5 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    AFM1 Q 5
+    AFM1 R 5
+    AFM1 S -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    AFM1 M 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLFormerAssaultTrooperBattleRifleShotCounter", 20)
+    AFM1 L 5
+    AFM1 K 5
+    AFM1 J 5
+    AFM1 I 5
+    AFM1 H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    AFM1 M -1
+    Stop
+  }
+}
+
+Actor RLFormerAssaultTrooperBattleRifleShotCounter : Inventory
+{
+inventory.maxamount 20
+}
+
+ACTOR RLCCFormerAssaultTrooper : RLFormerAssaultTrooper
+{
+  +TOUCHY
+  States
+  {
+  See:
+    AFM1 AABBCCDD 3
+    Loop
+  Missile:
+    AFM1 E 10
+    AFM1 F 3 Bright
+    AFM1 E 1
+    Goto Missile+1
+  Death:
+    AFM1 H 5
+    AFM1 I 5 A_Scream
+    AFM1 J 5 A_NoBlocking
+    AFM1 K 5
+    AFM1 L 5
+    AFM1 M -1
+    Stop
+  }
+}

@@ -1,0 +1,299 @@
+
+// REVENANT
+//
+ACTOR RLRevenant : Revenant
+{
+  MeleeSound ""
+  PainSound "revenant/pain"
+  CrushPainSound "rlmonsters/crush"
+  Health 220
+  GibHealth -75
+  DamageFactor "Bullet", 0.5
+  DamageFactor "Fire", 0.75
+  DamageFactor "Crush", 10
+  +DONTHARMSPECIES
+  Obituary "%o was unable to escape a Revenant."
+  HitObituary "%o was slugged by a Revenant."
+  Tag "Revenant"
+  States
+  {
+  Spawn:
+    REVE BE 10 A_Look
+    Loop
+  See:
+    REVE AABBCCDDEEFF 2 A_Chase
+    Loop
+  Melee:
+    REVE G 1 A_FaceTarget
+    TNT1 A 0 A_PlaySound("skeleton/swing", CHAN_VOICE)
+    REVE G 6 A_FaceTarget
+    REVE H 6 A_FaceTarget
+    REVE I 6 A_CustomBulletAttack (0, 0, 1, (6 * random(1, 10)), "RLEnemyBluntMeleePuff", 44, CBAF_NORANDOM | CBAF_AIMFACING)
+//    REVE I 6 A_CustomMeleeAttack (6 * random(1, 10), "skeleton/melee", "", "Melee")
+    Goto See
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    TNT1 A 0 A_JumpIfHealthLower(100, "DualMissile")
+    REVE J 8 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser(2048, 1)
+    Goto MissileNormal
+    TNT1 A 0 A_Jump(128, "MissileHoming")
+  MissileNormal:
+    TNT1 A 0 A_JumpIfInventory("RLRevenantMissileToken", 1, 3)
+    TNT1 A 0 A_CustomMissile("RLRevenantMissile", 52, 14, 0)
+    TNT1 A 0 A_GiveInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+    TNT1 A 0 A_CustomMissile("RLRevenantMissile", 52, -14, 0)
+    TNT1 A 0 A_TakeInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+  MissileHoming:
+    TNT1 A 0 A_JumpIfInventory("RLRevenantMissileToken", 1, 3)
+    TNT1 A 0 A_CustomMissile("RLRevenantHomingMissile", 52, 14, 0)
+    TNT1 A 0 A_GiveInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+    TNT1 A 0 A_CustomMissile("RLRevenantHomingMissile", 52, -14, 0)
+    TNT1 A 0 A_TakeInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+  DualMissile:
+    REVE J 8 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser(1024, 1)
+    Goto DualMissileNormal
+    TNT1 A 0 A_Jump(128, "DualMissileHoming")
+  DualMissileNormal:
+    TNT1 A 0 A_CustomMissile("RLRevenantMissile2", 52, 14, 0)
+    TNT1 A 0 A_CustomMissile("RLRevenantMissile2", 52, -14, 0)
+    Goto MissileEnd
+  DualMissileHoming:
+    TNT1 A 0 A_CustomMissile("RLRevenantHomingMissile2", 52, 14, 0)
+    TNT1 A 0 A_CustomMissile("RLRevenantHomingMissile2", 52, -14, 0)
+    Goto MissileEnd
+  MissileEnd:
+    REVE J 2 Bright A_FaceTarget
+    Goto MissileFinish
+  MissileFinish:
+    REVE K 20
+    Goto See
+//Copied in full because lazy
+  SummonMissile:
+    TNT1 A 0 A_JumpIfHealthLower(100, "SummonDualMissile")
+    REVE J 8 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser(2048, 1)
+    Goto SummonMissileNormal
+    TNT1 A 0 A_Jump(128, "SummonMissileHoming")
+  SummonMissileNormal:
+    TNT1 A 0 A_JumpIfInventory("RLRevenantMissileToken", 1, 3)
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantMissile", 52, 14, 0)
+    TNT1 A 0 A_GiveInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantMissile", 52, -14, 0)
+    TNT1 A 0 A_TakeInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+  SummonMissileHoming:
+    TNT1 A 0 A_JumpIfInventory("RLRevenantMissileToken", 1, 3)
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantHomingMissile", 52, 14, 0)
+    TNT1 A 0 A_GiveInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantHomingMissile", 52, -14, 0)
+    TNT1 A 0 A_TakeInventory("RLRevenantMissileToken", 1)
+    Goto MissileEnd
+  SummonDualMissile:
+    REVE J 8 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser(1024, 1)
+    Goto SummonDualMissileNormal
+    TNT1 A 0 A_Jump(128, "SummonDualMissileHoming")
+  SummonDualMissileNormal:
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantMissile2", 52, 14, 0)
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantMissile2", 52, -14, 0)
+    Goto MissileEnd
+  SummonDualMissileHoming:
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantHomingMissile2", 52, 14, 0)
+    TNT1 A 0 A_CustomMissile("RLSummonRevenantHomingMissile2", 52, -14, 0)
+    Goto MissileEnd
+  Pain:
+    REVE L 5
+    REVE L 5 A_Pain
+    Goto See
+  Pain.CyberDisruptor:
+    REVE L 2
+    REVE L 6 A_Pain
+    REVE L 6
+    REVE L 6 A_Pain
+    REVE L 6
+    REVE L 6 A_Pain
+    REVE L 6
+    REVE L 6 A_Pain
+    Goto See
+  Death:
+    REVE LM 7
+    REVE N 7 A_Scream
+    REVE O 7 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    REVE P 7
+    REVE Q -1
+    Stop
+  XDeath:
+    REVE R 4
+    TNT1 A 0 A_PlaySound ("misc/gibbed", 5)
+    REVE S 4 A_Scream
+    REVE T 4 A_NoBlocking
+    REVE UVW 4
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    REVE X 4
+    REVE Y -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    REVE Q 2
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    REVE Q 5
+    REVE PONML 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_Die ("NightmareRemoval")
+  Death.NightmareRemoval:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareRevenantReborn", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Stop
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_Die ("CyberneticRemoval")
+  Death.CyberneticRemoval:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticRevenantReborn", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Stop
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    REVE Q -1
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLRevenantMissile : RevenantTracer
+{
+   -SEEKERMISSILE
+   +THRUGHOST
+   Decal "RevenantScorch"
+   DamageType "Fire"
+   PainType "Explosion"
+   DeathType "Explosion"
+  States
+  {
+  Spawn:
+    FATB AB 2 Bright
+    Loop
+  }
+}
+
+ACTOR RLRevenantHomingMissile : RLRevenantMissile
+{
+   +SEEKERMISSILE
+   +DONTSEEKINVISIBLE
+   +ROCKETTRAIL
+  States
+  {
+  Spawn:
+    FATB AB 2 Bright A_SeekerMissile (9, 9,SMF_LOOK,128)
+    Loop
+  }
+}
+//17, 17, to keep track of Kate knowledge
+
+ACTOR RLRevenantMissile2 : RLRevenantMissile
+{
+   Damage 5
+}
+
+ACTOR RLRevenantHomingMissile2 : RLRevenantMissile2
+{
+   Damage 5
+}
+
+ACTOR RLSummonRevenantMissile : RLRevenantMissile
+{
+   +MTHRUSPECIES
+}
+
+ACTOR RLSummonRevenantHomingMissile : RLRevenantHomingMissile
+{
+   +MTHRUSPECIES
+}
+
+ACTOR RLSummonRevenantMissile2 : RLRevenantMissile2
+{
+   +MTHRUSPECIES
+}
+
+ACTOR RLSummonRevenantHomingMissile2 : RLRevenantHomingMissile2
+{
+   +MTHRUSPECIES
+}
+
+Actor RLRevenantMissileToken : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLDRPGSummonedRevenant : RLRevenant
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCRevenant : RLRevenant
+{
+  +TOUCHY
+  States
+  {
+  Melee:
+    REVE G 7
+    REVE H 6
+    REVE I 6
+    Goto See
+  Missile:
+    REVE J 10 Bright
+    REVE K 20
+    Goto See
+  Death:
+    REVE LM 7
+    REVE N 7 A_Scream
+    REVE O 7 A_NoBlocking
+    REVE P 7
+    REVE Q -1
+    Stop
+  }
+}

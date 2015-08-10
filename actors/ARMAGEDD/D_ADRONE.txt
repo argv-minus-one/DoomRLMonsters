@@ -1,0 +1,278 @@
+
+// UAC DEFENCE DRONE
+//
+ACTOR RLUACDefenceDrone 16555
+{
+  Health 25
+  Radius 12
+  Height 18
+  Mass 50
+  Speed 1
+  PainChance 0
+  DamageFactor "Radiation", 0
+  DamageFactor "Melee", 0.8
+  DamageFactor "Bullet", 0.5
+  DamageFactor "Fire", 0.8
+  MaxTargetRange 512
+  Monster
+  +FLOAT
+  +NOGRAVITY
+  +MISSILEMORE
+  +DONTFALL
+  +NOICEDEATH
+  +LOOKALLAROUND
+  +NOINFIGHTING
+  +NOBLOOD
+  +FLOATBOB
+  +NOPAIN
+  +NOFEAR
+  +SPAWNFLOAT
+  +DONTSPLASH
+  DeathSound "rlmonsters/missilehit"
+  Obituary "%o set off all the gun-toting alarms."
+  Tag "UAC Defence Drone"
+  DropItem "RLClip"
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_PlaySound("defencedrone/loop", 6, 0.7, 1, 1.5)
+    TNT1 A 0 A_GiveInventory ("RLFormerOverwatchDroneControl", 1, AAPTR_MASTER)
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAlerted", 1, "Searching")
+    TNT1 A 0 A_SetAngle (angle+2)
+    TNT1 A 0 A_LookEx (LOF_NOSOUNDCHECK, 0, 1024, 0, 25, "AlertActivate")
+    ADRO A 1 A_LookEx (LOF_NOSIGHTCHECK, 0, 0, 0, 360, "AlertNoActivate")
+    TNT1 A 0 A_SetAngle (angle+2)
+    TNT1 A 0 A_LookEx (LOF_NOSOUNDCHECK, 0, 1024, 0, 25, "AlertActivate")
+    ADRO B 1 A_LookEx (LOF_NOSIGHTCHECK, 0, 0, 0, 360, "AlertNoActivate")
+    Loop
+  AlertActivate:
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAlerted", 1)
+    TNT1 A 0 A_PlaySound("defencedrone/alarm", 7, 1, 0, 0.4)
+    TNT1 A 0 A_AlertMonsters
+    ADRO ABABABABABABABAB 1 A_FaceTarget (5)
+    TNT1 A 0 A_PlaySound("defencedrone/alarm", 7, 1, 0, 0.4)
+    TNT1 A 0 A_AlertMonsters
+    ADRO ABABABABABABABAB 1 A_FaceTarget (5)
+    TNT1 A 0 A_PlaySound("defencedrone/alarm", 7, 1, 0, 0.4)
+    TNT1 A 0 A_AlertMonsters
+    ADRO ABABABABABABABAB 1 A_FaceTarget (5)
+    TNT1 A 0 A_PlaySound("defencedrone/alarm", 7, 1, 0, 0.4)
+    TNT1 A 0 A_AlertMonsters
+    ADRO ABABABABABABABAB 1 A_FaceTarget (5)
+    TNT1 A 0 A_MonsterRefire(0, "Overwatch")
+    Goto Missile
+  AlertNoActivate:
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAlerted", 1)
+    Goto See
+  Searching:
+    TNT1 A 0 A_PlaySound("defencedrone/loop", 6, 0.7, 1, 1.5)
+    TNT1 A 0 A_JumpIf (z <= floorz, "BlastoffSearch")
+    TNT1 A 0 A_LookEx (LOF_NOSOUNDCHECK, 0, 1024, 0, 360, "See")
+    ADRO A 1 A_Wander
+    TNT1 A 0 A_JumpIf (z <= floorz, "BlastoffSearch")
+    TNT1 A 0 A_LookEx (LOF_NOSOUNDCHECK, 0, 1024, 0, 360, "See")
+    ADRO B 1 A_Wander
+    Loop
+  BlastoffSearch:
+    TNT1 A 0 ThrustThingZ(0, 15, 0, 1)
+    ADRO ABABAB 1
+    Goto Searching
+  Blastoff:
+    TNT1 A 0 ThrustThingZ(0, 15, 0, 1)
+    ADRO ABABAB 1 A_Chase ("", "Missile", CHF_DONTMOVE)
+    Goto See
+  See:
+    TNT1 A 0 A_TakeInventory ("RLDefenceDroneAccuracyCounter", 7)
+    TNT1 A 0 A_PlaySound("defencedrone/loop", 6, 0.7, 1, 1.5)
+    TNT1 A 0 A_JumpIf (z <= floorz, "Blastoff")
+    ADRO A 1 A_Chase
+    TNT1 A 0 A_JumpIf (z <= floorz, "Blastoff")
+    ADRO B 1 A_Chase
+    Loop
+  Overwatch:
+    TNT1 A 0 A_JumpIfCloser (600, 1)
+	Goto MissileEnd
+    TNT1 A 0 A_TakeInventory ("RLDefenceDroneAccuracyCounter", 1)
+    TNT1 A 0 A_Chase ("", "MissileRestartFire", CHF_DONTMOVE)
+    ADRO A 1 A_FaceTarget
+    TNT1 A 0 A_Chase ("", "MissileRestartFire", CHF_DONTMOVE)
+    ADRO B 1 A_FaceTarget
+    Loop
+  MissileRestartFire:
+    ADRO ABA 1 A_FaceTarget
+    TNT1 A 0 A_PlaySound("defencedrone/target", 7)
+    TNT1 A 0 A_Jump (256, 4,8,12)
+    ADRO ABABABABABABABABABABABABABABABAB 1 A_FaceTarget
+    Goto MissileFire
+  Missile:
+    TNT1 A 0 A_JumpIfCloser (600, 1)
+	Goto See
+    TNT1 A 0 A_PlaySound("defencedrone/target", 7)
+    ADRO ABABABABABAB 1 A_FaceTarget (5)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneOverwatch", 1)
+    TNT1 A 0 A_MonsterRefire(0, "Overwatch")
+	Goto MissileFire
+  MissileFire:
+    TNT1 A 0 A_JumpIfCloser (600, 1)
+	Goto MissileEnd
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 7, "MissileFire8")
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 6, "MissileFire7")
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 5, "MissileFire6")
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 4, "MissileFire5")
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 3, "MissileFire4")
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 2, "MissileFire3")
+    TNT1 A 0 A_JumpIfInventory ("RLDefenceDroneAccuracyCounter", 1, "MissileFire2")
+  MissileFire1:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (52, 7.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire2:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (48, 7, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire3:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (44, 6.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire4:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (40, 6, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire5:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (36, 5.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire6:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (32, 5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire7:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (28, 4.5, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileFire8:
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingun", CHAN_WEAPON, 1, 0, 0.8)
+    ADRO C 1 Bright A_CustomBulletAttack (26, 4, 1, random(1,5) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_GiveInventory ("RLDefenceDroneAccuracyCounter", 1)
+    ADRO DC 1 Bright
+    ADRO B 1
+    TNT1 A 0 A_MonsterRefire(164, "Overwatch")
+    Goto MissileFire
+  MissileEnd:
+    TNT1 A 0 A_TakeInventory ("RLDefenceDroneOverwatch", 1)
+    TNT1 A 0 A_TakeInventory ("RLDefenceDroneAccuracyCounter", 7)
+    ADRO ABAB 1 A_FaceTarget
+    Goto See
+  Pain:
+    TNT1 A 0 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_SetTranslucent (0.95, 1)
+    TNT1 A 0 A_ChangeFlag ("FLOATBOB", 0)
+    TNT1 A 0 A_CustomMissile("RLDefenceDroneExplosion",12,0)
+    ADRO E 4 Bright A_Scream
+    ADRO F 4 Bright A_NoBlocking
+    ADRO GH 3 Bright
+    ADRO IJ 2 Bright
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    Stop
+  }
+}
+
+ACTOR RLDefenceDroneExplosion : Rocket
+{
+   Radius 1
+   Height 1
+   +THRUGHOST
+   -RANDOMIZE
+   -DEHEXPLOSION
+   -ROCKETTRAIL
+   DamageType "Fire"
+   PainType "Explosion"
+   DeathType "Explosion"
+   Speed 0
+   Damage 0
+   SeeSound ""
+   DeathSound ""
+   Obituary "$OB_BARREL" // "%o went boom."
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_Explode (12, 32)
+    TNT1 A 8
+    Stop
+  }
+}
+
+Actor RLDefenceDroneAlerted : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor RLDefenceDroneOverwatch : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor RLDefenceDroneAccuracyCounter : Inventory
+{
+inventory.maxamount 7
+}
+
+ACTOR RLCCUACDefenceDrone : RLUACDefenceDrone
+{
+  +TOUCHY
+  States
+  {
+  Spawn:
+    ADRO AB 1
+    Loop
+  See:
+    ADRO AB 1
+    Loop
+  Missile:
+    ADRO CDC 1 Bright
+    ADRO B 1
+    Goto Missile
+  Death:
+    ADRO E 4 Bright A_Scream
+    ADRO F 4 Bright A_NoBlocking
+    ADRO GH 3 Bright
+    ADRO IJ 2 Bright
+    TNT1 A 15
+    Stop
+  }
+}

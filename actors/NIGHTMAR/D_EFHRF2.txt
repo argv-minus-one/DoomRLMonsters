@@ -1,0 +1,139 @@
+
+// ELITE FORMER HUMAN
+//
+ACTOR RLEliteHumanBattleRifle2 : ZombieMan
+{
+  Health 40
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.85
+  SeeSound "femalezombie/sight"
+  PainSound "femalezombie/pain"
+  DeathSound "femalezombie/death"
+  ActiveSound "femalezombie/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was eliminated by an Elite Former Human."
+  DropItem "RLClip"
+  DropItem "RLBattleRiflePickup"
+  +AVOIDMELEE
+  Tag "Elite Human"
+  States
+  {
+  Spawn:
+    ERF2 AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanBattleRifleShotCounter", 40, "RetreatReload")
+    ERF2 AABBCCDD 4 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ERF2 AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ERF2 BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ERF2 CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ERF2 DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanBattleRifleShotCounter", 40, "RetreatReload")
+    ERF2 E 12 A_FaceTarget
+    TNT1 A 0 A_GiveInventory ("RLEliteHumanBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/burstbattlerifle", CHAN_WEAPON)
+    ERF2 F 1 Bright A_CustomBulletAttack (16, 0, 1, random(1,5) * 4, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ERF2 E 1 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanBattleRifleShotCounter", 40, "MissileEnd")
+    TNT1 A 0 A_GiveInventory ("RLEliteHumanBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/burstbattlerifle", CHAN_WEAPON)
+    ERF2 F 1 Bright A_CustomBulletAttack (16, 0, 1, random(1,5) * 4, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ERF2 E 1 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanBattleRifleShotCounter", 40, "MissileEnd")
+    TNT1 A 0 A_GiveInventory ("RLEliteHumanBattleRifleShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/burstbattlerifle", CHAN_WEAPON)
+    ERF2 F 1 Bright A_CustomBulletAttack (16, 0, 1, random(1,5) * 4, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ERF2 E 1 A_FaceTarget
+  MissileEnd:
+    ERF2 E 8 A_FaceTarget
+    Goto See
+  Reload:
+    ERF2 EE 4 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifleunload", 7)
+    ERF2 EEEEEEEE 4 A_FaceTarget
+    ERF2 E 2 A_FaceTarget
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_PlaySound("rlmonsters/battlerifleload", 7)
+    TNT1 A 0 A_TakeInventory ("RLEliteHumanBattleRifleShotCounter", 40)
+    ERF2 EE 5 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/battleriflecock", 5)
+    ERF2 E 6 A_FaceTarget
+    Goto See
+  Pain:
+    ERF2 G 3
+    ERF2 G 3 A_Pain
+    Goto See
+  Death:
+    ERF2 H 5
+    ERF2 I 5 A_Scream
+    ERF2 J 5 A_NoBlocking
+    ERF2 K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ERF2 LM 5
+    ERF2 N -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    ERF2 O 5
+    ERF2 P 5 A_XScream
+    ERF2 Q 5 A_NoBlocking
+    ERF2 RS 5
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ERF2 TUV 5
+    ERF2 W -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ERF2 N 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteHumanBattleRifleShotCounter", 40)
+    ERF2 M 5
+    ERF2 L 5
+    ERF2 K 5
+    ERF2 J 5
+    ERF2 I 5
+    ERF2 H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ERF2 N -1
+    Stop
+  }
+}

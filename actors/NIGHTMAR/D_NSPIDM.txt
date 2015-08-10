@@ -1,0 +1,504 @@
+
+// NIGHTMARE MASTERMIND
+//
+ACTOR RLNightmareSpiderMastermind : SpiderMastermind 16534
+{
+  Health 7500
+  -NORADIUSDMG
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTHARMSPECIES
+  +MISSILEMORE
+  +QUICKTORETALIATE
+  +TELESTOMP
+  PainThreshold 20
+  PainChance 120
+  Speed 15
+//  SeeSound "nightmaremastermind/sight"
+//  ActiveSound "nightmaremastermind/sight"
+  PainSound "spidermastermind/pain"
+//  DeathSound "nightmaremastermind/death"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  MinMissileChance 10
+  Mass 10000
+  Species "RLSpidermind"
+  RadiusDamageFactor 0.2
+  DamageFactor "Melee", 0.25
+  DamageFactor "Radiation", 0
+  DamageFactor "Crush", 10
+  Obituary "%o was demolished by the Nightmare Mastermind."
+  DropItem "RLDemolitionAmmoMinigunPickup" 1
+  Tag "Nightmare Mastermind"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory ("RLMonsterInitializerToken", 1, 3)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLSpiderMindToken", 1)
+  SpawnLoop:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag("NODAMAGE", 0)
+    NMAS A 10 A_Look
+    Goto SpawnLoop
+  ClearTarget:
+    TNT1 A 0 A_ClearTarget
+    TNT1 A 0 A_LookEx (LOF_NOSEESOUND, 0, 0, 0, 360, "See")
+    Goto See
+  ClearTargetWindDown:
+    TNT1 A 0 A_ClearTarget
+    TNT1 A 0 A_LookEx (LOF_NOSEESOUND, 0, 0, 0, 360, "See")
+    Goto ProlongedFireEnd
+  See:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag("NODAMAGE", 0)
+    TNT1 A 0 A_PlaySound("spider/walk", 5, 1, 0, 0.7)
+    TNT1 A 0 A_Quake(1, 12, 0, 384, "")
+    NMAS AABB 2 A_Chase
+    TNT1 A 0 A_PlaySound("spider/walk", 5, 1, 0, 0.7)
+    TNT1 A 0 A_Quake(1, 12, 0, 384, "")
+    NMAS CCDD 2 A_Chase
+    TNT1 A 0 A_PlaySound("spider/walk", 5, 1, 0, 0.7)
+    TNT1 A 0 A_Quake(1, 12, 0, 384, "")
+    NMAS EEFF 2 A_Chase
+    Loop
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLSpiderMindToken", 1, "ClearTarget")
+    TNT1 A 0 A_PlaySound("nightmaremastermind/minigunburst", CHAN_WEAPON, 1, 0, 0.5)
+    NMAS A 26 A_FaceTarget
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
+    NMAS TU 3 A_FaceTarget
+    NMAS TU 2 A_FaceTarget
+    NMAS TUTU 1 A_FaceTarget
+  MissileFire:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLSpiderMindToken", 1, "ClearTargetWindDown")
+    TNT1 A 0 A_JumpIfCloser (350, "ProlongedFire")
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    NMAS GHGHGHGHGHGHGHGHGHGHGHGHGHGH 1 Bright A_CustomBulletAttack (12, 5, 1, random(3,7) * 3, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    NMAS TUTU 1
+    NMAS T 2
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    NMAS A 16
+    TNT1 A 0 A_Jump (96, "Teleporting")
+    Goto See
+  SummonMissile:
+    NMAS GHGHGHGHGHGHGHGHGHGHGHGHGHGH 1 Bright A_CustomBulletAttack (3, 1.5, 1, random(3,5) * 5, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    NMAS TUTU 1
+    NMAS T 2
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    NMAS A 16
+    TNT1 A 0 A_Jump (96, "Teleporting")
+    Goto See
+  ProlongedFire:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLSpiderMindToken", 1, "ClearTargetWindDown")
+    TNT1 A 0 A_PlaySound("nightmaremastermind/minigunloop", CHAN_WEAPON, 1, 1, 0.5)
+    TNT1 A 0 A_JumpIfInventory ("RLSpiderMastermindStateCounter", 1, "ProlongedFireAlt")
+    TNT1 A 0 A_GiveInventory ("RLSpiderMastermindStateCounter", 1)
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonProlongedMissile")
+    NMAS G 1 Bright A_CustomBulletAttack (12, 5, 1, random(3,7) * 3, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_JumpIfTargetInLOS ("ProlongedFireCheck", 0, JLOSF_DEADNOJUMP | JLOSF_NOSIGHT)
+    Goto ProlongedFireEnd
+  SummonProlongedMissile:
+    NMAS G 1 Bright A_CustomBulletAttack (3, 1.5, 1, random(3,5) * 5, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_JumpIfTargetInLOS ("ProlongedFireCheck", 0, JLOSF_DEADNOJUMP | JLOSF_NOSIGHT)
+    Goto ProlongedFireEnd
+  ProlongedFireCheck:
+    TNT1 A 0 A_JumpIfCloser (350, "ProlongedFire")
+    Goto ProlongedFireEnd
+  ProlongedFireAlt:
+    TNT1 A 0 A_TakeInventory ("RLSpiderMastermindStateCounter", 1)
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonProlongedMissileAlt")
+    NMAS H 1 Bright A_CustomBulletAttack (12, 5, 1, random(3,7) * 3, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_JumpIfCloser (350, "ProlongedFire")
+    Goto ProlongedFireEnd
+  SummonProlongedMissileAlt:
+    NMAS H 1 Bright A_CustomBulletAttack (3, 1.5, 1, random(3,5) * 5, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_JumpIfCloser (350, "ProlongedFire")
+    Goto ProlongedFireEnd
+  ProlongedFireEnd:
+    TNT1 A 0 A_PlaySound("nightmaremastermind/minigunend", CHAN_WEAPON, 1, 0, 0.5)
+    NMAS TUTU 1
+    NMAS T 2
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    NMAS A 16
+    TNT1 A 0 A_Jump (180, "Teleporting")
+    Goto See
+  Pain:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_Pain
+    TNT1 A 0 A_Jump (180, "Teleporting")
+    Goto See
+  Pain.CyberDisruptor:
+    TNT1 A 0 A_Pain
+    Goto Teleporting
+  Teleporting:
+    TNT1 A 0 A_JumpIfHealthLower(1500, "TeleportHate")
+    TNT1 A 0 A_PlaySound("nightmaremastermind/darkness", 7, 1, 0, 0.4)
+    NMAS IIIIVIIIIVIIIIVIIIIVIIIIVIIIIV 1 Bright A_SpawnItemEx ("RLNightmareMastermindDarkAura", -1, 0, 0, 0, 0, 0, 0, SXF_SETTARGET | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOut", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+    TNT1 A 0 A_ChangeFlag("NODAMAGE", 1)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/darknessmove", 5, 1, 0, 0.3)
+    TNT1 A 0 A_SetSpeed (Speed*3)
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_SetSpeed (Speed/3)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag("NODAMAGE", 0)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindDarkShockwave", -1, 0, 50, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/darkness", 7, 1, 0, 0.4)
+    NMAS IIIIVIIIIV 1 Bright A_SpawnItemEx ("RLNightmareMastermindDarkAura", -1, 0, 0, 0, 0, 0, 0, SXF_SETTARGET | SXF_NOCHECKPOSITION)
+    Goto Missile
+  TeleportHate:
+    TNT1 A 0 A_PlaySound("nightmaremastermind/darkness", 7, 1, 0, 0.4)
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
+    NMAS IIIIVIIIIVIIIIV 1 Bright A_SpawnItemEx ("RLNightmareMastermindDarkAura", -1, 0, 0, 0, 0, 0, 0, SXF_SETTARGET | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOut", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+    TNT1 A 0 A_ChangeFlag("NODAMAGE", 1)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/darknessmove", 5, 1, 0, 0.3)
+    TNT1 A 0 A_SetSpeed (Speed*3)
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindFadeOutFast", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 1 A_Wander
+    TNT1 A 0 A_SetSpeed (Speed/3)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag("NODAMAGE", 0)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareMastermindDarkShockwave", -1, 0, 50, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/darkness", 7, 1, 0, 0.4)
+    NMAS IIIIV 1 Bright A_SpawnItemEx ("RLNightmareMastermindDarkAura", -1, 0, 0, 0, 0, 0, 0, SXF_SETTARGET | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/minigunloop", CHAN_WEAPON, 1, 1, 0.5)
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonTeleportHate")
+    NMAS GHGHGHGHGHGHGHGHGHGHGHGHGHGH 1 Bright A_CustomBulletAttack (12, 5, 1, random(3,7) * 3, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/minigunend", CHAN_WEAPON, 1, 0, 0.5)
+    NMAS TUTU 1
+    NMAS T 2
+    TNT1 A 0 A_MonsterRefire(0, "See")
+    Goto TeleportHate
+  SummonTeleportHate:
+    NMAS GHGHGHGHGHGHGHGHGHGHGHGHGHGH 1 Bright A_CustomBulletAttack (3, 1.55, 1, random(3,5) * 5, "RLNightmareMastermindExplodePuff", 0, CBAF_NORANDOM)
+    TNT1 A 0 A_PlaySound("nightmaremastermind/minigunend", CHAN_WEAPON, 1, 0, 0.5)
+    NMAS TUTU 1
+    NMAS T 2
+    TNT1 A 0 A_MonsterRefire(0, "See")
+    Goto TeleportHate
+  Death:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    NMAS J 20 A_Scream
+    NMAS K 10 A_NoBlocking
+    NMAS L 10
+    TNT1 A 0 A_Quake(7, 30, 0, 1536, "")
+    NMAS MNO 10 Bright
+    TNT1 A 0 A_Quake(1, 20, 0, 768, "")
+    NMAS PQ 10 Bright
+    NMAS R 10
+    NMAS S 30
+    NMAS S -1 A_BossDeath
+    Stop
+  Crush:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 1 A_SpawnItem("RLCrushedLarge",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    NMAS S -1 A_BossDeath
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLNightmareMastermindDarkAura
+{
+  Radius 100
+  Height 100
+  VSpeed 3
+  +MTHRUSPECIES
+  +NOGRAVITY
+  +FLOORCLIP
+  +NOLIFTDROP
+  +NOTONAUTOMAP
+  DamageType "MindRape"
+  Alpha 0.8
+  RenderStyle Stencil
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_Explode (3, 256, "None", 0, 256)
+  SpawnLoop:
+    TNT1 A 0 A_SetScale (ScaleX, ScaleY+0.1)
+    NMAS V 1 A_FadeTo (0, 0.06, 1)
+    Loop
+  }
+}
+
+ACTOR RLNightmareMastermindFadeOut
+{
+  Radius 100
+  Height 100
+  +NOGRAVITY
+  +FLOORCLIP
+  +NOLIFTDROP
+  +NOTONAUTOMAP
+  Alpha 1.0
+  RenderStyle Stencil
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    NMAS V 1 A_FadeTo (0, 0.08, 1)
+    Loop
+  }
+}
+
+ACTOR RLNightmareMastermindFadeOutFast : RLNightmareMastermindFadeOut
+{
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    NMAS V 1 A_FadeTo (0, 0.22, 1)
+    Loop
+  }
+}
+
+ACTOR RLNightmareMastermindDarkShockwave
+{
+   Projectile
+   Radius 8
+   Height 8
+   Speed 0
+   Scale 0.8
+   Damage 0
+   RENDERSTYLE Stencil
+   Alpha 0.98
+   +NOCLIP
+   +NOINTERACTION
+   States
+   {
+   Spawn:
+   SHOK ABCDEFGHIJKLMNOPQR 1 Bright A_SetScale (ScaleX+0.2)
+   Stop
+   }
+}
+
+ACTOR RLNightmareMastermindExplodePuff
+{ 
+   +NOGRAVITY
+   +NOBLOCKMAP
+   +PUFFONACTORS
+   +PUFFGETSOWNER
+   +RANDOMIZE
+   +THRUGHOST
+   +MTHRUSPECIES
+   RenderStyle Add
+   Alpha 0.9
+   Mass 5
+   Scale 0.6
+   Decal "RevenantScorch"
+   Damagetype "Fire"
+   States
+   {
+   Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_PlaySound("rlmonsters/bulletexp", 7, 0.5, 0, 1.2)
+      TNT1 A 0 A_Explode (20,16, 0, 1)
+      MICX ABCDEFG 2 Bright
+      Stop
+   }
+}
+
+ACTOR RLDRPGSummonedNightmareSpiderMastermind : RLNightmareSpiderMastermind
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  }
+}
+
+ACTOR RLCCNightmareSpiderMastermind : RLNightmareSpiderMastermind
+{
+  +TOUCHY
+  States
+  {
+  See:
+    NMAS TUTUTUTUTUTUTUTU 1
+    Loop
+  Missile:
+    NMAS GH 1 Bright
+    Loop
+  Death:
+    NMAS J 20 A_Scream
+    NMAS K 10 A_NoBlocking
+    NMAS L 10
+    NMAS MNOPQ 10 Bright
+    NMAS R 10
+    NMAS S 30
+    NMAS S -1 A_BossDeath
+    Stop
+  }
+}

@@ -1,0 +1,264 @@
+
+// TECHNO-LORD
+//
+ACTOR RLCyberneticBaronOfHell : BaronOfHell 16544
+{
+  Health 1500 
+  PainChance 40
+  GibHealth -75
+  +DONTHARMSPECIES
+  SeeSound "technolord/sight"
+  PainSound "mechdemon/pain"
+  DeathSound "technolord/death"
+  ActiveSound "mechdemon/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Bloodcolor "DarkGreen"
+  DamageFactor "Crush", 10
+  Species "RLHellNoble"
+  Obituary "%o was unable to dodge a Techno-Lord's salvo."
+  HitObituary "%o decided that the Techno-Lord's fist was less dangerous than his gun."
+  Tag "Techno-Lord"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory ("RLMonsterInitializerToken", 1, 3)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLHellNobleToken", 1)
+    CBAR BD 10 A_Look
+    Goto Spawn+3
+  See:
+    CBAR AABB 3 A_Chase
+    TNT1 A 0 A_Playsound("cybruiser/walk", 7)
+    CBAR CCDD 3 A_Chase
+    Loop
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "MissileContinue")
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLCacodemonToken", 1, "HatredOn")
+	Goto HatredOff
+  MissileContinue:
+    TNT1 A 0 A_Jump(128, "Melee")
+    CBAR EE 10 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    CBAR F 4 Bright A_CustomMissile("RLTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 10 A_FaceTarget
+    Goto See
+  SummonMissile:
+    CBAR F 4 Bright A_CustomMissile("RLSummonTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLSummonTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLSummonTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLSummonTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 4 A_FaceTarget
+    CBAR F 4 Bright A_CustomMissile("RLSummonTechnoLordMiniMissile", 27, 16, frandom(5,-5))
+    CBAR E 10 A_FaceTarget
+    Goto See
+  HatredOn:
+    TNT1 A 0 A_JumpIfInventory ("PowerRLMonsterInfightCooldownToken", 1, 3)
+    TNT1 A 0 A_PlaySound ("technolord/sight", CHAN_VOICE, 1, 0, 0.7)
+    TNT1 A 0 A_GiveInventory ("PowerRLMonsterInfightCooldownToken", 1)
+    TNT1 A 0 A_ChangeFlag ("NOFEAR", 1)
+    TNT1 A 0 A_ChangeFlag ("NOTARGETSWITCH", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEEVENMORE", 1)
+    Goto MissileContinue
+  HatredOff:
+    TNT1 A 0 A_ChangeFlag ("NOFEAR", 0)
+    TNT1 A 0 A_ChangeFlag ("NOTARGETSWITCH", 0)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 0)
+    TNT1 A 0 A_ChangeFlag ("MISSILEEVENMORE", 0)
+    Goto MissileContinue
+  Melee:
+    CBAR PQ 8 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMelee")
+    CBAR R 8 A_CustomComboAttack("RLBaronOfHellPlasmaBall", 32, 10 * random(1, 8), "baron/melee")
+    Goto See
+  SummonMelee:
+    CBAR R 8 A_CustomComboAttack("RLSummonBaronOfHellPlasmaBall", 32, 10 * random(1, 8), "baron/melee")
+    Goto See
+  Pain:
+    CBAR H 2
+    CBAR H 2 A_Pain
+    Goto See
+  Pain.CyberDisruptor:
+    CBAR H 2
+    CBAR H 6 A_Pain
+    CBAR H 6
+    CBAR H 6 A_Pain
+    CBAR H 6
+    CBAR H 6 A_Pain
+    CBAR H 6
+    CBAR H 6 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_BossDeath
+    CBAR I 8
+    CBAR J 8 A_Scream
+    TNT1 A 0 A_Playsound("rlmonsters/fireblast", 6)
+    CBAR K 8
+    CBAR L 8 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    CBAR MN 8
+    CBAR O -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    CBAR O 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    CBAR ONMLKJI 8
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedMediumGreen",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    CBAR O -1 A_BossDeath
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLTechnoLordMiniMissile : Rocket
+{
+  Radius 5
+  Height 3
+  Scale 0.7
+  Speed 20
+  Decal "RevenantScorch"
+  Damage 6
+  Damagetype "Fire"
+  PainType "Explosion"
+  DeathType "Explosion"
+  SeeSound "rlmonsters/minimissile"
+  DeathSound "rlmonsters/smallexp"
+  -DEHEXPLOSION
+  -ROCKETTRAIL
+  +THRUGHOST
+  States
+  {
+  Spawn:
+    FLAR A 1 Bright
+    Loop
+  Death:
+    FREX A 6 Bright A_Explode (16,32)
+    FREX B 4 Bright
+    FREX C 2 Bright
+    Stop
+  }
+}
+
+ACTOR RLSummonTechnoLordMiniMissile : RLTechnoLordMiniMissile
+{
+  +MTHRUSPECIES
+}
+
+ACTOR RLCyberneticBaronOfHellReborn : RLCyberneticBaronOfHell
+{
+  +LOOKALLAROUND
+  +NOPAIN
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory("RLResurrectionComplete", 1, "SpawnNormal")
+    CBAR ONMLKJI 8
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_GiveInventory("RLResurrectionComplete", 1)
+  SpawnNormal:
+    CBAR BD 10 A_Look
+    Loop
+  }
+}
+
+ACTOR RLDRPGSummonedCyberneticBaronOfHell : RLCyberneticBaronOfHell
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCCyberneticBaronOfHell : RLCyberneticBaronOfHell
+{
+  +TOUCHY
+  States
+  {
+  Spawn:
+    CBAR BD 10 A_Look
+    Loop
+  See:
+    CBAR AABBCCDD 3
+    Loop
+  Missile:
+    CBAR E 20
+    CBAR F 4 Bright
+    CBAR E 4
+    CBAR F 4 Bright
+    CBAR E 4
+    CBAR F 4 Bright
+    CBAR E 4
+    CBAR F 4 Bright
+    CBAR E 4
+    CBAR F 4 Bright
+    CBAR E 10
+    Goto See
+  Melee:
+    CBAR PQ 8
+    CBAR R 8
+    Goto See
+  Death:
+    CBAR I 8
+    CBAR J 8 A_Scream
+    CBAR K 8
+    CBAR L 8 A_NoBlocking
+    CBAR MN 8
+    CBAR O -1 A_BossDeath
+    Stop
+  }
+}

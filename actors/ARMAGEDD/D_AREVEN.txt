@@ -1,0 +1,626 @@
+
+// REVENIHILATOR
+//
+ACTOR RLArmageddonRevenant : Revenant 16565
+{
+  MeleeSound ""
+  SeeSound "revenihilator/sight"
+  ActiveSound "revenihilator/active"
+  PainSound "revenant/pain"
+  DeathSound "revenihilator/death"
+  CrushPainSound "rlmonsters/crush"
+  Health 400
+  GibHealth -100
+  MeleeThreshold 196
+  MeleeRange 196
+  Speed 8
+  Mass 1500
+  PainChance 0
+  PainChance "CyberDisruptor", 256
+  DamageFactor "Bullet", 0.75
+  DamageFactor "Fire", 0.90
+  DamageFactor "Plasma", 1.25
+  DamageFactor "Crush", 10
+  +DONTHARMSPECIES
+  +NOBLOOD
+  +NOTELESTOMP
+  Obituary "%o found that there was nowhere to run from a Revenihilator."
+  HitObituary "%o was exploderated by a Revenihilator."
+  Tag "Revenihilator"
+  States
+  {
+  Spawn:
+    TNT1 A 0 A_JumpIfInventory("RLRevenihilatorActive", 1, "SpawnHunt")
+    TNT1 A 0 A_Jump(100, "Deactivated")
+    TNT1 A 0 A_GiveInventory("RLRevenihilatorDroneDeployed", 1)
+  Deactivated:
+    AREV O 10 A_LookEx (LOF_NOSEESOUND, 16, 2048, 0, 20, "Activate")
+    Loop
+  Activate:
+    TNT1 A 0 A_PlaySound("revenihilator/activate", 5, 1, 0, 1.25)
+    AREV O 14
+    TNT1 A 0 A_GiveInventory("RLRevenihilatorActive", 1)
+    AREV C 4
+    TNT1 A 0 A_AlertMonsters(1024)
+    TNT1 A 0 A_PlaySound("revenihilator/sight", CHAN_VOICE)
+    AREV DD 3 A_Chase ("", "")
+    Goto See
+  SpawnHunt:
+    TNT1 A 0 A_Look
+    AREV A 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV A 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV B 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV B 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV C 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV C 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV D 3 A_Wander
+    TNT1 A 0 A_Look
+    AREV D 3 A_Wander
+    Goto See
+  See:
+    TNT1 A 0 A_JumpIfInventory("RLRevenihilatorDroneDeployed", 1, 3)
+    TNT1 A 0 A_CheckSightOrRange(1536, 1)
+	Goto See+3
+    TNT1 A 0 A_Jump(128, "LaunchDrone")
+    AREV A 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV A 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV B 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV B 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV C 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV C 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV D 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, 2)
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    AREV D 3 A_Chase
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorTeleported", 1, "See")
+    TNT1 A 0 A_Teleport("Teleported", "RLRevenihilatorTeleport", "TeleportFog")
+    Goto See
+  Teleported:
+    TNT1 A 0 A_GiveInventory("PowerRLRevenihilatorTeleported", 1)
+    AREV AABB 2 A_Chase ("", "", CHF_NIGHTMAREFAST)
+    AREV CCDD 2 A_Chase
+    Goto See
+  Melee:
+    TNT1 A 0 A_PlaySound("revenihilator/vree", 5, 1, 0, 1.25)
+    AREV EE 6 A_FaceTarget
+  FlakSpam:
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlakNoBlast", 36, 9, frandom(-10,10))
+    AREV G 3 A_FaceTarget
+    AREV EE 4 A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser (196, 1)
+    Goto See
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    Goto FlakSpam
+  Overwatch:
+    TNT1 A 0 A_JumpIfCloser (1024, 1)
+	Goto See
+    AREV E 1 A_FaceTarget
+    TNT1 A 0 A_Chase ("", "OverwatchAttack", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    Loop
+  LaunchDrone:
+    TNT1 A 0 A_PlaySound("revenihilator/vree", 5, 1, 0, 1.25)
+    AREV GG 6
+    AREV H 3 Bright A_SpawnItemEx("RLRevenihilatorDrone", 12, 48, 32, 0, 5, 5, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS)
+    AREV GG 6
+    Goto See
+  Missile:
+    TNT1 A 0 A_PlaySound("revenihilator/vree", 5, 1, 0, 1.25)
+    AREV EEE 6 A_FaceTarget
+  OverwatchAttack:
+    TNT1 A 0 A_Jump(256, 1,2,3)
+    AREV EEEEEEEE 2 A_FaceTarget
+    TNT1 A 0 A_JumpIfHealthLower(100, "HyperBolt")
+    TNT1 A 0 A_JumpIfInTargetInventory("RLFireangelPerk", 1, "AttackNoBlast")
+    TNT1 A 0 A_JumpIfInTargetInventory("RLTacticalSetBonusActive", 1, "AttackNoBlast")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlak", 36, 9, frandom(-3,3))
+    AREV G 3 A_FaceTarget
+    AREV EEEEEEEEEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlak", 36, 9, frandom(-3,3))
+    AREV G 3 A_FaceTarget
+    AREV EEEEEEEEEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlak", 36, 9, frandom(-3,3))
+    AREV G 3 A_FaceTarget
+    AREV EEEEEEEEEE 1 A_FaceTarget
+    Goto See
+  AttackNoBlast:
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlakNoBlast", 36, 9, frandom(-3,3))
+    AREV G 3 A_FaceTarget
+    AREV EEEEEEEEEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlakNoBlast", 36, 9, frandom(-3,3))
+    AREV G 3 A_FaceTarget
+    AREV EEEEEEEEEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorFlakNoBlast", 36, 9, frandom(-3,3))
+    AREV G 3 A_FaceTarget
+    AREV EEEEEEEEEE 1 A_FaceTarget
+    Goto See
+  HyperBolt:
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorHyperBolt", 36, 9, frandom(-5,5))
+    AREV GE 2 A_FaceTarget
+    AREV EEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorHyperBolt", 36, 9, frandom(-5,5))
+    AREV GE 2 A_FaceTarget
+    AREV EEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorHyperBolt", 36, 9, frandom(-5,5))
+    AREV GE 2 A_FaceTarget
+    AREV EEE 1 A_FaceTarget
+    TNT1 A 0 A_MonsterRefire (0, "Overwatch")
+    TNT1 A 0 A_FaceTarget
+    AREV F 3 Bright A_CustomMissile("RLRevenihilatorHyperBolt", 36, 9, frandom(-5,5))
+    AREV GE 2 A_FaceTarget
+    AREV EEE 1 A_FaceTarget
+    Goto See
+  Pain:
+    AREV I 1 A_Pain
+    Goto OverwatchAttack
+  Pain.CyberDisruptor:
+    AREV I 2
+    TNT1 A 0 A_KillChildren
+    AREV I 6 A_Pain
+    AREV I 6
+    AREV I 6 A_Pain
+    AREV I 6
+    AREV I 6 A_Pain
+    AREV I 6
+    AREV I 6 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_SpawnItemEx ("RLRevenihilatorExplosion", 0, 0, 48, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_KillChildren
+    AREV JK 6
+    AREV L 6 A_Scream
+    AREV M 6 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    AREV N -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    AREV N 2
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+  RaiseContinue:
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    AREV MLKJ 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    AREV N -1
+    Stop
+  }
+}
+
+ACTOR RLRevenihilatorFlak : PlasmaBall
+{
+   +THRUGHOST
+   +DONTREFLECT
+   +SEEKERMISSILE
+   +MTHRUSPECIES
+   Decal "Scorch"
+   DamageType "Plasma"
+   Damage (random(3,4)*10)
+   Speed 12
+   Scale 0.2
+   SeeSound "revenihilator/pulseflak"
+   DeathSound ""
+   States
+   {
+   Spawn: 
+      AREX ABCDE 1 Bright A_JumpIfTracerCloser(100, "Detonate")
+      loop
+   Detonate: 
+      TNT1 A 0 A_Die
+   Death:
+      TNT1 A 0 A_PlaySound("revenihilator/flakbang", 5, 1, 0, 0.85)
+      TNT1 A 0 A_Stop
+      AREX F 1 A_SetScale (0.7)
+      TNT1 A 0 A_Explode(25, 128, 0)
+      AREX FGHIJKLMNO 2 Bright
+      Stop
+   }
+}
+
+ACTOR RLRevenihilatorFlakNoBlast : RLRevenihilatorFlak
+{
+   States
+   {
+   Spawn: 
+      AREX ABCDE 1 Bright
+      loop
+   }
+}
+
+ACTOR RLRevenihilatorHyperBolt : FastProjectile
+{
+   Radius 4
+   Height 4
+   Speed 40
+   MissileHeight 8
+   Damage (random(2,5)*5)
+   DamageType "Plasma"
+   Scale 0.3
+   PROJECTILE
+   RENDERSTYLE ADD
+   ALPHA 0.95
+   +THRUGHOST
+   +EXPLODEONWATER
+   +MTHRUSPECIES
+   Decal "Scorch"
+   MissileType "RLRevenihilatorHyperBoltTrail"
+   SeeSound "revenihilator/hyperbolt"
+   DeathSound "techvile/pulsehit"
+   States
+   {
+   Spawn: 
+      AREX ABCDE 1 Bright A_CustomMissile("RLRevenihilatorHyperBoltSparks",0,0,random(150, 210), CMF_AIMDIRECTION, Random(-30, 30))
+      loop
+   Death:
+      TNT1 AAAAAAAAAAAAAAA 0 A_CustomMissile("RLRevenihilatorHyperBoltSparks",0,0,random(0, 359), CMF_AIMDIRECTION, Random(-80, 80))
+   DeathLoop:
+      AREX F 1 Bright A_SetScale (ScaleX+0.1)
+      TNT1 A 0 A_FadeTo(0, 0.12, 1)
+      Goto DeathLoop
+   }
+}
+
+ACTOR RLRevenihilatorHyperBoltTrail
+{
+   Projectile
+   Radius 8
+   Height 8
+   Speed 1
+   Scale 0.09
+   Damage 0
+   RENDERSTYLE ADD
+   Alpha 0.55
+   +NOCLIP
+   +NOINTERACTION
+   +NOTONAUTOMAP
+   States
+   {
+   Spawn:
+   AREX F 1 Bright A_SetScale (ScaleX+0.02)
+   TNT1 A 0 A_FadeTo(0, 0.04, 1)
+   Loop
+   }
+}
+
+Actor RLRevenihilatorHyperBoltSparks
+{
+  Radius 2
+  Height 2
+  Speed 8
+  Damage (0)
+  Projectile
+  RenderStyle Add
+  Gravity 0.3
+  Alpha 0.95
+  Scale 0.08
+  -NOGRAVITY
+  +THRUACTORS
+  +NOCLIP
+  +NOTONAUTOMAP
+  States
+  {
+  Spawn:
+    AREX F 1 Bright A_SetScale (ScaleX-0.005)
+    TNT1 A 0 A_FadeTo(0, 0.04, 1)
+    Loop
+  Death:
+    TNT1 A 0
+    Stop
+  }
+}
+
+ACTOR RLRevenihilatorDrone
+{
+  Health 25
+  Radius 12
+  Height 18
+  Mass 50
+  Speed 4
+  Species "DRR Drone"
+  PainChance 0
+  DamageFactor "Melee", 0.8
+  DamageFactor "Bullet", 0.5
+  DamageFactor "Fire", 0.8
+  Monster
+  +FLOAT
+  +NOGRAVITY
+  +DONTFALL
+  +NOICEDEATH
+  +LOOKALLAROUND
+  +NOINFIGHTING
+  +NOBLOOD
+  +FLOATBOB
+  +NOPAIN
+  +NOFEAR
+  +SPAWNFLOAT
+  +DONTSPLASH
+  +THRUSPECIES
+  +BLOCKEDBYSOLIDACTORS
+  -COUNTKILL
+  DeathSound "rlmonsters/smallexp"
+  Obituary "%o was stupidly close to the exploding drone thingy."
+  Tag "DRR Drone"
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_GiveInventory ("RLRevenihilatorDroneDeployed", 1, AAPTR_MASTER)
+    TNT1 A 0 A_PlaySound("revenihilator/droneloop", 6, 0.1, 1, 0.8)
+    TNT1 A 0 A_GiveInventory ("PowerRLRevenihilatorDroneResetTimer", 1)
+  SpawnWait:
+    ARDR A 1 A_Look
+    TNT1 A 0 A_JumpIfInventory ("PowerRLRevenihilatorDroneResetTimer", 1, "SpawnWait")
+    TNT1 A 0 A_TakeInventory ("RLRevenihilatorDroneDeployed", 1, "None", AAPTR_MASTER)
+    TNT1 A 0 A_SpawnItemEx("TeleportFog", 0, 0, -16)
+    Stop
+  See:
+    TNT1 A 0 A_ChangeFlag("NOCLIP", 0)
+    TNT1 A 0 A_ChangeFlag("INVULNERABLE", 0)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_PlaySound("revenihilator/droneloop", 6, 0.1, 1, 0.8)
+    ARDR A 1 A_Chase ("", "")
+    TNT1 A 0 A_JumpIfTargetInLOS ("RapidResponseMode", 0, JLOSF_DEADNOJUMP, 1024, 0)
+    TNT1 A 0 A_Jump(2, 1)
+    Loop
+    TNT1 A 0 A_JumpIfInventory("PowerRLRevenihilatorDroneTeleported", 1, "See")
+    TNT1 A 0 A_CheckSight("TeleportMode")
+    Loop
+  TeleportMode:
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_SpawnItemEx("TeleportFog", 0, 0, -16)
+    TNT1 A 0 A_ChangeFlag("NOCLIP", 1)
+    TNT1 A 0 A_ChangeFlag("INVULNERABLE", 1)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+    TNT1 A 0 A_GiveInventory("PowerRLRevenihilatorDroneTeleported", 1)
+    TNT1 A 0 A_Jump(256, 1,2,3,4,5)
+    TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Chase("","", CHF_NIGHTMAREFAST | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_ChangeFlag("NOCLIP", 0)
+    TNT1 A 0 A_ChangeFlag("INVULNERABLE", 0)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_SpawnItemEx("TeleportFog", 0, 0, -16)
+    TNT1 A 0 A_PlaySound("revenihilator/droneloop", 6, 0.1, 1, 0.8)
+    Goto See
+  Ambush:
+    TNT1 A 1
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_ChangeFlag("NOCLIP", 0)
+    TNT1 A 0 A_ChangeFlag("INVULNERABLE", 0)
+    TNT1 A 0 A_ChangeFlag("SHOOTABLE", 1)
+    TNT1 A 0 A_SpawnItemEx("TeleportFog", 0, 0, -16)
+    TNT1 A 0 A_PlaySound("revenihilator/droneloop", 6, 0.1, 1, 0.8)
+    Goto See
+  RapidResponseMode:
+    TNT1 A 0 A_PlaySound("revenihilator/dronestart", 7, 1, 0, 0.4)
+    ARDR B 2 Bright A_FaceTarget (25)
+    ARDR AAAA 5 A_FaceTarget (25)
+    TNT1 A 0 A_PlaySound("revenihilator/dronebeep", 7, 1, 0, 0.4)
+    ARDR B 2 Bright A_FaceTarget (25)
+    ARDR AAAA 5 A_FaceTarget (25)
+    TNT1 A 0 A_PlaySound("revenihilator/dronebeep", 7, 1, 0, 0.4)
+    ARDR B 2 Bright A_FaceTarget (25)
+    ARDR AAAA 5 A_FaceTarget (25)
+    TNT1 A 0 A_PlaySound("revenihilator/dronebeep", 7, 1, 0, 0.4)
+    ARDR B 2 Bright A_FaceTarget (25)
+    ARDR AAAA 5 A_FaceTarget (25)
+    TNT1 A 0 A_PlaySound("revenihilator/dronebeep", 7, 1, 0, 0.4)
+    ARDR B 2 Bright A_FaceTarget (25)
+    ARDR AAAA 5 A_FaceTarget (25)
+    TNT1 A 0 A_SpawnItemEx("RLRevenihilatorTeleport")
+    Stop
+  Pain:
+    TNT1 A 0 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_SetTranslucent (0.95, 1)
+    TNT1 A 0 A_ChangeFlag ("FLOATBOB", 0)
+    TNT1 A 0 A_CustomMissile("RLDefenceDroneExplosion",12,0)
+    ADRO E 4 Bright A_Scream
+    ADRO F 4 Bright A_NoBlocking
+    ADRO GH 3 Bright
+    ADRO IJ 2 Bright
+    Stop
+  Death.Recall:
+    TNT1 A 0 A_TakeInventory ("RLRevenihilatorDroneDeployed", 1, AAPTR_MASTER)
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_Scream
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_SpawnItemEx("TeleportFog", 0, 0, -16)
+    Stop
+  }
+}
+
+ACTOR RLRevenihilatorExplosion : Rocket
+{
+   Radius 1
+   Height 1
+   +THRUGHOST
+   -RANDOMIZE
+   -DEHEXPLOSION
+   -ROCKETTRAIL
+   DamageType "Fire"
+   PainType "Explosion"
+   DeathType "Explosion"
+   Speed 0
+   Damage 0
+  RenderStyle Add
+  Alpha 0.95
+  Scale 0.8
+   SeeSound ""
+   DeathSound ""
+   Obituary "$OB_BARREL" // "%o went boom."
+  States
+  {
+  Spawn:
+    TNT1 A 0
+  Death:
+    TNT1 A 0 A_PlaySound("rlmonsters/mediumexp", 5, 1, 0, 0.85)
+    MEXP A 4 Bright A_Explode (24,96)
+    MEXP B 4 Bright
+    MEXP C 3 Bright
+    MEXP D 3 Bright
+    MEXP E 2 Bright
+    MEXP F 2 Bright
+    Stop
+  }
+}
+
+ACTOR RLRevenihilatorTeleport : SpecialSpot
+{
+  +NOBLOCKMAP
+  RenderStyle Add
+  Alpha 0.98
+  Scale 1.4
+  States
+  {
+  Spawn:
+    TFOG A 1 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG ABAB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDCB 3 Bright
+    TNT1 A 0 A_PlaySound("misc/teleport", 6, 0.6, 1, 1.75)
+    TFOG CDEFGHIJ 3 Bright
+    Stop
+  }
+}
+
+Actor RLRevenihilatorActive : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor RLRevenihilatorDroneDeployed : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR PowerRLRevenihilatorTeleported : Powerup
+{
+	Powerup.Duration -60
+   +INVENTORY.UNTOSSABLE
+}
+
+ACTOR PowerRLRevenihilatorDroneTeleported : Powerup
+{
+	Powerup.Duration -10
+   +INVENTORY.UNTOSSABLE
+}
+
+ACTOR PowerRLRevenihilatorDroneResetTimer : Powerup
+{
+	Powerup.Duration -10
+   +INVENTORY.UNTOSSABLE
+}
+
+ACTOR RLCCArmageddonRevenant : RLArmageddonRevenant
+{
+  +TOUCHY
+  States
+  {
+  See:
+    AREV AABBCCDD 3
+    Loop
+  Melee:
+    AREV E 6
+    AREV F 3 Bright
+    AREV GE 2
+    AREV F 3 Bright
+    AREV GE 2
+    AREV F 3 Bright
+    AREV GE 2
+    AREV F 3 Bright
+    AREV GE 2
+    Goto See
+  Missile:
+    AREV E 6
+    AREV F 3 Bright
+    AREV GEE 3
+    AREV F 3 Bright
+    AREV GEE 3
+    AREV F 3 Bright
+    AREV GEE 3
+    Goto See
+  Death:
+    AREV LM 7
+    AREV N 7 A_Scream
+    AREV O 7 A_NoBlocking
+    AREV P 7
+    AREV Q -1
+    Stop
+  }
+}

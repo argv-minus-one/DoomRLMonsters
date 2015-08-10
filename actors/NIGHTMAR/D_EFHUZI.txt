@@ -1,0 +1,163 @@
+
+// ELITE FORMER HUMAN SCOUT
+//
+ACTOR RLEliteHumanUzi : ZombieMan 16515
+{
+  Health 55
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.85
+  SeeSound "eliteformer/sight"
+  PainSound "eliteformer/pain"
+  DeathSound "eliteformer/death"
+  ActiveSound "eliteformer/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o forgot to duck the Elite Former Scout's bullets."
+  DropItem "RLClip"
+  DropItem "RLUziPickup" 30
+  +AVOIDMELEE
+  Tag "Elite Human Scout"
+  States
+  {
+  Spawn:
+    EUZI AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanUziShotCounter", 32, "RetreatReload")
+    EUZI AABBCCDD 4 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    EUZI AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    EUZI BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    EUZI CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    EUZI DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanUziShotCounter", 32, "RetreatReload")
+    EUZI EEE 5 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanUziShotCounter", 32, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLEliteHumanUziShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/uzi", CHAN_WEAPON)
+    EUZI F 2 Bright A_CustomBulletAttack (22.5, 0, 1, random(1,5) * 2, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    EUZI E 2 A_FaceTarget
+    EUZI E 0 A_MonsterRefire(180, "See")
+    Goto Missile+4
+  Reload:
+    EUZI EEEEE 3 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadout", 7)
+    EUZI E 50
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadin", 7)
+    TNT1 A 0 A_TakeInventory ("RLEliteHumanUziShotCounter", 32)
+    EUZI E 3
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolcock", 7)
+    EUZI EEEEE 3 A_FaceTarget
+    Goto See
+  Pain:
+    EUZI G 3
+    EUZI G 3 A_Pain
+    Goto See
+  Death:
+    EUZI H 5
+    EUZI I 5 A_Scream
+    EUZI J 5 A_NoBlocking
+    EUZI K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    EUZI L -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    EUZI M 5
+    ZHRF N 5 A_XScream
+    ZHRF O 5 A_NoBlocking
+    ZHRF PQ 5
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ZHRF RST 5
+    ZHRF U -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    EUZI L 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteHumanUziShotCounter", 32)
+    EUZI K 5
+    EUZI J 5
+    EUZI I 5
+    EUZI H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    EUZI L -1
+    Stop
+  }
+}
+
+Actor RLEliteHumanUziShotCounter : Inventory
+{
+inventory.maxamount 32
+}
+
+ACTOR RLCCEliteHumanUzi : RLEliteHumanUzi
+{
+  +TOUCHY
+  States
+  {
+  See:
+    EUZI AABBCCDD 4
+    Loop
+  Missile:
+    EUZI E 15
+    EUZI F 2 Bright
+    EUZI E 2
+    EUZI F 2 Bright
+    EUZI E 2
+    EUZI F 2 Bright
+    EUZI E 2
+    EUZI F 2 Bright
+    EUZI E 2
+    EUZI F 2 Bright
+    EUZI E 2
+    EUZI F 2 Bright
+    EUZI E 10
+    Goto See
+  Death:
+    EUZI H 5
+    EUZI I 5 A_Scream
+    EUZI J 5 A_NoBlocking
+    EUZI K 5
+    EUZI L -1
+    Stop
+  }
+}

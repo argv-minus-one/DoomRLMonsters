@@ -1,0 +1,172 @@
+
+// FORMER HUMAN SERGEANT
+//
+ACTOR RLFormerSergeantCombatShotgun : ShotgunGuy
+{
+  DamageFactor "Crush", 10
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was blatted by a Former Human Sergeant."
+  DropItem "RLCombatShotgunPickup"
+  +AVOIDMELEE
+  Tag "Former Human Sergeant"
+  States
+  {
+  Spawn:
+    ZSSH AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLFormerSergeantCombatShotgunShotCounter", 5, "RetreatReload")
+    ZSSH AABBCCDD 3 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ZSSH AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ZSSH BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ZSSH CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ZSSH DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    ZSSH E 10 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLFormerSergeantCombatShotgunShotCounter", 5, "RetreatReload")
+    TNT1 A 0 A_JumpIfInventory ("RLFormerSergeantCombatShotgunPumpCounter", 1, "Pump")
+    TNT1 A 0 A_GiveInventory ("RLFormerSergeantCombatShotgunShotCounter", 1)
+    TNT1 A 0 A_GiveInventory ("RLFormerSergeantCombatShotgunPumpCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/combatshotgun", CHAN_WEAPON)
+    ZSSH F 7 Bright A_CustomBulletAttack (22.5, 0, 3, random(1,5)*2, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ZSSH E 4
+    TNT1 A 0 A_JumpIfInventory ("RLFormerSergeantCombatShotgunShotCounter", 5, "RetreatReload")
+    Goto Pump
+  Pump:
+    ZSSH V 3 A_FaceTarget
+    TNT1 A 0 A_TakeInventory ("RLFormerSergeantCombatShotgunPumpCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/combatshotgunpump", 7)
+    ZSSH W 3 A_FaceTarget
+    ZSSH V 3 A_FaceTarget
+    Goto See
+  Reload:
+    ZSSH VV 3
+    TNT1 A 0 A_PlaySound("rlmonsters/combatshotgunload", 7)
+    TNT1 A 0 A_TakeInventory ("RLFormerSergeantCombatShotgunShotCounter", 1)
+    ZSSH VV 5
+    TNT1 A 0 A_JumpIfInventory ("RLFormerSergeantCombatShotgunShotCounter", 1, 1)
+    Goto ReloadFinish
+    TNT1 A 0
+    Goto Reload+2
+  ReloadFinish:
+    TNT1 A 0 A_JumpIfInventory ("RLFormerSergeantCombatShotgunPumpCounter", 1, "Pump")
+    ZSSH VE 4
+    Goto See
+  Pain:
+    ZSSH G 3
+    ZSSH G 3 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_Jump(128, "Death2")
+    ZSSH H 5
+    ZSSH I 5 A_Scream
+    ZSSH J 5 A_NoBlocking
+    ZSSH K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ZSSH L -1
+    Stop
+  Death2:
+    ZSS2 A 8
+    ZSS2 B 8 A_Scream
+    ZSS2 C 8 A_NoBlocking
+    ZSS2 D 8
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ZSS2 E -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    ZSSH M 5
+    ZSSH N 5 A_XScream
+    ZSSH O 5 A_NoBlocking
+    ZSSH PQ 5
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ZSSH RST 5
+    ZSSH U -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ZSSH L 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_TakeInventory ("RLFormerSergeantCombatShotgunShotCounter", 5)
+    ZSSH K 5
+    ZSSH J 5
+    ZSSH I 5
+    ZSSH H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ZSSH L -1
+    Stop
+  }
+}
+
+Actor RLFormerSergeantCombatShotgunShotCounter : Inventory
+{
+inventory.maxamount 5
+}
+
+Actor RLFormerSergeantCombatShotgunPumpCounter : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLCCFormerSergeantCombatShotgun : RLFormerSergeantCombatShotgun
+{
+  +TOUCHY
+  States
+  {
+  See:
+    ZSSH AABBCCDD 3
+    Loop
+  Missile:
+    ZSSH E 10
+    ZSSH F 7 Bright
+    ZSSH E 4
+    ZSSH V 3
+    ZSSH W 3
+    ZSSH V 3
+    Goto See
+  Death:
+    ZSSH H 5
+    ZSSH I 5 A_Scream
+    ZSSH J 5 A_NoBlocking
+    ZSSH K 5
+    ZSSH L -1
+    Stop
+  }
+}

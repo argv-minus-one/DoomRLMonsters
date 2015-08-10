@@ -1,0 +1,233 @@
+
+// ELITE FORMER HUMAN CAPTAIN
+//
+ACTOR RLEliteCaptainTristarBlaster : Chaingunguy 16520
+{
+  Health 200
+  DamageFactor "Plasma", 0.8
+  DamageFactor "Crush", 10
+  SeeSound "eliteformer/sight"
+  PainSound "eliteformer/pain"
+  DeathSound "eliteformer/death"
+  ActiveSound "eliteformer/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was right in the middle of the Elite Captain's killzone."
+  DropItem "RLCellPack"
+  DropItem "RLTristarBlasterPickup" 30
+  +AVOIDMELEE
+  Tag "Elite Human Captain"
+  States
+  {
+  Spawn:
+    ETRI AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteCaptainTristarBlasterShotCounter", 3, "RetreatReload")
+    ETRI AABBCCDD 3 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ETRI AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ETRI BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ETRI CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ETRI DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    ETRI EEEE 5 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLEliteCaptainTristarBlasterShotCounter", 3, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLEliteCaptainTristarBlasterShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/tristarblaster", CHAN_WEAPON)
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    TNT1 A 0 A_CustomMissile ("RLEliteCaptainTristarBlasterBall", 30, 13, -15)
+    TNT1 A 0 A_CustomMissile ("RLEliteCaptainTristarBlasterBall", 30, 13, 15)
+    ETRI F 10 Bright A_CustomMissile ("RLEliteCaptainTristarBlasterBall", 30, 13, 0)
+    ETRI EEE 5 A_FaceTarget
+    Goto See
+  SummonMissile:
+    TNT1 A 0 A_CustomMissile ("RLSummonEliteCaptainTristarBlasterBall", 30, 13, -15)
+    TNT1 A 0 A_CustomMissile ("RLSummonEliteCaptainTristarBlasterBall", 30, 13, 15)
+    ETRI F 10 Bright A_CustomMissile ("RLSummonEliteCaptainTristarBlasterBall", 30, 13, 0)
+    ETRI EEE 5 A_FaceTarget
+    Goto See
+  Reload:
+    ETRI EEEEEEEE 3 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/bfg9000unload", 7)
+    ETRI E 15
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteCaptainTristarBlasterShotCounter", 3)
+    TNT1 A 0 A_PlaySound("rlmonsters/bfg9000load", 7)
+    ETRI EEEEEEEEEE 3 A_FaceTarget
+    Goto See
+  Pain:
+    ETRI G 3
+    ETRI G 3 A_Pain
+    Goto See
+  Death:
+    ETRI H 5
+    ETRI I 5 A_Scream
+    ETRI J 5 A_NoBlocking
+    ETRI K 5
+    ETRI L 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ETRI M 5
+    ETRI N -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    ETRI O 5
+    ETRI P 5 A_XScream
+    ETRI Q 5 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ETRI R 5
+    ETRI S 5
+    ETRI T -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ETRI N 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteCaptainTristarBlasterShotCounter", 3)
+    ETRI N 5
+    ETRI M 5
+    ETRI L 5
+    ETRI K 5
+    ETRI J 5
+    ETRI I 5
+    ETRI H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ETRI N -1
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLEliteCaptainTristarBlasterBall : PlasmaBall
+{
+  +THRUGHOST
+  Radius 13
+  Height 8
+  Alpha 0.85
+  Scale 0.25
+  Speed 20
+  Decal "EnemyBlueBFGLightning"
+  Damage 8
+  Damagetype "Plasma"
+  PainType "PlasmaExplosion"
+  DeathType "PlasmaExplosion"
+  SeeSound ""
+  DeathSound "rlmonsters/tristarblasterhit"
+  States
+  {
+  Spawn:
+    PULS CDEFED 2 Bright
+    Loop
+  Death:
+	TNT1 A 0 A_SetScale(1)
+    IXPL A 8 Bright A_Explode (32,96, 0)
+    IXPL B 6 Bright
+    IXPL C 4 Bright
+    Stop
+  }
+}
+
+ACTOR RLSummonEliteCaptainTristarBlasterBall : RLEliteCaptainTristarBlasterBall
+{
+  +MTHRUSPECIES
+}
+
+Actor RLEliteCaptainTristarBlasterShotCounter : Inventory
+{
+inventory.maxamount 3
+}
+
+ACTOR RLDRPGSummonedEliteCaptain2 : RLEliteCaptainTristarBlaster
+{
+  -COUNTKILL
+  +AVOIDMELEE
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCEliteCaptainTristarBlaster : RLEliteCaptainTristarBlaster
+{
+  +TOUCHY
+  States
+  {
+  See:
+    ETRI AABBCCDD 3
+    Loop
+  Missile:
+    ETRI E 20
+    ETRI F 10 Bright
+    ETRI E 15
+    Goto See
+  Death:
+    ETRI H 5
+    ETRI I 5 A_Scream
+    ETRI J 5 A_NoBlocking
+    ETRI K 5
+    ETRI L 5
+    ETRI M 5
+    ETRI N -1
+    Stop
+  }
+}

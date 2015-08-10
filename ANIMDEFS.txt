@@ -1,0 +1,19 @@
+
+texture optional M_TPHOB
+	pic M_TPHOB tics 3
+	pic M_TPHO2 tics 3
+	pic M_TPHO3 tics 3
+	pic M_TPHO4 tics 3
+	pic M_TPHOB tics 3
+	pic M_TPHO5 tics 3
+	pic M_TPHO3 tics 3
+	pic M_TPHO4 tics 3
+	pic M_TPHOB tics 3
+	pic M_TPHO2 tics 3
+	pic M_TPHO3 tics 3
+	pic M_TPHO6 tics 3
+	pic M_TPHOB tics 3
+	pic M_TPHO2 tics 3
+	pic M_TPHO3 tics 3
+	pic M_TPHO4 tics 3
+	

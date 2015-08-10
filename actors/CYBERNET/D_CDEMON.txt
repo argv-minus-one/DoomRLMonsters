@@ -1,0 +1,195 @@
+
+// MECHDEMON
+//
+ACTOR RLCyberneticDemon : Demon 16539
+{
+  Health 450
+  PainChance 75
+  GibHealth -90
+  DamageFactor "Crush", 10
+  Species "RLDemon"
+  SeeSound "mechdemon/sight"
+  PainSound "mechdemon/pain"
+  DeathSound "mechdemon/death"
+  ActiveSound "mechdemon/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was unable to stop a Mechdemon."
+  Tag "Mechdemon"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory ("RLMonsterInitializerToken", 1, 3)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLDemonToken", 1)
+    CDEM A 10 A_Look
+    Goto Spawn+3
+  ClearTarget:
+    TNT1 A 0 A_ClearTarget
+    TNT1 A 0 A_LookEx (LOF_NOSEESOUND, 0, 0, 0, 360, "See")
+    Goto Spawn
+  See:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLDemonToken", 1, "ClearTarget")
+    TNT1 A 0 A_PlaySound("mechdemon/walk", 7)
+    CDEM AABB 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLDemonToken", 1, "ClearTarget")
+    TNT1 A 0 A_PlaySound("mechdemon/walk", 7)
+    CDEM CCDD 2 Fast A_Chase
+    Loop
+  Melee:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLDemonToken", 1, "ClearTarget")
+    TNT1 A 0 A_PlaySound("mechdemon/attack", CHAN_VOICE)
+    CDEM EF 8 Fast A_FaceTarget
+    CDEM G 8 Fast A_CustomMeleeAttack (4 * random(1, 10), "", "", "Melee")
+    Goto See
+  Pain:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLDemonToken", 1, "ClearTarget")
+    CDEM H 2 Fast
+    CDEM H 2 Fast A_Pain
+    Goto See
+  Pain.CyberDisruptor:
+    CDEM H 2
+    CDEM H 6 A_Pain
+    CDEM H 6
+    CDEM H 6 A_Pain
+    CDEM H 6
+    CDEM H 6 A_Pain
+    CDEM H 6
+    CDEM H 6 A_Pain
+    Goto See
+  Death:
+    CDEM I 8
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx("RLMechDemonArm", 10, 0, 32, 0, 8, 0, 0, 128)
+    CDEM J 8 A_Scream
+    CDEM K 4
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    CDEM L 4 A_NoBlocking
+    CDEM M 4
+    CDEM N -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    CDEM N 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    CDEM NMLKJI 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedMedium",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    CDEM N -1
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLMechDemonArm
+{
+	Radius 8
+	Height 8
+	Speed 4
+	+DOOMBOUNCE
+	+DROPOFF
+    +NOTONAUTOMAP
+	+Missile
+      States
+	{
+	Spawn:
+     CDAR ABCDEFGH 3
+     Loop
+	Death:
+	 CDAR I -1
+	 Loop
+	}
+} 
+
+ACTOR RLCyberneticDemonReborn : RLCyberneticDemon
+{
+  +LOOKALLAROUND
+  +NOPAIN
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory("RLResurrectionComplete", 1, "SpawnNormal")
+    CDEM NMLKJI 5
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_GiveInventory("RLResurrectionComplete", 1)
+  SpawnNormal:
+    CDEM AB 10 A_Look
+    Loop
+  }
+}
+
+ACTOR RLDRPGSummonedCyberneticDemon : RLCyberneticDemon
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCCyberneticDemon : RLCyberneticDemon
+{
+  +TOUCHY
+  States
+  {
+  See:
+    CDEM AABBCCDD 2
+    Loop
+  Melee:
+    CDEM EF 8
+    CDEM G 8
+    Goto See
+  Death:
+    CDEM I 8
+    CDEM J 8 A_Scream
+    CDEM K 4
+    CDEM L 4 A_NoBlocking
+    CDEM M 4
+    CDEM N -1
+    Stop
+  }
+}

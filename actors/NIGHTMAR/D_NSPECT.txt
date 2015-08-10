@@ -1,0 +1,357 @@
+
+// NIGHTMARE SPECTRE
+//
+ACTOR RLNightmareSpectre : RLDemon 16523
+{
+  +SHADOW
+  Health 200
+  RenderStyle Add
+  Alpha 0
+  SeeSound ""
+  ActiveSound ""
+  DeathSound "nightmarespectre/death"
+  CrushPainSound "rlmonsters/crush"
+  DamageFactor "Crush", 10
+  AttackSound ""
+  Species "RLDemon"
+  Obituary "%o was chased down by a Nightmare Spectre."
+  Tag "Nightmare Spectre"
+  States
+  {
+  Spawn:
+    NSPE AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailA", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE A 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailA", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE A 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailB", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE B 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailB", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE B 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailC", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE C 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailC", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE C 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailD", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE D 2 Fast A_Chase
+    TNT1 A 0 A_JumpIfHealthLower (150, 3)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareSpectreAmbushDone", 1, 2)
+    TNT1 A 0 A_JumpIfInTargetLOS ("Ambush", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailD", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE D 2 Fast A_Chase
+    Loop
+  Ambush:
+    TNT1 A 0 A_JumpIfInTargetLOS (7, 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 256)
+    TNT1 A 0 A_JumpIfCloser (256, 2)
+    NSPE A 1
+    Goto See
+    TNT1 A 0 A_GiveInventory ("RLNightmareSpectreAmbushDone", 1)
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    TNT1 A 0 A_PlaySound("nightmarespectre/sight", CHAN_VOICE)
+    NSPE A 1
+    Goto See
+    NSPE A 2
+    Goto Ambush
+  Melee:
+    TNT1 A 0 A_PlaySound("demon/melee", CHAN_VOICE)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailE", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE E 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailE", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE E 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailE", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE E 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailE", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE E 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailF", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE F 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailF", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE F 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailF", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE F 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailF", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE F 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailG", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE G 2 Fast A_CustomMeleeAttack (4 * random(1, 10), "", "", "Melee")
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailG", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE G 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailG", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE G 2 Fast A_FaceTarget
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailG", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE G 2 Fast A_FaceTarget
+    Goto See
+  Pain:
+    TNT1 A 0 A_SetTranslucent (0, 1)
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailH", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE H 2 Fast
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareSpectreTrailH", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    NSPE H 2 Fast A_Pain
+    Goto See
+  XDeath:
+  Death:
+    TNT1 A 0 A_SetTranslucent (0.05, 1)
+    NSPE I 8
+    TNT1 A 0 A_SetTranslucent (0.10, 1)
+    NSPE J 8 A_Scream
+    TNT1 A 0 A_SetTranslucent (0.15, 1)
+    NSPE K 4
+    TNT1 A 0 A_SetTranslucent (0.20, 1)
+    NSPE L 4 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    TNT1 A 0 A_SetTranslucent (0.25, 1)
+    NSPE M 4
+    TNT1 A 0 A_SetTranslucent (0.30, 1)
+    NSPE N -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    NSPE N 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_SetTranslucent (0.30, 1)
+    NSPE N 5
+    TNT1 A 0 A_SetTranslucent (0.25, 1)
+    NSPE M 5
+    TNT1 A 0 A_SetTranslucent (0.20, 1)
+    NSPE L 5
+    TNT1 A 0 A_SetTranslucent (0.15, 1)
+    NSPE K 5
+    TNT1 A 0 A_SetTranslucent (0.10, 1)
+    NSPE J 5
+    TNT1 A 0 A_SetTranslucent (0.05, 1)
+    NSPE I 5
+    TNT1 A 0 A_SetTranslucent (0, 1)
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedMedium",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    NSPE N -1
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+Actor RLNightmareSpectreAmbushDone : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLNightmareSpectreTrailA
+{
+  Radius 30
+  Height 56
+  +NOGRAVITY
+  +FLOORCLIP
+  +NOLIFTDROP
+  Alpha 0.2
+  RenderStyle Translucent
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE A 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailB : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE B 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailC : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE C 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailD : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE D 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailE : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE E 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailF : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE F 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailG : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE G 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreTrailH : RLNightmareSpectreTrailA
+{
+  States
+  {
+  Spawn:
+    TNT1 A 16
+    NSPE H 1 A_FadeTo (0, 0.03, 1)
+    Goto Spawn+1
+  }
+}
+
+ACTOR RLNightmareSpectreReborn : RLNightmareSpectre
+{
+  +LOOKALLAROUND
+  +NOPAIN
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory("RLResurrectionComplete", 1, "SpawnNormal")
+    TNT1 A 0 A_SetTranslucent (0.30, 1)
+    NSPE N 5
+    TNT1 A 0 A_SetTranslucent (0.25, 1)
+    NSPE M 5
+    TNT1 A 0 A_SetTranslucent (0.20, 1)
+    NSPE L 5
+    TNT1 A 0 A_SetTranslucent (0.15, 1)
+    NSPE K 5
+    TNT1 A 0 A_SetTranslucent (0.10, 1)
+    NSPE J 5
+    TNT1 A 0 A_SetTranslucent (0.05, 1)
+    NSPE I 5
+    TNT1 A 0 A_SetTranslucent (0, 1)
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_GiveInventory("RLResurrectionComplete", 1)
+  SpawnNormal:
+    NSPE AB 10 A_Look
+    Loop
+  }
+}
+
+ACTOR RLDRPGSummonedNightmareSpectre : RLNightmareSpectre
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLNightmareSpectreAmbushDone", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLNightmareSpectreAmbushDone", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCNightmareSpectre : RLNightmareSpectre
+{
+  +TOUCHY
+  SeeSound "nightmarespectre/sight"
+  RenderStyle Add
+  Alpha 0.3
+  States
+  {
+  See:
+    NSPE AABBCCDD 2
+    Loop
+  Melee:
+    NSPE EF 8
+    NSPE G 8
+    Goto See
+  Death:
+    NSPE I 8
+    NSPE J 8 A_Scream
+    NSPE K 4
+    NSPE L 4 A_NoBlocking
+    NSPE M 4
+    NSPE N -1
+    Stop
+  }
+}

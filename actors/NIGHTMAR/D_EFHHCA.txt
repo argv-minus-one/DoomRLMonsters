@@ -1,0 +1,151 @@
+
+// ELITE FORMER HUMAN
+//
+ACTOR RLEliteHumanHandcannon : ZombieMan 16513
+{
+  Health 55
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.85
+  SeeSound "eliteformer/sight"
+  PainSound "eliteformer/pain"
+  DeathSound "eliteformer/death"
+  ActiveSound "eliteformer/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o duked it out with an Elite Former Human and lost."
+  DropItem "RLClip"
+  DropItem "RLDesertEaglePickup" 30
+  +AVOIDMELEE
+  Tag "Elite Human"
+  States
+  {
+  Spawn:
+    ZHPI AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanHandcannonShotCounter", 7, "RetreatReload")
+    ZHPI AABBCCDD 4 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ZHPI AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ZHPI BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ZHPI CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    ZHPI DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (32, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteHumanHandcannonShotCounter", 7, "RetreatReload")
+    ZHPI EE 5 A_FaceTarget
+    TNT1 A 0 A_GiveInventory ("RLEliteHumanHandcannonShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/handcannon", CHAN_WEAPON)
+    ZHPI F 6 Bright A_CustomBulletAttack (22.5, 0, 1, random(1,5) * 7, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ZHPI E 11 A_FaceTarget
+    Goto See
+  Reload:
+    ZHPI EE 3 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadout", 7)
+    ZHPI E 51
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadin", 7)
+    TNT1 A 0 A_TakeInventory ("RLEliteHumanHandcannonShotCounter", 7)
+    ZHPI E 3
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolcock", 7)
+    ZHPI EEEEE 4 A_FaceTarget
+    Goto See
+  Pain:
+    ZHPI G 3
+    ZHPI G 3 A_Pain
+    Goto See
+  Death:
+    ZHPI H 5
+    ZHRF I 5 A_Scream
+    ZHRF J 5 A_NoBlocking
+    ZHRF K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ZHRF L -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    ZHPI M 5
+    ZHRF N 5 A_XScream
+    ZHRF O 5 A_NoBlocking
+    ZHRF PQ 5
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ZHRF RST 5
+    ZHRF U -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ZHRF L 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteHumanHandcannonShotCounter", 7)
+    ZHRF K 5
+    ZHRF J 5
+    ZHRF I 5
+    ZHPI H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ZHRF L -1
+    Stop
+  }
+}
+
+Actor RLEliteHumanHandcannonShotCounter : Inventory
+{
+inventory.maxamount 7
+}
+
+ACTOR RLCCEliteHumanHandcannon : RLEliteHumanHandcannon
+{
+  +TOUCHY
+  States
+  {
+  See:
+    ZHPI AABBCCDD 4
+    Loop
+  Missile:
+    ZHPI E 10
+    ZHPI F 6 Bright
+    ZHPI E 11
+    Goto See
+  Death:
+    ZHPI H 5
+    ZHRF I 5 A_Scream
+    ZHRF J 5 A_NoBlocking
+    ZHRF K 5
+    ZHRF L -1
+    Stop
+  }
+}

@@ -1,0 +1,165 @@
+
+// HELLMINE
+//
+ACTOR RLCyberneticLostSoul : LostSoul 16541
+{
+  Health 1
+  Speed 1
+  Radius 16
+  Height 24
+  +LOOKALLAROUND
+  +NORADIUSDMG
+  +NOBLOOD
+  +FLOATBOB
+  +NOFEAR
+  +SPAWNFLOAT
+  +DONTSPLASH
+  -COUNTKILL
+  DamageFactor "Radiation", 0
+  DamageType "Fire"
+  RenderStyle Normal
+  AttackSound ""
+  PainSound "hellmine/pain"
+  DeathSound "rlmonsters/missilehit"
+  ActiveSound ""
+  Obituary "%o got too close to a Hellmine."
+  Tag "Hellmine"
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_JumpIfInventory ("RLHellmineArmed", 1, "Death2")
+    CSOL A 0 A_Wander
+    CSOL A 1 A_Look
+    Loop
+  See:
+    TNT1 A 0
+    TNT1 A 0 A_JumpIfInventory ("RLHellmineArmed", 1, "Death2")
+    TNT1 A 0 A_JumpIfCloser (120, "Missile")
+    TNT1 A 0 A_Wander
+    CSOL A 1 A_FaceTarget
+    Loop
+  Missile:
+    TNT1 A 0 A_PlaySound("hellmine/arm", 7)
+    CSOL B 3 Bright A_FaceTarget
+    CSOL A 2 A_FaceTarget
+    CSOL B 3 Bright A_FaceTarget
+    CSOL A 2 A_FaceTarget
+    CSOL B 3 Bright A_FaceTarget
+    CSOL A 2 A_FaceTarget
+    TNT1 A 0 A_RadiusGive ("RLHellmineArmed", 512, RGF_MONSTERS, 1)
+    Goto Death2
+  Pain:
+    TNT1 A 0 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_SetTranslucent (0.95, 1)
+    TNT1 A 0 A_ChangeFlag ("FLOATBOB", 0)
+    TNT1 A 0 A_CustomMissile("RLHellmineExplosion",12,0)
+    CSOL C 6 Bright A_Scream
+    CSOL D 6 Bright A_NoBlocking
+    CSOL E 6 Bright
+    Stop
+  Death2:
+    TNT1 A 0 A_Die
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_SetTranslucent (0.95, 1)
+    TNT1 A 0 A_ChangeFlag ("FLOATBOB", 0)
+    TNT1 A 0 A_CustomMissile("RLHellmineExplosion",12,0)
+    CSOL C 6 Bright A_Scream
+    CSOL D 6 Bright A_NoBlocking
+    CSOL E 6 Bright
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    Stop
+  }
+}
+
+ACTOR RLHellmineExplosion : Rocket
+{
+   Radius 1
+   Height 1
+   +THRUGHOST
+   -RANDOMIZE
+   -DEHEXPLOSION
+   -ROCKETTRAIL
+   DamageType "Fire"
+   PainType "Explosion"
+   DeathType "Explosion"
+   Speed 0
+   Damage 0
+   SeeSound ""
+   DeathSound ""
+   Obituary "$OB_BARREL" // "%o went boom."
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_Explode (64, 128)
+    TNT1 A 8
+    Stop
+  }
+}
+
+Actor RLHellmineArmed : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLDRPGSummonedCyberneticLostSoul : RLCyberneticLostSoul
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  }
+}
+
+ACTOR RLCCCyberneticLostSoul : RLCyberneticLostSoul
+{
+  +TOUCHY
+  States
+  {
+  Spawn:
+    CSOL A 10
+    Loop
+  See:
+    CSOL A 10
+    Loop
+  Missile:
+    CSOL B 3 Bright A_FaceTarget
+    CSOL A 2 A_FaceTarget
+    CSOL B 3 Bright A_FaceTarget
+    CSOL A 2 A_FaceTarget
+    CSOL B 3 Bright A_FaceTarget
+    CSOL A 2 A_FaceTarget
+    Goto See
+  Death:
+    CSOL C 6 Bright A_Scream
+    CSOL D 6 Bright A_NoBlocking
+    CSOL E 6 Bright
+    TNT1 A 15
+    Stop
+  }
+}

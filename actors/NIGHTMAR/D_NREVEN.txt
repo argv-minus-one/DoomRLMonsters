@@ -1,0 +1,333 @@
+
+// NIGHTMARE REVENANT
+//
+ACTOR RLNightmareRevenant : Revenant 16530
+{
+  MeleeSound ""
+  SeeSound "nightmarerevenant/sight"
+  ActiveSound "nightmarerevenant/active"
+  PainSound "revenant/pain"
+  DeathSound "nightmarerevenant/death"
+  CrushPainSound "rlmonsters/crush"
+  BloodColor "11 11 11"
+  Health 420
+  GibHealth -50
+  MeleeThreshold 96
+  DamageFactor "Crush", 10
+  +DONTHARMSPECIES
+  +JUMPDOWN
+  Obituary "%o was taken down by a Nightmare Revenant."
+  HitObituary "%o had %p skull cracked open by a Nightmare Revenant."
+  Tag "Nightmare Revenant"
+  States
+  {
+  Spawn:
+    NREV BE 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_Jump(254, 2)
+    TNT1 A 0 A_CheckSightOrRange(1024, "DistantScream")
+    NREV AABBCCDDEEFF 2 A_Chase
+    Loop
+  DistantScream:
+    TNT1 A 0 A_PlaySound("nightmarerevenant/far", 7, 1, 0, 0.2)
+    Goto See+2
+  Melee:
+    TNT1 A 0 A_JumpIfInventory("RLNightmareRevenantArmToken", 1, "Melee2")
+    NREV G 1 A_FaceTarget
+    TNT1 A 0 A_PlaySound("skeleton/swing", CHAN_VOICE)
+    NREV G 6 A_FaceTarget
+    NREV H 6 A_FaceTarget
+    TNT1 A 0 A_GiveInventory("RLNightmareRevenantArmToken", 1)
+    NREV I 6 A_CustomBulletAttack (0, 0, 1, (6 * random(1, 10)), "RLEnemyNightmareRevenantBluntMeleePuff", 44, CBAF_NORANDOM | CBAF_AIMFACING)
+//    NREV I 6 A_CustomMeleeAttack (6 * random(1, 10), "nightmarerevenant/melee", "", "Melee")
+    Goto See
+  Melee2:
+    NREV R 1 A_FaceTarget
+    TNT1 A 0 A_PlaySound("skeleton/swing", CHAN_VOICE)
+    NREV R 6 A_FaceTarget
+    NREV S 6 A_FaceTarget
+    TNT1 A 0 A_TakeInventory("RLNightmareRevenantArmToken", 1)
+    NREV T 6 A_CustomBulletAttack (0, 0, 1, (6 * random(1, 10)), "RLEnemyNightmareRevenantBluntMeleePuff", 44, CBAF_NORANDOM | CBAF_AIMFACING)
+//    NREV T 6 A_CustomMeleeAttack (6 * random(1, 10), "nightmarerevenant/melee", "", "Melee")
+    Goto See
+  Missile:
+    TNT1 A 0 A_JumpIfCloser(280, "MissileClose")
+    TNT1 A 0 A_JumpIfHealthLower(120, "MissileHate")
+    NREV J 8 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull", 52, 14, -5)
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull", 52, -14, 5)
+    NREV J 2 Bright A_FaceTarget
+    NREV K 20
+    Goto See
+  SummonMissile:
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull", 52, 14, -5)
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull", 52, -14, 5)
+    NREV J 2 Bright A_FaceTarget
+    NREV K 20
+    Goto See
+  MissileHate:
+    NREV U 8 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissileHate")
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull2", 52, 14, -5)
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull2", 52, -14, 5)
+    NREV U 2 Bright A_FaceTarget
+    NREV K 20
+    Goto See
+  SummonMissileHate:
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull2", 52, 14, -5)
+    TNT1 A 0 A_CustomMissile("RLNightmareRevenantPlasmaSkull2", 52, -14, 5)
+    NREV U 2 Bright A_FaceTarget
+    NREV K 20
+    Goto See
+  MissileClose:
+    TNT1 A 0 A_JumpIfInventory("RLNightmareRevenantArmToken", 1, "MissileClose2")
+    NREV G 1 A_FaceTarget
+    TNT1 A 0 A_Recoil(-30)
+    TNT1 A 0 A_PlaySound("skeleton/swing", CHAN_VOICE)
+    NREV G 6
+    NREV H 6
+    TNT1 A 0 A_GiveInventory("RLNightmareRevenantArmToken", 1)
+    TNT1 A 0 A_Stop
+    NREV I 6 A_CustomMissile("RLNightmareRevenantDashPunch", 32, 0, 0, CMF_AIMDIRECTION)
+    Goto See
+  MissileClose2:
+    NREV R 1 A_FaceTarget
+    TNT1 A 0 A_Recoil(-30)
+    TNT1 A 0 A_PlaySound("skeleton/swing", CHAN_VOICE)
+    NREV R 6
+    NREV S 6
+    TNT1 A 0 A_TakeInventory("RLNightmareRevenantArmToken", 1)
+    TNT1 A 0 A_Stop
+    NREV T 6 A_CustomMissile("RLNightmareRevenantDashPunch", 32, 0, 0, CMF_AIMDIRECTION)
+    Goto See
+  Pain:
+    NREV L 5
+    NREV L 5 A_Pain
+    Goto See
+  Death:
+    NREV LM 7
+    NREV N 7 A_Scream
+    NREV O 7 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    NREV P 7
+    NREV Q -1
+    Stop
+   XDeath:
+   Death.Plasma:
+    TNT1 A 0 A_GiveInventory("RLNightmareRevenantExplodedToken", 1)
+    NREX A 10 Bright A_Playsound("nightmarerevenant/explode", 6)
+    NREX BC 5 Bright
+    NREX D 5 Bright
+    NREX D 0 Bright A_CustomMissile("RLNightmareRevenantDeathWave",32,0)
+    NREX EFGHIJ 5 Bright
+    TNT1 A 0 A_NoBlocking
+   DeathLoop:
+    NREX K 10
+    Goto DeathLoop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    NREV Q 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    NREV QPONML 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmallBlack",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    NREV Q -1
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLNightmareRevenantPlasmaSkull : RevenantTracer
+{
+   +THRUGHOST
+   Speed 9
+   Scale 0.7
+   Decal "Scorch"
+   Damage 6
+   DamageType "Plasma"
+   PainType "Nightmare"
+   DeathType "Nightmare"
+   SeeSound "nightmarerevenant/fire"
+   DeathSound "nightmarerevenant/impact"
+  States
+  {
+  Spawn:
+    NREB A 1 Bright A_SeekerMissile(0, 1, SMF_PRECISE | SMF_CURSPEED)
+    NREB A 1 Bright A_ScaleVelocity(1.05)
+    NREB A 1 Bright A_SeekerMissile(0, 1, SMF_PRECISE | SMF_CURSPEED)
+    NREB A 1 Bright A_ScaleVelocity(1.05)
+    NREB B 1 Bright A_SeekerMissile(0, 1, SMF_PRECISE | SMF_CURSPEED)
+    NREB B 1 Bright A_ScaleVelocity(1.05)
+    NREB B 1 Bright A_SeekerMissile(0, 1, SMF_PRECISE | SMF_CURSPEED)
+    NREB B 1 Bright A_ScaleVelocity(1.05)
+    Loop
+  Death:
+    NREB CDEFGHIJKL 3 Bright
+    Stop
+  }
+}
+
+ACTOR RLNightmareRevenantPlasmaSkull2 : RLNightmareRevenantPlasmaSkull
+{
+   Speed 12
+}
+
+ACTOR RLSummonNightmareRevenantPlasmaSkull : RLNightmareRevenantPlasmaSkull
+{
+   +MTHRUSPECIES
+}
+
+ACTOR RLSummonNightmareRevenantPlasmaSkull2 : RLNightmareRevenantPlasmaSkull2
+{
+   +MTHRUSPECIES
+}
+
+ACTOR RLNightmareRevenantDashPunch : BaronBall
+{
+   +MTHRUSPECIES
+   +THRUGHOST
+   +BLOODLESSIMPACT
+   SeeSound ""
+   DeathSound "nightmarerevenant/melee"
+   Speed 60
+   FastSpeed 60
+   DamageType "Melee"
+   PainType "BluntMelee"
+   DeathType "BluntMelee"
+   Damage (6 * random(1, 10))
+   States
+   {
+   Spawn:
+    TNT1 A 2
+    Stop
+   Death:
+    TNT1 A 1
+    Stop
+   }
+}
+
+actor RLNightmareRevenantDeathWave
+{
+    Radius 0
+    Height 0
+    Speed 0
+    Scale 7.0
+    +MTHRUSPECIES
+    +THRUGHOST
+    PROJECTILE
+    RENDERSTYLE Add 
+    ALPHA 0.27
+	DamageType "MindRape"
+    States
+    {
+    Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_Quake(9,12,0,768,"")
+        TNT1 A 0 A_Playsound("rlmonsters/horror", 5)
+        NRXP ABCDEF 1 Bright A_Explode(32, 128)
+        Stop
+    }
+}
+
+Actor RLNightmareRevenantArmToken : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor RLNightmareRevenantExplodedToken : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLNightmareRevenantReborn : RLNightmareRevenant
+{
+  +LOOKALLAROUND
+  +NOPAIN
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory("RLResurrectionComplete", 1, "SpawnNormal")
+    NREV QPONML 5
+    TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+    TNT1 A 0 A_GiveInventory("RLResurrectionComplete", 1)
+  SpawnNormal:
+    NREV BE 10 A_Look
+    Loop
+  }
+}
+
+ACTOR RLDRPGSummonedNightmareRevenant : RLNightmareRevenant
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCNightmareRevenant : RLNightmareRevenant
+{
+  +TOUCHY
+  States
+  {
+  See:
+    NREV AABBCCDDEEFF 2
+    Loop
+  Melee:
+    NREV GHIRST 4
+    Goto See
+  Missile:
+    NREV U 10 Bright
+    NREV K 20
+    Goto See
+  Death:
+    NREV LM 7
+    NREV N 7 A_Scream
+    NREV O 7 A_NoBlocking
+    NREV P 7
+    NREV Q -1
+    Stop
+  }
+}

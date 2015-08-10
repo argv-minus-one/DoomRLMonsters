@@ -1,0 +1,326 @@
+
+// MAGMABUS
+//
+ACTOR RLArmageddonMancubus : Fatso 16566
+{
+  Radius 44
+  Height 60
+  Health 1320
+  GibHealth -200
+  DamageFactor "Crush", 10
+  DamageFactor "Fire", 0.65
+  Speed 12
+  Mass 3000
+  PainChance 50
+  +NOGRAVITY
+  +FLOAT
+  +MISSILEMORE
+  +DONTCORPSE
+  +DONTHARMSPECIES
+  -FLOORCLIP
+  Species "RLMancubus"
+  DeathSound "volacubus/death1"
+  CrushPainSound "rlmonsters/crush"
+  Obituary "%o didn't like the smell of the Magmabus's napalm in the morning."
+  Tag "Magmabus"
+  States
+  {
+  Spawn:
+    AMAN AA 4 A_Look
+    Loop
+  See:
+    AMAN AA 4 A_Chase
+    Loop
+  Missile:
+    TNT1 A 0 A_JumpIfCloser (512, "NormalMissile")
+    TNT1 A 0 A_JumpIfCloser (1024, "RandomMissile")
+    TNT1 A 0 A_JumpIfCloser (2048, "RandomSpamMissile")
+    Goto ChargeAttack
+  NormalMissile:
+    TNT1 A 0 A_PlaySound("fatso/raiseguns", CHAN_VOICE)
+    AMAN B 20 A_FaceTarget
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_CustomMissile("RLMagmabusLavaBall", 54, 32, 0)
+    AMAN C 5 Bright A_CustomMissile("RLMagmabusLavaBall", 54, -32, 0)
+    AMAN D 5
+    Goto See
+  RandomMissile:
+    TNT1 A 0 A_PlaySound("fatso/raiseguns", CHAN_VOICE)
+    AMAN B 20 A_FaceTarget
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_CustomMissile("RLMagmabusLavaBall", 54, 32, random(-7,4))
+    AMAN C 5 Bright A_CustomMissile("RLMagmabusLavaBall", 54, -32, random(-4,7))
+    AMAN D 5
+    Goto See
+  RandomSpamMissile:
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_PlaySound("fatso/raiseguns", CHAN_VOICE)
+    AMAN B 20 A_FaceTarget
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 A_CustomMissile("RLMagmabusLavaBall", 54, 32, random(-14,4))
+    AMAN C 3 Bright A_CustomMissile("RLMagmabusLavaBall", 54, -32, random(-4,14))
+    AMAN D 3
+    TNT1 A 0 A_MonsterRefire (0, "ChargeAttack")
+    AMAN B 3
+    Goto RandomSpamMissile+2
+  ChargeAttack:
+    TNT1 A 0 A_PlaySound("fatso/raiseguns", CHAN_VOICE)
+    AMAN A 20 A_FaceTarget
+    TNT1 A 0 A_ChangeVelocity (Cos(Pitch) * 1, 0, Sin(Pitch) * -1, 1)//ThrustThing(angle*256/360, 5, 0, 0)
+    AMAN A 1 A_FaceTarget
+    TNT1 A 0 A_JumpIfCloser (512, "RandomSpamMissile")
+    TNT1 A 0 A_MonsterRefire (0, "See")
+    Goto ChargeAttack+2
+  Pain:
+    AMAN E 3
+    AMAN E 3 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_BossDeath
+    TNT1 A 0 A_ChangeFlag(FLOATBOB, 0)
+    AMAN E 2
+    AMAN F 5 A_Scream
+    AMAN G 5 A_NoBlocking
+    AMAN H 4
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 0)
+  DeathFall:
+    AMAN H 1
+	Loop
+  Crash:
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    TNT1 A 0 A_PlaySound("volacubus/death2", CHAN_VOICE)
+    AMAN IJK 5
+    TNT1 A 0 A_SetFloorClip
+    AMAN L -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    AMAN L 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_UnSetFloorClip
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 0)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 1)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    AMAN KJIHGF 4
+    TNT1 A 0 A_ChangeFlag(FLOATBOB, 1)
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 1 A_SpawnItem("RLCrushedMedium",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 0)
+    TNT1 A 0 A_BossDeath
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    AMAN L -1
+    Stop
+  }
+}
+
+ACTOR RLMagmabusLavaBall
+{
+   Radius 8
+   Height 8
+   Speed 22
+   Damage (random(2,5)*9)
+   DamageType Fire
+   PainType "Explosion"
+   DeathType "Explosion"
+   Scale 1.0
+   PROJECTILE
+   RENDERSTYLE ADD
+   ALPHA 0.95
+   +THRUGHOST
+   +EXPLODEONWATER
+   SeeSound "nightmareelemental/attack"
+   BounceSound "nightmareelemental/bounce"
+   DeathSound "rlmonsters/fireblast"
+   States
+   {
+   Spawn: 
+      BAL3 AB 4 Bright A_SpawnItem("RLMagmabusLavaBallTrail",0,0)
+      loop
+   Death:
+      TNT1 AAAAAA 0 A_CustomMissile("RLMagmabusMiniLavaBall",4,0,random(0, 359), CMF_AIMDIRECTION | CMF_TRACKOWNER, Random(60, 90))
+      TNT1 AAAAAAAAAAAAAAAAA 0 A_CustomMissile("RLMagmabusNapalmFlare",4,0,random(0, 359), CMF_AIMDIRECTION | CMF_TRACKOWNER, Random(60, 90))
+      BAL3 C 5 Bright A_Explode (16, 96)
+      BAL3 DE 5 Bright
+      stop
+   }
+}
+
+ACTOR RLMagmabusMiniLavaBall : RLMagmabusLavaBall
+{
+   Radius 3
+   Height 3
+   Speed 12
+   Damage (random(2,4)*3)
+   DamageType "Fire"
+   PainType "SmallFireball"
+   DeathType "SmallFireball"
+   Scale 0.4
+   Gravity 1.5
+  -NOGRAVITY
+  +NODAMAGETHRUST
+   SeeSound ""
+   BounceSound ""
+   DeathSound "rlmonsters/fireblast"
+   States
+   {
+   Spawn: 
+      BAL3 AB 3 Bright
+      loop
+   Death:
+      BAL3 C 5 Bright A_Explode (4, 32)
+      BAL3 DE 5 Bright
+      stop
+   }
+}
+
+ACTOR RLMagmabusLavaBallTrail
+{   
+   Radius 0
+   Height 1
+   Speed 0
+   PROJECTILE
+   RENDERSTYLE ADD
+   ALPHA 0.85
+   +NOTONAUTOMAP
+   States
+   {
+   Spawn:
+      TNT1 A 3
+      RPUF ABCDE 3 Bright
+      Stop 
+   }
+}
+
+Actor RLMagmabusNapalmFlare
+{
+  Radius 8
+  Height 11
+  Speed 8
+  Damage (random(1,5)*2)
+  Projectile
+  RenderStyle Add
+  DamageType "Fire"
+  PainType "SmallFireball"
+  DeathType "SmallFireball"
+  Gravity 1.7
+  Alpha 0.95
+  -NOGRAVITY
+  +THRUGHOST
+  Decal "RevenantScorch"
+  DeathSound "nightmareelemental/bounce"
+  States
+  {
+  Spawn:
+    TNT1 A 1 Bright A_SpawnItemEx("RLMagmabusNapalmFX", 0, 0, 0, 0, 0, 0, 0, 128)
+    Loop
+  Death:
+    FRFX HIJ 2 Bright
+    FRFX J 0 A_Explode(32, 64)
+    FRFX J 0 A_CustomMissile("RLMagmabusNapalmFire", 0, 0, 0, CMF_AIMDIRECTION | CMF_TRACKOWNER)
+    FRFX KLMNO 2 Bright
+    Stop
+  }
+}
+
+Actor RLMagmabusNapalmFX
+{
+  Radius 0
+  Height 1
+  Speed 0
+  Projectile
+  RenderStyle Add
+  Alpha 0.85
+  +NOTONAUTOMAP
+  States
+  {
+  Spawn:
+    TNT1 A 3
+    PYFX ABCDE 3 Bright
+    Stop
+  }
+}
+
+Actor RLMagmabusNapalmFire
+{
+  Radius 8
+  Height 40
+  Projectile
+  RenderStyle Add
+  DamageType Fire
+  Alpha 0.90
+  -NOGRAVITY
+  +LOWGRAVITY
+  +NOEXPLODEFLOOR
+  +NODAMAGETHRUST
+  +THRUGHOST
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_Jump(80, 3,6,9,12,15)
+  SpawnLoop:
+    FLME A 1 Bright A_Playsound("rlmonsters/fireloop")
+    FLME A 1 Bright A_Explode(3, 32, "", 0, 16)
+    FLME BCDEFGHIJKLMN 2 Bright A_Explode(random(0, 1), 16, XF_HURTSOURCE)
+    FLME A 1 Bright A_Playsound("rlmonsters/fireloop")
+    FLME A 1 Bright A_Explode(3, 32, "", 0, 16)
+    FLME BCDEFGHIJKLMN 2 Bright A_Explode(random(0, 1), 16, XF_HURTSOURCE)
+    FLME A 1 Bright A_Playsound("rlmonsters/fireloop")
+    FLME A 1 Bright A_Explode(3, 32, "", 0, 16)
+    FLME BCDEFGHIJKLMN 2 Bright A_Explode(random(0, 1), 16, XF_HURTSOURCE)
+    FLME A 1 Bright A_Playsound("rlmonsters/fireloop")
+    FLME A 1 Bright A_Explode(3, 32, "", 0, 16)
+    FLME BCDEFGHIJKLMN 2 Bright A_Explode(random(0, 1), 16, XF_HURTSOURCE)
+    FLME A 1 Bright A_Playsound("rlmonsters/fireloop")
+    FLME A 1 Bright A_Explode(3, 32, "", 0, 16)
+    FLME BCDEFGHIJKLMN 2 Bright A_Explode(random(0, 1), 16, XF_HURTSOURCE)
+    TNT1 A 0 A_Jump(192, 1)
+    Loop
+    TNT1 A 0
+  Death:
+    TNT1 A 1 Bright
+    Stop
+  }
+}
+
+ACTOR RLCCArmageddonMancubus : RLArmageddonMancubus
+{
+  +TOUCHY
+  DeathSound "fatso/death"
+  States
+  {
+  See:
+    AMAN A 4
+    Loop
+  Missile:
+    AMAN B 20
+    AMAN C 5 Bright
+    AMAN D 5
+    Goto See
+  Death:
+    AMAN E 2
+    AMAN F 5 A_Scream
+    AMAN G 5 A_NoBlocking
+    AMAN H 5
+    AMAN IJK 5
+    AMAN L -1 A_BossDeath
+    Stop
+  }
+}

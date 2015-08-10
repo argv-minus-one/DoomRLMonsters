@@ -1,0 +1,210 @@
+
+// CACODEMON
+//
+ACTOR RLCacodemon : Cacodemon
+{
+  GibHealth -60
+  DamageFactor "Crush", 10
+  Bloodcolor "Blue"
+  Species "RLCacodemon"
+  PainSound "cacodemon/pain"
+  CrushPainSound "rlmonsters/crush"
+  +DONTCORPSE
+  +DONTHARMSPECIES
+  Obituary "%o was blasted by a Cacodemon."
+  HitObituary "%o was consumed by a Cacodemon."
+  Tag "Cacodemon"
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory ("RLMonsterInitializerToken", 1, 3)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("RLCacodemonToken", 1)
+    CACO A 10 A_Look
+    Goto Spawn+3
+  See:
+    CACO A 3 A_Chase
+    Loop
+  Missile:
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "MissileContinue")
+    TNT1 A 0 A_JumpIfInTargetInventory ("RLHellNobleToken", 1, "HatredOn")
+	Goto HatredOff
+  MissileContinue:
+    CACO BC 5 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, "SummonMissile")
+    CACO D 5 Bright A_CustomComboAttack("RLCacodemonPlasmaBall", 24, 10 * random(1, 6), "rlmonsters/bite")
+    CACO CB 3 A_Chase ("", "")
+    Goto See
+  SummonMissile:
+    CACO D 5 Bright A_CustomComboAttack("RLSummonCacodemonPlasmaBall", 24, 10 * random(1, 6), "rlmonsters/bite")
+    CACO CB 3 A_Chase ("", "")
+    Goto See
+  HatredOn:
+    TNT1 A 0 A_JumpIfInventory ("PowerRLMonsterInfightCooldownToken", 1, 3)
+    TNT1 A 0 A_PlaySound ("caco/sight", CHAN_VOICE, 1, 0, 0.7)
+    TNT1 A 0 A_GiveInventory ("PowerRLMonsterInfightCooldownToken", 1)
+    TNT1 A 0 A_ChangeFlag ("NOFEAR", 1)
+    TNT1 A 0 A_ChangeFlag ("NOTARGETSWITCH", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEEVENMORE", 1)
+    Goto MissileContinue
+  HatredOff:
+    TNT1 A 0 A_ChangeFlag ("NOFEAR", 0)
+    TNT1 A 0 A_ChangeFlag ("NOTARGETSWITCH", 0)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 0)
+    TNT1 A 0 A_ChangeFlag ("MISSILEEVENMORE", 0)
+    Goto MissileContinue
+  Pain:
+    CACO E 3
+    CACO E 3 A_Pain
+    CACO F 6
+    Goto See
+  Death:
+    CACO G 8
+    CACO H 8 A_Scream
+    CACO I 8 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 0)
+  DeathFall:
+    CACO I 1 A_JumpIf (velz <= 0.01, "Splat")
+	Loop
+  Splat:
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    CACO J 8
+    CACO K 8 A_NoBlocking
+    CACO L -1 A_SetFloorClip
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    CACO M 2
+    CACO M 3 A_XScream
+    CACO N 5
+    CACO O 5 A_NoBlocking
+  XDeathFall:
+    CACO O 1 A_JumpIf (velz <= 0.01, "XSplat")
+	Loop
+  XSplat:
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    CACO P 5
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 0)
+    CACO Q -1
+    Stop
+  Raise:
+    TNT1 A 0 A_TakeInventory ("RLCacodemonFallCheckToken", 350)
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    CACO L 2
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 0)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 1)
+    CACO L 8 A_UnSetFloorClip
+    CACO KJIHG 8
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_Die ("NightmareRemoval")
+  Death.NightmareRemoval:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareCacodemonReborn", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Stop
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_Die ("CyberneticRemoval")
+  Death.CyberneticRemoval:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticCacodemonReborn", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    Stop
+  Crush:
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 1 A_SpawnItem("RLCrushedMediumBlue",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_ChangeFlag ("CORPSE", 1)
+    TNT1 A 0 A_ChangeFlag ("DONTCORPSE", 0)
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 3)
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    CACO L -1 A_SetFloorClip
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLCacodemonPlasmaBall : CacodemonBall
+{
+   +THRUGHOST
+   Decal "CacoScorch"
+   DamageType "Plasma"
+   PainType "Lightning"
+}
+
+ACTOR RLSummonCacodemonPlasmaBall : RLCacodemonPlasmaBall
+{
+   +MTHRUSPECIES
+}
+
+Actor RLCacodemonFallCheckToken : Inventory
+{
+inventory.maxamount 350
+}
+
+ACTOR RLDRPGSummonedCacodemon : RLCacodemon
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCCacodemon : RLCacodemon
+{
+  -DONTCORPSE
+  +TOUCHY
+  States
+  {
+  Spawn:
+    CACO A 10 A_Look
+    Loop
+  See:
+    CACO A 3
+    Loop
+  Missile:
+    CACO BC 5
+    CACO D 5 Bright
+    CACO CB 3
+    Goto See
+  Death:
+    CACO G 8
+    CACO H 8 A_Scream
+    CACO I 8
+    CACO J 8
+    CACO K 8 A_NoBlocking
+    CACO L -1 A_SetFloorClip
+    Stop
+  }
+}

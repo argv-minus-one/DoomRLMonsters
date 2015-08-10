@@ -1,0 +1,435 @@
+
+rlmonsters/pistol				DSFHPIST
+rlmonsters/pistolreloadin		DSGLKIN
+rlmonsters/pistolreloadout		DSGLKOUT
+rlmonsters/pistolcock			DSGLKCK
+rlmonsters/combatpistol			DSCOMPIS
+rlmonsters/handcannon			DSDEAGLE
+rlmonsters/uzi					DSUZIFIR
+rlmonsters/battlerifle			DSUACRIF
+rlmonsters/burstbattlerifle		DSBCURIF
+rlmonsters/battlerifleload		DSRIFLOA
+rlmonsters/battlerifleunload	DSRIFUNL
+rlmonsters/battleriflecock		DSRIFCOC
+
+rlmonsters/shotgun				DSSHOT1
+rlmonsters/shotgunpump			DSSHOTP2
+rlmonsters/combatshotgun		DSCOMSHO
+rlmonsters/combatshotgunpump	DSCSPUMP
+rlmonsters/combatshotgunload	DSSHELLL
+rlmonsters/doubleshotgun		DSEFSDBF
+rlmonsters/doubleshotgunopen	DSEFSDBO
+rlmonsters/doubleshotgunclose	DSEFSDBC
+rlmonsters/doubleshotgunload	DSEFSDBL
+rlmonsters/supershotgun			DSZOVFIR
+rlmonsters/supershotgunopen		DSZOVOPN
+rlmonsters/supershotgunclose	DSZOVCLS
+rlmonsters/supershotgunload		DSZOVLOA
+rlmonsters/assaultshotgun		DSTACSHO
+rlmonsters/bfg					DSMBFG
+rlmonsters/bfgx					DSMBFGX
+
+rlmonsters/chaingun1			DSCHAIN1
+rlmonsters/chaingun2			DSCHAIN2
+rlmonsters/chaingun3			DSCHAIN3
+$random rlmonsters/chaingun { rlmonsters/chaingun1 rlmonsters/chaingun2 rlmonsters/chaingun3 }
+rlmonsters/chaingunload			DSCHAINL
+rlmonsters/chaingunwinddown		DSGTWNDD
+rlmonsters/chaingunwindup		DSGTWNDU
+rlmonsters/chaingunspin			DSGTSPIN
+rlmonsters/minigun				DSMINIF2
+rlmonsters/laserrifle			DSLASERF
+rlmonsters/laserhit1			DSLASRH1
+rlmonsters/laserhit2			DSLASRH2
+rlmonsters/laserhit3			DSLASRH3
+$random rlmonsters/laserhit { rlmonsters/laserhit1 rlmonsters/laserhit2 rlmonsters/laserhit3 }
+
+rlmonsters/bfg9000unload		DSBFGLOA
+rlmonsters/bfg9000load			DSBFGLO2
+rlmonsters/plasmarifleunload	DSPLASL1
+rlmonsters/plasmarifleload		DSPLASL2
+rlmonsters/missilelauncher		DSMLAUNC
+rlmonsters/missilehit			DSMISEXP
+rlmonsters/tristarblaster1		DSTRISF1
+rlmonsters/tristarblaster2		DSTRISF2
+rlmonsters/tristarblaster3		DSTRISF3
+$random rlmonsters/tristarblaster { rlmonsters/tristarblaster1 rlmonsters/tristarblaster2 rlmonsters/tristarblaster3 }
+rlmonsters/tristarblasterhit	DSTRIHIT
+
+rlmonsters/baronball			DSD64SHT
+rlmonsters/baronballhit			DSD64XPL
+
+rlmonsters/masterminigun		DSSPIMIN
+rlmonsters/masterminigunendfire	DSSPIMI2
+rlmonsters/masterminigunspin	DSSPISPN
+rlmonsters/masterminigunend		DSSPIFST
+
+rlmonsters/sentinelwinddown		DSHPMIEN
+rlmonsters/sentinelwindup		DSHPMIST
+rlmonsters/sentinelspin			DSHPMILO
+rlmonsters/bulletstormchaingun	DSBULSTO
+
+rlmonsters/fireloop				DSFIRELP
+rlmonsters/hpminigun			DSHPMINI
+rlmonsters/minimissile			DSMINIMI
+rlmonsters/highpowerplasma		DSHPPLAS
+rlmonsters/homingplasma			DSNCYPLS
+rlmonsters/particlebeam			DSNCYPBM
+rlmonsters/plasmamkii			DSHVYPLS
+rlmonsters/bite					DSBITE
+rlmonsters/meleeswing			DSMELESW
+rlmonsters/stomp				DSSTOMP
+rlmonsters/metalhoof			DSMEHOOF
+rlmonsters/fireblast			DSHELLEX
+rlmonsters/thruster				DSNARTHR
+rlmonsters/thrusterloop			DSNARFLY
+rlmonsters/crush1				DSCRUSH1
+rlmonsters/crush2				DSCRUSH2
+$random rlmonsters/crush { rlmonsters/crush1 rlmonsters/crush2 }
+$limit rlmonsters/crush1 10
+$limit rlmonsters/crush2 10
+
+//==============================================================================
+
+femalezombie/sight1				DSZFESI1
+femalezombie/sight2				DSZFESI2
+$random femalezombie/sight { femalezombie/sight1 femalezombie/sight2 }
+femalezombie/active				DSZFEACT
+femalezombie/pain				DSZFEPAN
+femalezombie/death1				DSZFEDT1
+femalezombie/death2				DSZFEDT2
+$random femalezombie/death { femalezombie/death1 femalezombie/death2 }
+
+imp/pain						DSIMPPAN
+lostsoul/pain					DSSOULPN
+cacodemon/pain					DSCACOPN
+hellknight/pain					DSHKPAIN
+arachnotron/pain				DSARAPAN
+revenant/pain					DSSKPAIN
+cyberdemon/pain					DSCYBERP
+spidermastermind/pain1			DSSPIPN1
+spidermastermind/pain2			DSSPIPN2
+$random spidermastermind/pain { spidermastermind/pain1 spidermastermind/pain2 }
+
+agonyelemental/sight			DSAESIT
+agonyelemental/pain				DSAEPAIN
+agonyelemental/death			DSAEDTH
+//==============================================================================
+
+eliteformer/sight1				DSEZSIT1
+eliteformer/sight2				DSEZSIT2
+eliteformer/sight3				DSEZSIT3
+$random eliteformer/sight { eliteformer/sight1 eliteformer/sight2 eliteformer/sight3 }
+eliteformer/active				DSEZSACT
+eliteformer/pain				DSEZPAIN
+eliteformer/death1				DSEZDTH1
+eliteformer/death2				DSEZDTH2
+eliteformer/death3				DSEZDTH3
+$random eliteformer/death { eliteformer/death1 eliteformer/death2 eliteformer/death3 }
+
+nightmareimp/sight1				DSNIMPS1
+nightmareimp/sight2				DSNIMPS2
+$random nightmareimp/sight { nightmareimp/sight1 nightmareimp/sight2 }
+nightmareimp/active				DSNIMPAC
+nightmareimp/death1				DSNIMPD1
+nightmareimp/death2				DSNIMPD2
+$random nightmareimp/death { nightmareimp/death1 nightmareimp/death2 }
+
+nightmaredemon/sight			DSNDEMSI
+nightmaredemon/active			DSNDEMAC
+nightmaredemon/pain				DSNDEMPN
+nightmaredemon/attack			DSNDEMAT
+nightmaredemon/death			DSNDEMDT
+
+nightmarespectre/sight			DSNSPESI
+nightmarespectre/death			DSNSPEDT
+
+nightmaresoul/active			DSNSOLAC
+nightmaresoul/pain				DSNSOLPN
+nightmaresoul/death				DSNSOLDT
+
+nightmarecacodemon/sight		DSNCACSI
+nightmarecacodemon/death		DSNCACDT
+nightmarecacodemon/ballloop		DSNCACBL
+nightmarecacodemon/ballimpact	DSNCACXP
+nightmarecacodemon/shadowsplit	DSNCACSP
+
+nightmareknight/sight			DSNKNISI
+nightmareknight/death			DSNKNIDT
+
+nightmarebaron/sight			DSNBARSI
+nightmarebaron/death			DSNBARDT
+nightmarebaron/active			DSNBARAC
+nightmarebaron/pain				DSNBARPN
+
+nightmarearachnotron/sight		DSNARSIT
+nightmarearachnotron/active		DSNARACT
+nightmarearachnotron/walk		DSNARWLK
+nightmarearachnotron/death		DSNARDTH
+
+nightmareelemental/sight		DSNPESIT
+nightmareelemental/pain			DSNPEPAI
+nightmareelemental/death		DSNPEDTH
+nightmareelemental/bounce		DSNPEBOU
+nightmareelemental/attack		DSNPEFIR
+
+nightmarerevenant/sight			DSNRESIT
+nightmarerevenant/active		DSNREACT
+nightmarerevenant/melee			DSNREHIT
+nightmarerevenant/death			DSNREDTH
+nightmarerevenant/explode		DSNREEXP
+nightmarerevenant/fire			DSNREFIR
+nightmarerevenant/impact		DSNREIMP
+nightmarerevenant/far1			DSNREFA1
+nightmarerevenant/far2			DSNREFA2
+$random nightmarerevenant/far { nightmarerevenant/far1 nightmarerevenant/far2 }
+
+rlmonsters/horror1				DSHORRO4
+rlmonsters/horror2				DSHORRO5
+rlmonsters/horror3				DSHORRO6
+rlmonsters/horror4				DSHORRO7
+rlmonsters/horror5				DSHORRO8
+rlmonsters/horror6				DSHORRO9
+$random rlmonsters/horror { rlmonsters/horror1 rlmonsters/horror2 rlmonsters/horror3 rlmonsters/horror4 rlmonsters/horror5 rlmonsters/horror6 }
+
+nightmaremancubus/sight			DSNMANSI
+nightmaremancubus/pain			DSNMANPA
+nightmaremancubus/attack		DSNMANAT
+nightmaremancubus/death			DSNMANDT
+nightmaremancubus/fire			DSNMANFI
+nightmaremancubus/explode		DSNMANXP
+
+nightmarearchvile/sight			DSNAVSIT
+nightmarearchvile/pain			DSNAVPAI
+nightmarearchvile/active		DSNAVACT
+nightmarearchvile/death			DSNAVDTH
+nightmarearchvile/laugh			DSNAVLAU
+nightmarearchvile/aura			DSNAVAUR
+nightmarearchvile/burst			DSNAVBUR
+
+nightmarecyberdemon/pain1		DSNCYPN1
+nightmarecyberdemon/pain2		DSNCYPN2
+$random nightmarecyberdemon/pain { nightmarecyberdemon/pain1 nightmarecyberdemon/pain2 }
+nightmarecyberdemon/active		DSNCYACT
+nightmarecyberdemon/sight1		DSNCYSI1
+nightmarecyberdemon/sight2		DSNCYSI2
+nightmarecyberdemon/sight3		DSNCYSI3
+$random nightmarecyberdemon/sight { nightmarecyberdemon/sight1 nightmarecyberdemon/sight2 nightmarecyberdemon/sight3 }
+
+nightmaremastermind/minigunburst	DSNSPMF1
+nightmaremastermind/minigunloop		DSNSPMF2
+nightmaremastermind/minigunend		DSNSPMF3
+nightmaremastermind/darkness		DSNSPMD1
+nightmaremastermind/darknessmove	DSNSPMD2
+
+//==============================================================================
+
+cyberformer/sight1				DSCZMSI1
+cyberformer/sight2				DSCZMSI2
+cyberformer/sight3				DSCZMSI3
+$random cyberformer/sight { cyberformer/sight1 cyberformer/sight2 cyberformer/sight3 }
+cyberformer/active				DSCZMACT
+cyberformer/pain1				DSCZMPN1
+cyberformer/pain2				DSCZMPN2
+$random cyberformer/pain { cyberformer/pain1 cyberformer/pain2 }
+cyberformer/step				DSCZWALK
+cyberformer/death1				DSCZMDT1
+cyberformer/death2				DSCZMDT2
+cyberformer/death3				DSCZMDT3
+$random cyberformer/death { cyberformer/death1 cyberformer/death2 cyberformer/death3 }
+
+cyberformercommando/sight1		DSCZSIT1
+cyberformercommando/sight2		DSCZSIT2
+cyberformercommando/sight3		DSCZSIT3
+$random cyberformercommando/sight { cyberformercommando/sight1 cyberformercommando/sight2 cyberformercommando/sight3 }
+cyberformercommando/active		DSCZSACT
+cyberformercommando/pain		DSCZPAIN
+cyberformercommando/death1		DSCZDTH1
+cyberformercommando/death2		DSCZDTH2
+cyberformercommando/death3		DSCZDTH3
+$random cyberformercommando/death { cyberformercommando/death1 cyberformercommando/death2 cyberformercommando/death3 }
+
+cyberimp/sight1					DSCIMPS1
+cyberimp/sight2					DSCIMPS2
+$random cyberimp/sight { cyberimp/sight1 cyberimp/sight2 }
+cyberimp/death1					DSCIMPD1
+cyberimp/death2					DSCIMPD2
+$random cyberimp/death { cyberimp/death1 cyberimp/death2 }
+cyberimp/active					DSCIMPAC
+cyberimp/pain					DSCIMPPN
+
+mechdemon/sight					DSCDEMSI
+mechdemon/death					DSCDEMDT
+mechdemon/active				DSCDEMAC
+mechdemon/pain					DSCDEMPN
+mechdemon/walk					DSCDEMWL
+mechdemon/attack				DSCDEMAT
+
+mechtre/cloakshort1				DSCSPCL1
+mechtre/cloakshort2				DSCSPCL2
+$random mechtre/cloakshort { mechtre/cloakshort1 mechtre/cloakshort2 }
+
+hellmine/arm					DSCLSARM
+
+cybruiser/sight					DSCKNSIT
+cybruiser/death					DSCKNDTH
+cybruiser/walk					DSCKNWLK
+cybruiser/fire					DSCKNFIR
+
+technolord/sight				DSCBARSI
+technolord/death				DSCBARDT
+technolord/active				DSCBARAC
+technolord/pain					DSCBARPA
+
+arachnosentinel/sight			DSCARASI
+arachnosentinel/death			DSCARADT
+
+machineelemental/loop			DSCPELOP
+
+heavyrevenant/sight				DSCRESIT
+heavyrevenant/death				DSCREDTH
+heavyrevenant/active			DSCREACT
+heavyrevenant/fire				DSSLAYER
+heavyrevenant/lockon			DSHOMING
+heavyrevenant/boost				DSCREVMB
+heavyrevenant/loop				DSCREVML
+heavyrevenant/target			DSCREVL1
+heavyrevenant/targetlocked		DSCREVL2
+
+volacubus/death1				DSMANDT2
+volacubus/death2				DSMANDT3
+volacubus/jetloop				DSFFJETS
+volacubus/jeton					DSFFJET1
+volacubus/jetoff				DSFFJET0
+volacubus/fire					DSCMANFI
+
+techvile/sight					DSCVISIT
+techvile/pain					DSCVIPAN
+techvile/active					DSCVIACT
+techvile/death					DSCVIDTH
+techvile/pulse					DSCVIFI1
+techvile/pulseaug				DSCVIFI2
+techvile/pulsehit				DSCVIHIT
+$limit techvile/pulse 0
+$limit techvile/pulseaug 0
+$limit techvile/pulsehit 0
+techvile/shieldstart			DSCVISS1
+techvile/shieldend				DSCVISS2
+techvile/shieldloop				DSCVISS3
+techvile/shieldhit1				DSCVISH1
+techvile/shieldhit2				DSCVISH2
+$random techvile/shieldhit { techvile/shieldhit1 techvile/shieldhit2 }
+techvile/smallzap1				DSCVIZZ1
+techvile/smallzap2				DSCVIZZ2
+techvile/smallzap3				DSCVIZZ3
+$random techvile/smallzap { techvile/smallzap1 techvile/smallzap2 techvile/smallzap3 }
+techvile/mediumzap				DSCVIZZ4
+techvile/deathzap				DSCVIZZ5
+techvile/aoezap1				DSCVIZA1
+techvile/aoezap2				DSCVIZA2
+techvile/aoezap3				DSCVIZA3
+$random techvile/aoezap { techvile/aoezap1 techvile/aoezap2 techvile/aoezap3 }
+techvile/aoezapmain				DSCVIZAX
+techvile/augupgrade				DSCVIAUG
+techvile/spawnshot				DSCVISPW
+techvile/electroball			DSCVILBT
+techvile/lightningloop			DSCVILIT
+techvile/lightningcharge		DSCVILCH
+
+spiderovermind/mindattack		DSOVERAT
+spiderovermind/laugh			DSOVERLA
+spiderovermind/whisper1			DSOVERW1
+spiderovermind/whisper2			DSOVERW2
+spiderovermind/whisper3			DSOVERW3
+spiderovermind/whisper4			DSOVERW4
+spiderovermind/whisper5			DSOVERW5
+spiderovermind/whisper6			DSOVERW6
+spiderovermind/whisper7			DSOVERW7
+spiderovermind/whisper8			DSOVERW8
+$random spiderovermind/whisper { spiderovermind/whisper1 spiderovermind/whisper2 spiderovermind/whisper3 spiderovermind/whisper4 spiderovermind/whisper5 spiderovermind/whisper6 spiderovermind/whisper7 spiderovermind/whisper8 }
+
+//==============================================================================
+
+defencedrone/alarm				DSADRONB
+defencedrone/loop				DSADRONL
+defencedrone/target				DSADRONT
+
+shocktrooper/radio1				DSASHKS1
+shocktrooper/radio2				DSASHKS2
+shocktrooper/radio3				DSASHKS3
+$random shocktrooper/radio { shocktrooper/radio1 shocktrooper/radio2 shocktrooper/radio3 }
+shocktrooper/active1			DSASHKA1
+shocktrooper/active2			DSASHKA2
+shocktrooper/active3			DSASHKA3
+$random shocktrooper/active { shocktrooper/active1 shocktrooper/active2 shocktrooper/active3 }
+
+mechstrosity/sight				DSADEMSI
+mechstrosity/death				DSADEMDT
+mechstrosity/active				DSADEMAC
+mechstrosity/pain				DSADEMPN
+mechstrosity/attack				DSADEMAT
+
+thehungry/sight					DSASOSIT
+thehungry/attack				DSASOATK
+thehungry/pain					DSASOPAN
+thehungry/death					DSASODTH
+thehungry/active				DSASOACT
+
+hellstormelemental/sight		DSNPESIT
+hellstormelemental/pain			DSNPEPAI
+hellstormelemental/death		DSNPEDTH
+
+revenihilator/sight				DSARESIT
+revenihilator/active			DSAREACT
+revenihilator/death				DSAREDTH
+revenihilator/activate1			DSAREST1
+revenihilator/activate2			DSAREST2
+$random revenihilator/activate { revenihilator/activate1 revenihilator/activate2 }
+revenihilator/vree				DSAREVRE
+revenihilator/pulseflak			DSAREFI1
+revenihilator/flakbang1			DSAREXP1
+revenihilator/flakbang2			DSAREXP2
+$random revenihilator/flakbang { revenihilator/flakbang1 revenihilator/flakbang2 }
+revenihilator/hyperbolt			DSAREFI2
+revenihilator/launchdrone		DSAREVDL
+revenihilator/dronestart		DSARDRST
+revenihilator/dronebeep			DSARDRCN
+revenihilator/droneloop			DSARDRLP
+
+nightmareovermind/whisper		DSNOVERM
+
+//==============================================================================
+
+rlmonsters/bulletexp							DSPIPEX1
+$limit rlmonsters/bulletexp 0
+$random rlmonsters/smallexp { rlmonsters/smallexp1 rlmonsters/smallexp2 rlmonsters/smallexp3 }
+rlmonsters/smallexp1							DSPIPEX2
+rlmonsters/smallexp2							DSPIPEX3
+rlmonsters/smallexp3							DSPIPEX4
+$random rlmonsters/mediumexp { rlmonsters/mediumexp1 rlmonsters/mediumexp2 rlmonsters/mediumexp3 rlmonsters/mediumexp4 }
+rlmonsters/mediumexp1								DSBAREX1
+rlmonsters/mediumexp2								DSBAREX2
+rlmonsters/mediumexp3								DSBAREX3
+rlmonsters/mediumexp4								DSBAREX4
+$random rlmonsters/largeexp { rlmonsters/largeexp1 rlmonsters/largeexp2 rlmonsters/largeexp3 rlmonsters/largeexp4 rlmonsters/largeexp5 rlmonsters/largeexp6 rlmonsters/largeexp7 }
+rlmonsters/largeexp1							DSLAGEX1
+rlmonsters/largeexp2							DSLAGEX2
+rlmonsters/largeexp3							DSLAGEX3
+rlmonsters/largeexp4							DSLAGEX4
+rlmonsters/largeexp5							DSLAGEX5
+rlmonsters/largeexp6							DSLAGEX6
+rlmonsters/largeexp7							DSLAGEX7
+
+$random rlmonsters/bodythud		{rlmonsters/bodythud1 rlmonsters/bodythud2 rlmonsters/bodythud3 rlmonsters/bodythud4 rlmonsters/bodythud5 rlmonsters/bodythud6 rlmonsters/bodythud7 rlmonsters/bodythud8}
+rlmonsters/bodythud1			DSBODY1
+rlmonsters/bodythud2			DSBODY2
+rlmonsters/bodythud3			DSBODY3
+rlmonsters/bodythud4			DSBODY4
+rlmonsters/bodythud5			DSBODY5
+rlmonsters/bodythud6			DSBODY6
+rlmonsters/bodythud7			DSBODY7
+rlmonsters/bodythud8			DSBODY8
+
+$random rlmonsters/gibthud		{rlmonsters/gibthud1 rlmonsters/gibthud2}
+rlmonsters/gibthud1				DSVILBD1
+rlmonsters/gibthud2				DSVILBD2

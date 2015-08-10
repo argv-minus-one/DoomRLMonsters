@@ -1,0 +1,158 @@
+
+// ELITE FORMER HUMAN SERGEANT
+//
+ACTOR RLEliteSergeantDoubleShotgun : ShotgunGuy 16516
+{
+  Health 60
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.85
+  SeeSound "eliteformer/sight"
+  PainSound "eliteformer/pain"
+  DeathSound "misc/gibbed"
+  ActiveSound "eliteformer/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was ended by an Elite Former Sergeant's double shotgun."
+  DropItem "RLShellBox"
+  DropItem "RLDoubleShotgunPickup"
+  +AVOIDMELEE
+  Tag "Elite Human Sergeant"
+  States
+  {
+  Spawn:
+    ESSG AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteSergeantDoubleShotgunShotCounter", 1, "RetreatReload")
+    ESSG AABBCCDD 3 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ESSG AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ESSG BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ESSG CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ESSG DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    ESSG EE 5 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLEliteSergeantDoubleShotgunShotCounter", 1, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLEliteSergeantDoubleShotgunShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/doubleshotgun", CHAN_WEAPON)
+    ESSG F 10 Bright A_CustomBulletAttack (30, 5, 7, random(1,5)*3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ESSG EE 5 A_FaceTarget
+    Goto See
+  Reload:
+    ESSG EE 7 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/doubleshotgunopen", 7)
+    ESSG E 21
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteSergeantDoubleShotgunShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/doubleshotgunload", 7)
+    ESSG E 18
+    TNT1 A 0 A_PlaySound("rlmonsters/doubleshotgunclose", 7)
+    ESSG E 5 A_FaceTarget
+    Goto See
+  Pain:
+    ESSG G 3
+    ESSG G 3 A_Pain
+    Goto See
+  Death:
+    ESSG H 5
+    ESSG I 5 A_Scream
+    ESSG J 5 A_NoBlocking
+    ESSG K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ESSG LM 5
+    ESSG N -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    ESSG O 5
+    ESSG P 5 A_XScream
+    ESSG Q 5 A_NoBlocking
+    ESSG RS 5
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ESSG TUV 5
+    ESSG W -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ESSG N 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteSergeantDoubleShotgunShotCounter", 1)
+    ESSG M 5
+    ESSG L 5
+    ESSG K 5
+    ESSG J 5
+    ESSG I 5
+    ESSG H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ESSG N -1
+    Stop
+  }
+}
+
+Actor RLEliteSergeantDoubleShotgunShotCounter : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLCCEliteSergeantDoubleShotgun : RLEliteSergeantDoubleShotgun
+{
+  +TOUCHY
+  States
+  {
+  See:
+    ESSG AABBCCDD 3
+    Loop
+  Missile:
+    ESSG E 10
+    ESSG F 10 Bright
+    ESSG E 24
+    ESSG E 21
+    ESSG E 18
+    ESSG E 5
+    Goto See
+  Death:
+    ESSG H 5
+    ESSG I 5 A_Scream
+    ESSG J 5 A_NoBlocking
+    ESSG K 5
+    ESSG LM 5
+    ESSG N -1
+    Stop
+  }
+}

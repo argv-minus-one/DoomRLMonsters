@@ -1,0 +1,147 @@
+
+// PAIN ELEMENTAL
+//
+ACTOR RLPainElemental : PainElemental
+{
+  GibHealth -60
+  DamageFactor "Crush", 10
+  CrushPainSound "rlmonsters/crush"
+  Obituary "%o was overwhelmed by a Pain Elemental."
+  HitObituary "%o forgot the Pain Elemental has teeth too."
+  Tag "Pain Elemental"
+  States
+  {
+  Spawn:
+    PELE A 10 A_Look
+    Loop
+  See:
+    PELE AABBCCBB 3 A_Chase
+    Loop
+  Melee:
+    PELE DNO 3 A_FaceTarget
+    TNT1 A 0 A_FaceTarget
+    PELE N 3 A_CustomMeleeAttack (6 * random(1, 10), "rlmonsters/bite", "", "Melee")
+    PELE D 3 A_FaceTarget
+    Goto See
+  Missile:
+    PELE DE 5 A_FaceTarget
+    PELE F 4 Bright A_FaceTarget
+    PELE F 1 Bright A_PainAttack ("RLLostSoulPE")
+    PELE ED 3 A_Chase ("", "")
+    Goto See
+  Pain:
+    PELE G 6
+    PELE G 6 A_Pain
+    Goto See
+  Death:
+    PELE H 8
+    PELE I 8 A_Scream
+    PELE JK 8 Bright
+    TNT1 A 0 A_JumpIfTargetInLOS (3,0, JLOSF_DEADNOJUMP | JLOSF_ALLYNOJUMP)
+    PELE L 8 Bright A_PainDie ("RLLostSoulPE")
+    PELE M 8 Bright
+    Stop
+    PELE L 8 Bright A_PainDie ("RLLostSoul")
+    PELE M 8 Bright
+    Stop
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedMedium",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_JumpIfInventory ("DRPGDRLASummonedMonsterToken", 1, 1)
+    Stop
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLPainElementalAgony : RLPainElemental
+{
+  +NOINFIGHTING
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_JumpIfInventory ("RLMonsterInitializerToken", 1, "NotInTheFuckingVoid")
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_JumpIfTargetInLOS ("NotInTheFuckingVoid", 0)
+	Stop
+  NotInTheFuckingVoid:
+    PELE A 10 A_Look
+    Loop
+  Missile:
+    PELE DE 5 A_FaceTarget
+    PELE F 4 Bright A_FaceTarget
+    PELE F 1 Bright A_PainAttack ("RLLostSoulAgony")
+    PELE ED 3 A_Chase ("", "")
+    Goto See
+  Death:
+    PELE H 8
+    PELE I 8 A_Scream
+    PELE JK 8 Bright
+    TNT1 A 0 A_JumpIfTargetInLOS (3,0, JLOSF_DEADNOJUMP | JLOSF_ALLYNOJUMP)
+    PELE L 8 Bright A_PainDie ("RLLostSoulAgony")
+    PELE M 8 Bright
+    Stop
+    PELE L 8 Bright A_PainDie ("RLLostSoul")
+    PELE M 8 Bright
+    Stop
+  }
+}
+
+ACTOR RLDRPGSummonedPainElemental : RLPainElemental
+{
+  -COUNTKILL
+  +NOBLOCKMONST
+  +NOTELESTOMP
+  +NOFEAR
+  +SEEINVISIBLE
+  +DONTDRAIN
+  +ALWAYSFAST
+  +QUICKTORETALIATE
+  +MISSILEMORE
+  +THRUSPECIES
+  Species "Player"
+  States
+  {
+  Spawn:
+	TNT1 A 0 NoDelay ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::Spawn
+	See:
+	TNT1 A 0 ACS_NamedExecuteAlways("MonsterInit", 0)
+    TNT1 A 0 A_GiveInventory ("RLMonsterInitializerToken", 1)
+    TNT1 A 0 A_GiveInventory ("DRPGDRLASummonedMonsterToken", 1)
+	Goto Super::See
+  Raise:
+    Stop
+  }
+}
+
+ACTOR RLCCPainElemental : RLPainElemental
+{
+  +TOUCHY
+  States
+  {
+  See:
+    PELE AABBCCBB 3
+    Loop
+  Melee:
+    PELE DNOND 3
+    Goto See
+  Missile:
+    PELE DE 5
+    PELE F 4 Bright
+    PELE F 1 Bright
+    PELE ED 3
+    Goto See
+  Death:
+    PELE H 8
+    PELE I 8 A_Scream
+    PELE JK 8 Bright
+    PELE L 8 Bright
+    PELE M 8 Bright
+    Stop
+  }
+}

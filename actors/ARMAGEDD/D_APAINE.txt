@@ -1,0 +1,681 @@
+
+// HELLSTORM ELEMENTAL
+//"Yholl, what have you done?." - Edward850, 2014
+ACTOR RLArmageddonPainElemental : PainElemental 16564
+{
+  Health 960
+  MeleeThreshold 148
+  MeleeRange 96
+  DamageFactor "Plasma", 0.3
+  DamageFactor "Crush", 10
+  Painchance 32
+  Painchance "Plasma", 256
+  Species "RLPainElemental"
+  +DONTHARMSPECIES
+  +QUICKTORETALIATE
+  SeeSound "hellstormelemental/sight"
+  ActiveSound "hellstormelemental/sight"
+  PainSound "hellstormlemental/pain"
+  DeathSound "hellstormelemental/death"
+  CrushPainSound "rlmonsters/crush"
+  Obituary "%o was subjected to theoretical physics by a Hellstorm Elemental."
+  HitObituary "%o was subjected to theoretical physics by a Hellstorm Elemental."
+  Tag "Hellstorm Elemental"
+  States
+  {
+  Spawn:
+	TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+	TNT1 A 0 A_ChangeFlag ("INVULNERABLE", 0)
+	TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalGonnaHellstorm", 1, "PreResetCheck")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_Look
+    Loop
+  PreResetCheck:
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_LookEx (LOF_NOSEESOUND | LOF_NOSOUNDCHECK, 0, 0, 0, 360, "Missile")
+	TNT1 A 0 A_TakeInventory ("RLHellstormElementalGonnaHellstorm", 1)
+	TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 0)
+	TNT1 A 0 A_Respawn (RSF_FOG | RSF_TELEFRAG)
+	Goto Spawn
+  See:
+	TNT1 A 0 A_GiveInventory ("RLHellstormElementalGonnaHellstorm", 1)
+	TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 1)
+	TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+	TNT1 A 0 A_ChangeFlag ("INVULNERABLE", 0)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE A 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE B 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE B 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE C 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE C 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE B 3 Bright A_Chase
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE B 3 Bright A_Chase
+    Loop
+  Melee:
+  Missile:
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE D 5 Bright A_FaceTarget
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE E 5 Bright A_FaceTarget
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE F 4 Bright A_FaceTarget
+    AELE F 1 Bright A_CustomMissile("RLHellstormBlast", 24)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE E 3 Bright A_Chase ("", "")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE D 3 Bright A_Chase ("", "")
+    Goto See
+  Pain:
+	TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 1)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE G 3 Bright
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE G 3 Bright
+    AELE G 3 Bright A_Pain
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE G 3 Bright
+    Goto See
+  Pain.Plasma:
+	TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 1)
+	TNT1 A 0 A_FaceTarget
+	TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE D 3 Bright A_FaceTarget
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE E 3 Bright A_FaceTarget
+	TNT1 A 0 A_Stop
+	TNT1 A 0 A_ChangeFlag ("INVULNERABLE", 1)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormElementalAbsorbHitbox", 1, 0, 0, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, frandom(-8, 8), "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(-45,45), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE F 3 Bright A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormElementalStopAbsorb",1, "AbsorbFinish")
+  AbsorbFinish:
+    TNT1 A 0 A_TakeInventory ("RLHellstormElementalStopAbsorb",1)
+	TNT1 A 0 A_ChangeFlag ("INVULNERABLE", 0)
+	TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE E 3 Bright A_Chase ("", "")
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE D 3 Bright A_Chase ("", "")
+    Goto See
+  Death:
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE H 8 Bright
+	TNT1 AAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE I 8 Bright A_Scream
+	TNT1 AAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE J 8 Bright
+	TNT1 AAAAAAAAAAAAAAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-128, 128), frandom(-128, 128), frandom(0, 128), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 AAAAAAAAAAAAAAA 0 A_CustomRailgun (10, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff3", frandom(0,359), frandom(-45,45), random(128,512), 1, 0.2, 0)
+    AELE K 8 Bright
+	TNT1 AAAAA 0 A_CustomRailgun (10, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff3", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE L 8 Bright
+	TNT1 AA 0 A_CustomRailgun (10, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff3", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AELE M 8 Bright
+    TNT1 A 0 A_SpawnItemEx ("RLHellstormElementalDeathRift", 0, 0, 0, 0, 0, 0, 0, SXF_TELEFRAG)
+	TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    AELE N 8 Bright
+    Stop
+  Crush:
+    TNT1 A 1 A_SpawnItem("TeleportFog",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlast
+{
+  Radius 20
+  Height 8
+  Speed 12
+  Damage 0
+  Projectile
+  BounceType Hexen
+  BounceFactor 1
+  WallBounceFactor 1
+  BounceCount 2
+  Species "RLPainElemental"
+  +DONTHARMSPECIES
+  +THRUACTORS
+  +USEBOUNCESTATE
+  RenderStyle Add
+  Alpha 0.98
+  DeathSound "weapons/bfgx"
+  States
+  {
+  Spawn:
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(-16, 32), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AEFG BBB 1 Bright A_SpawnItemEx ("RLHellstormBlastTrail", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION | SXF_TELEFRAG)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(-16, 32), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AEFG CCC 1 Bright A_SpawnItemEx ("RLHellstormBlastTrail", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION | SXF_TELEFRAG)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(-16, 32), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AEFG DDD 1 Bright A_SpawnItemEx ("RLHellstormBlastTrail", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION | SXF_TELEFRAG)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(-16, 32), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    AEFG CCC 1 Bright A_SpawnItemEx ("RLHellstormBlastTrail", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION | SXF_TELEFRAG)
+    Loop
+  Bounce.Floor:
+	TNT1 AAAAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(0, 32), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastVortex", 0, 0, 0, 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+    Stop
+  Bounce.Ceiling:
+	TNT1 AAAAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(-32, 0), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastVortex", 0, 0, 0, 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+    Stop
+  Bounce.Wall:
+	TNT1 AAAAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-32, 32), frandom(-32, 32), frandom(0, 32), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastVortex", 20, 0, 4, 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+    Stop
+  Death:
+	TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlastTrail
+{
+  Radius 13
+  Height 8
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  RenderStyle Add
+  Alpha 0.98
+  States
+  {	
+  Spawn:
+    AEFG KLMNO 3 Bright
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlastTelefragger
+{
+  Radius 13
+  Height 8
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  States
+  {	
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlastVortex
+{
+  Radius 13
+  Height 8
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  +THRUACTORS
+  RenderStyle Add
+  Alpha 0.98
+  Reactiontime 175
+  States
+  {	
+  Spawn:
+    TNT1 A 0
+	TNT1 AA 0 A_SpawnItemEx ("RLHellstormBlastVortexEffect", frandom(-13, 13), frandom(-13, 13), frandom(-4, 4), 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_SpawnItemEx ("RLHellstormBlastVortexShockwave", frandom(-1, 1), frandom(-1, 1), 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    TNT1 A 0 A_RadiusThrust (-10, 512, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE, 512)
+    TNT1 A 0 A_RadiusThrust (-100, 256, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE)
+    TNT1 A 0 A_Quake(4,1,0,256,"")
+    TNT1 A 0 A_Quake(2,1,0,512,"")
+    TNT1 A 1 A_Countdown
+	TNT1 AA 0 A_SpawnItemEx ("RLHellstormBlastVortexEffect", frandom(-13, 13), frandom(-13, 13), frandom(-4, 4), 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    TNT1 A 0 A_RadiusThrust (-10, 512, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE, 512)
+    TNT1 A 0 A_RadiusThrust (-100, 256, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE)
+    TNT1 A 0 A_Quake(4,1,0,256,"")
+    TNT1 A 0 A_Quake(2,1,0,512,"")
+    TNT1 A 1 A_Countdown
+	TNT1 AA 0 A_SpawnItemEx ("RLHellstormBlastVortexEffect", frandom(-13, 13), frandom(-13, 13), frandom(-4, 4), 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    TNT1 A 0 A_RadiusThrust (-10, 512, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE, 512)
+    TNT1 A 0 A_RadiusThrust (-100, 256, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE)
+    TNT1 A 0 A_Quake(4,1,0,256,"")
+    TNT1 A 0 A_Quake(2,1,0,512,"")
+    TNT1 A 1 A_Countdown
+	TNT1 AA 0 A_SpawnItemEx ("RLHellstormBlastVortexEffect", frandom(-13, 13), frandom(-13, 13), frandom(-4, 4), 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    TNT1 A 0 A_RadiusThrust (-10, 512, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE, 512)
+    TNT1 A 0 A_RadiusThrust (-100, 256, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE)
+    TNT1 A 0 A_Quake(4,1,0,256,"")
+    TNT1 A 0 A_Quake(2,1,0,512,"")
+    TNT1 A 1 A_Countdown
+	TNT1 AA 0 A_SpawnItemEx ("RLHellstormBlastVortexEffect", frandom(-13, 13), frandom(-13, 13), frandom(-4, 4), 0, 0, 0, 0, SXF_TELEFRAG | SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_CustomRailgun (0, 0, "None", "Green", RGF_SILENT | RGF_FULLBRIGHT, 0, 25, "RLParticleBeamPuff2", frandom(0,359), frandom(-45,45), random(64,256), 1, 0.2, 0)
+    TNT1 A 0 A_RadiusThrust (-10, 512, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE, 512)
+    TNT1 A 0 A_RadiusThrust (-100, 256, RTF_NOTMISSILE | RTF_NOIMPACTDAMAGE)
+    TNT1 A 0 A_Quake(4,1,0,256,"")
+    TNT1 A 0 A_Quake(2,1,0,512,"")
+    TNT1 A 1 A_Countdown
+    Goto Spawn
+  Death:
+    AEFG ABCDEFG 2 Bright
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlastVortexEffect
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  +THRUACTORS
+  RenderStyle Add
+  Alpha 0.98
+  States
+  {	
+  Spawn:
+	TNT1 A 0 NoDelay A_SetScale (ScaleX+frandom(-0.2, 1.8))
+	TNT1 A 0 A_Jump (128, "Spawn2")
+    AEFG ABCDEFG 3 Bright
+    Stop
+  Spawn2:
+    AEFG KLMNO 3 Bright
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlastVortexShockwave
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  +THRUACTORS
+  RenderStyle Add
+  Alpha 0.12
+  Scale 13
+  States
+  {	
+  Spawn:
+	TNT1 A 0 NoDelay A_SetScale (ScaleX+frandom(-4.2, 4.2))
+    AESK FEDCBA 1 Bright
+    Stop
+  }
+}
+
+ACTOR RLHellstormBlastSpark
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  +THRUACTORS
+  RenderStyle Add
+  Alpha 0.98
+  States
+  {	
+  Spawn:
+	TNT1 A 0 NoDelay A_SetScale (ScaleX+frandom(-0.5, 1.5))
+    AEFG JIHG 3 Bright
+    Stop
+  }
+}
+
+ACTOR RLHellstormElementalDeathRift
+{
+  Radius 48
+  Height 64
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOTELEPORT
+  States
+  {	
+  Spawn:
+	TFOG AAAAAABBBBCCCCDDDDBBBBCCCCDDDDBBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJ 1 Bright A_RadiusGive ("RLHellstormElementalDeathRiftTeleport", 32, RGF_PLAYERS, 1)
+    Stop
+  }
+}
+
+ACTOR RLHellstormElementalDeathRiftTeleport : CustomInventory
+{
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  Pickup:
+    TNT1 A 0 
+	TNT1 A 0 A_Teleport("Teleport", "RLMegasphereSpot", "TeleportFog", TF_TELEFRAG)
+  Teleport:
+	TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    Stop
+  }
+}
+
+ACTOR RLHellstormElementalAbsorbHitbox
+{
+  Health 960
+  Radius 35
+  Height 60
+  Mass 0x7fffffff
+  Painchance 256
+  +ISMONSTER
+  +SOLID
+  +SHOOTABLE
+  +NOBLOOD
+  +DONTGIB
+  +NOICEDEATH
+  +DONTDRAIN
+  +NOTELEOTHER
+  +NOTELEFRAG
+  +DONTMORPH
+  +DONTBLAST
+  +NORADIUSDMG
+  +THRUSPECIES
+  +NOTELEPORT
+  Species "RLPainElemental"
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_TakeInventory ("RLHellstormHealingCounter",960)
+    TNT1 A 0 A_GiveInventory ("RLHellstormHealingCounter",960-health)
+    TNT1 A 0 A_GiveInventory ("RLHellstormTimerCounter",1)
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormTimerCounter",60, "Death")
+    TNT1 A 1 A_Warp(AAPTR_MASTER, 1, 0, 0, 0, WARPF_INTERPOLATE)
+    Goto Spawn
+  See:
+    TNT1 A 0
+    Goto Spawn
+  Pain.Melee:
+  Pain.Bullet:
+  Pain.Fire:
+  Pain:
+    TNT1 A 0 A_Warp(AAPTR_MASTER, 1, 0, 0, 0, WARPF_INTERPOLATE)
+    Goto Death
+  Pain.Plasma:
+	TNT1 AAA 0 A_SpawnItemEx ("RLHellstormBlastSpark", frandom(-8, 8), frandom(2, 32), frandom(32, 38), 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_PlaySound ("hellstormelemental/absorb", 5, 1, 0, 0.7)
+    TNT1 A 0 A_TakeInventory ("RLHellstormHealingCounter",960)
+    TNT1 A 0 A_GiveInventory ("RLHellstormHealingCounter",960-health)
+    TNT1 A 0 A_Warp(AAPTR_MASTER, 1, 0, 0, 0, WARPF_INTERPOLATE)
+    Goto Spawn
+  Death:
+    TNT1 A 0 A_TakeInventory ("RLHellstormHealingCounter",1)
+    TNT1 A 0 A_GiveInventory ("RLHellstormHealing",1, AAPTR_MASTER)
+    TNT1 A 0 A_JumpIfInventory ("RLHellstormHealingCounter",1, "Death")
+  DeathFinish:
+    TNT1 A 0 A_GiveInventory ("RLHellstormHealingFinish",1, AAPTR_MASTER)
+    TNT1 A 1
+    Stop
+  }
+}
+
+ACTOR RLHellstormHealing : CustomInventory
+{
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  Pickup:
+    TNT1 A 0 
+    TNT1 A 0 HealThing(1)
+    Stop
+  }
+}
+
+ACTOR RLHellstormHealingFinish : CustomInventory
+{
+  -COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage ""
+  Inventory.PickupSound ""
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  Pickup:
+    TNT1 A 0 
+	TNT1 A 0 A_ChangeFlag ("INVULNERABLE", 0)
+	TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_GiveInventory ("RLHellstormElementalStopAbsorb",1)
+    Stop
+  }
+}
+
+Actor RLHellstormHealingCounter : Inventory
+{
+inventory.maxamount 960
+}
+
+Actor RLHellstormTimerCounter : Inventory
+{
+inventory.maxamount 60
+}
+
+Actor RLHellstormElementalStopAbsorb : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor RLHellstormElementalGonnaHellstorm : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLCCArmageddonPainElemental : RLArmageddonPainElemental
+{
+  +TOUCHY
+  States
+  {
+  See:
+    AELE AABBCCBB 3 Bright
+    Loop
+  Missile:
+    AELE DE 5 Bright
+    AELE F 5 Bright
+    AELE ED 3 Bright
+    Goto See
+  Melee:
+    AELE DE 5 Bright
+    AELE F 5 Bright
+    AELE ED 3 Bright
+    Goto See
+  Death:
+    AELE H 8 Bright
+    AELE I 8 Bright A_Scream
+    AELE JK 8 Bright
+    AELE L 8 Bright
+    AELE M 8 Bright
+    AELE O 8 Bright
+    Stop
+  }
+}

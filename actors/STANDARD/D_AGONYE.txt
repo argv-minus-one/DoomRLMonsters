@@ -1,0 +1,213 @@
+
+// AGONY ELEMENTAL
+//"Ohhhh my god, that thiiiing..." - Kyle873, 2014
+ACTOR RLAgonyElemental : PainElemental 16511
+{
+  Health 5000
+  GibHealth -1000
+  MeleeThreshold 148
+  MeleeRange 96
+  MinMissileChance 4
+  Speed 4
+  Scale 1.5
+  Radius 40
+  Height 100
+  Mass 15000
+  DamageFactor "Melee", 0.4
+  DamageFactor "Radiation", 0
+  DamageFactor "Crush", 10
+  Species "RLPainElemental"
+  +BOSS
+  +DONTHARMSPECIES
+  +QUICKTORETALIATE
+  SeeSound "agonyelemental/sight"
+  ActiveSound "agonyelemental/sight"
+  PainSound "agonyelemental/pain"
+  DeathSound "agonyelemental/death"
+  CrushPainSound "rlmonsters/crush"
+  Obituary "%o was unprepared for an Agony Elemental."
+  HitObituary "%o was consumed by an Agony Elemental."
+  Tag "Agony Elemental"
+  States
+  {
+  Spawn:
+    AGON AAA 2 A_Look
+    Loop
+  See:
+    AGON AAABBB 2 A_Chase
+    Loop
+  MeleeCharge:
+    TNT1 A 0 A_FaceTarget
+    TNT1 A 0 ThrustThing(angle*256/360, 2, 0, 0)
+    AGON A 1 A_Chase ("Melee", "", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_FaceTarget
+    AGON A 1 A_Chase ("Melee", "", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_FaceTarget
+    AGON A 1 A_Chase ("Melee", "", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_FaceTarget
+    AGON A 1 A_Chase ("Melee", "", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_FaceTarget
+    AGON A 1 A_Chase ("Melee", "", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_FaceTarget
+    AGON A 1 A_Chase ("Melee", "", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_Stop
+    Goto See
+  Melee:
+    TNT1 A 0 ThrustThing(angle*256/360, 2, 0, 0)
+    AGON C 3 A_FaceTarget
+    TNT1 A 0 ThrustThing(angle*256/360, 2, 0, 0)
+    AGON D 3 A_FaceTarget
+    TNT1 A 0 ThrustThing(angle*256/360, 2, 0, 0)
+    AGON E 3 A_CustomMeleeAttack (10 * random(1, 10), "rlmonsters/bite", "", "Melee")
+    TNT1 A 0 A_Stop
+    AGON BB 2 A_Chase ("", "")
+    Goto See
+  Missile:
+    TNT1 A 0 A_Jump (40, "ElementalSpawn")
+    AGON CD 5 A_FaceTarget
+    TNT1 A 0 A_FaceTarget
+    AGON E 1 Bright A_SpawnItemEx ("RLLostSoulAgonySpawner", 80, -30, 24, 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS)
+    AGON E 1 Bright A_FaceTarget
+    AGON E 1 Bright A_SpawnItemEx ("RLLostSoulAgonySpawner", 80, 30, 24, 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS)
+    AGON E 1 Bright A_FaceTarget
+    AGON E 1 Bright A_SpawnItemEx ("RLLostSoulAgonySpawner", 80, 0, 24, 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS)
+    AGON BB 2 A_Chase ("", "")
+    Goto See
+    AGON E 1 Bright A_PainAttack ("RLLostSoulAgony", -30, PAF_AIMFACING)
+    AGON E 1 Bright A_FaceTarget
+    AGON E 1 Bright A_PainAttack ("RLLostSoulAgony", 30, PAF_AIMFACING)
+    AGON E 1 Bright A_FaceTarget
+    AGON E 1 Bright A_PainAttack ("RLLostSoulAgony", 0, PAF_AIMFACING)
+    AGON BB 2 A_Chase ("", "")
+    Goto See
+  ElementalSpawn:
+    AGON CD 5 A_FaceTarget
+    AGON E 4 Bright A_FaceTarget
+    AGON E 1 Bright A_SpawnItemEx ("RLPainElementalAgony", 90, 0, 24, 0, 0, 0, 0, SXF_SETMASTER)
+    AGON BB 2 A_Chase ("", "")
+    Goto See
+  Pain:
+    TNT1 A 0 A_Stop
+    AGON F 6
+    AGON F 6 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    AGON F 8
+    AGON G 8 A_Scream
+    AGON HI 8 Bright
+    TNT1 A 0 A_Playsound("rlmonsters/largeexp", 6)
+    TNT1 A 0 A_CustomMissile("RLAgonyElementalExplosion",32,0)
+    AGON J 8 Bright
+    TNT1 A 0 A_SpawnItemEx ("RLLostSoulDeathAgonySpawner", random(-30,30), random(-30,30), random(16,56), 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLLostSoulDeathAgonySpawner", random(-30,30), random(-30,30), random(16,56), 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLLostSoulDeathAgonySpawner", random(-30,30), random(-30,30), random(16,56), 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLLostSoulDeathAgonySpawner", random(-30,30), random(-30,30), random(16,56), 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLLostSoulDeathAgonySpawner", random(-30,30), random(-30,30), random(16,56), 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_SpawnItemEx ("RLLostSoulDeathAgonySpawner", random(-30,30), random(-30,30), random(16,56), 0, 0, 0, 0, SXF_SETMASTER | SXF_TRANSFERPOINTERS | SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_Playsound("rlmonsters/largeexp", 5)
+    AGON K 8 Bright
+    TNT1 A 0 A_SpawnItemEx ("RLPainElementalAgony", 90, 0, 24, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION)
+    AGON L 8 Bright
+    TNT1 A 0 A_SpawnItemEx ("RLPainElementalAgony", -90, 0, 24, 0, 0, 0, 0, SXF_SETMASTER | SXF_NOCHECKPOSITION)
+    AGON M 8 Bright A_BossDeath
+    Stop
+  Raise:
+    Stop
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedLarge",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+	TNT1 A 0 A_BossDeath
+    Stop
+  }
+}
+
+ACTOR RLLostSoulAgonySpawner : RLLostSoul
+{
+  -COUNTKILL
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_PainAttack ("RLLostSoulAgony", 0, PAF_AIMFACING)
+    TNT1 A 0 A_Die
+	Stop
+  Death:
+    TNT1 A 0
+    Stop
+  }
+}
+
+ACTOR RLLostSoulDeathAgonySpawner : RLLostSoul
+{
+  -COUNTKILL
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_JumpIfTargetInLOS ("NotInTheFuckingVoid", 0)
+	Stop
+  NotInTheFuckingVoid:
+    TNT1 A 0 A_PainAttack ("RLLostSoulAgony", 0, PAF_AIMFACING)
+    TNT1 A 0 A_Die
+	Stop
+  Death:
+    TNT1 A 0
+    Stop
+  }
+}
+
+ACTOR RLAgonyElementalExplosion : Rocket
+{
+   Radius 1
+   Height 1
+   +THRUGHOST
+   -RANDOMIZE
+   -DEHEXPLOSION
+   -ROCKETTRAIL
+   DamageType "Fire"
+   PainType "Explosion"
+   DeathType "Explosion"
+   Speed 0
+   Damage 0
+   SeeSound ""
+   DeathSound ""
+   Obituary "$OB_BARREL" // "%o went boom."
+  States
+  {
+  Spawn:
+    TNT1 A 0 NoDelay A_Explode (128, 128)
+    TNT1 A 8
+    Stop
+  }
+}
+
+ACTOR RLCCAgonyElemental : RLAgonyElemental
+{
+  +TOUCHY
+  States
+  {
+  See:
+    AGON AABB 3
+    Loop
+  Melee:
+    Goto See
+  Missile:
+    AGON CD 5
+    AGON E 4 Bright
+    AGON E 1 Bright
+    Goto See
+  Death:
+    AGON F 8
+    AGON G 8
+    AGON HI 8 Bright
+    AGON J 8 Bright
+    AGON K 8 Bright
+    AGON L 8 Bright
+    AGON M 8 Bright
+    Stop
+  }
+}

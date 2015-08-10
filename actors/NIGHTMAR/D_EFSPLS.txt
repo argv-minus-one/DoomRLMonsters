@@ -1,0 +1,174 @@
+
+// ELITE FORMER HUMAN SERGEANT
+//
+ACTOR RLEliteSergeantPlasmaShotgun : ShotgunGuy 16518
+{
+  Health 60
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.85
+  SeeSound "eliteformer/sight"
+  PainSound "eliteformer/pain"
+  DeathSound "eliteformer/death"
+  ActiveSound "eliteformer/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o found himself on the wrong end of a Elite Human Sergeant's plasma shotgun."
+  DropItem "RLCell"
+  DropItem "RLCell"
+  DropItem "RLPlasmaShotgunPickup" 30
+  +AVOIDMELEE
+  Tag "Elite Human Sergeant"
+  States
+  {
+  Spawn:
+    ESPS AB 10 A_Look
+    Loop
+  See:
+    TNT1 A 0 A_JumpIfInventory ("RLEliteSergeantPlasmaShotgunShotCounter", 10, "RetreatReload")
+    ESPS AABBCCDD 3 A_Chase
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ESPS AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ESPS BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ESPS CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    ESPS DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, 2)
+    TNT1 A 0 A_Jump (24, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  Missile:
+    ESPS EE 5 A_FaceTarget
+    TNT1 A 0 A_JumpIfInventory ("RLEliteSergeantPlasmaShotgunShotCounter", 10, "RetreatReload")
+    TNT1 A 0 A_GiveInventory ("RLEliteSergeantPlasmaShotgunShotCounter", 1)
+    TNT1 AAAA 0 A_CustomMissile ("RLEliteSergeantPlasmaShotgunBallSilent", 30, 13, frandom(12,-12), CMF_OFFSETPITCH, frandom(5,-5))
+    TNT1 AA 0 A_CustomMissile ("RLEliteSergeantPlasmaShotgunBall", 30, 13, frandom(12,-12), CMF_OFFSETPITCH, frandom(5,-5))
+    ESPS F 10 Bright A_CustomMissile ("RLEliteSergeantPlasmaShotgunBall", 30, 13, frandom(12,-12), CMF_OFFSETPITCH, frandom(5,-5))
+    ESPS EEE 5 A_FaceTarget
+    Goto See
+  Reload:
+    ESPS EE 2 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/plasmapistolunload", 7)
+    ESPS E 23
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteSergeantPlasmaShotgunShotCounter", 10)
+    TNT1 A 0 A_PlaySound("rlmonsters/plasmapistolload", 7)
+    ESPS E 4
+    TNT1 A 0 A_PlaySound("weapons/plasmashotgunpump", 6)
+    ESPS E 7
+    TNT1 A 0 A_PlaySound("weapons/plasmashotgunspark", 7)
+    ESPS EEEEEE 3 A_FaceTarget
+    Goto See
+  Pain:
+    ESPS G 3
+    ESPS G 3 A_Pain
+    Goto See
+  Death:
+    ESPS H 5
+    ESPS I 5 A_Scream
+    ESPS J 5 A_NoBlocking
+    ESPS K 5
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ESPS L -1
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    ESPS M 5
+    ZHRF N 5 A_XScream
+    ZHRF O 5 A_NoBlocking
+    ZHRF PQ 5
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ZHRF RST 5
+    ZHRF U -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ESPS L 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLEliteSergeantPlasmaShotgunShotCounter", 10)
+    ESPS K 5
+    ESPS J 5
+    ESPS I 5
+    ESPS H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ESPS L -1
+    Stop
+  }
+}
+
+ACTOR RLEliteSergeantPlasmaShotgunBall : PlasmaBall
+{
+  Radius 4
+  Height 2
+  Alpha 0.85
+  Scale 0.25
+  Speed 20
+  +THRUGHOST
+  Damage 2
+  Decal "RailScorch"
+  Damagetype "Plasma"
+}
+
+ACTOR RLEliteSergeantPlasmaShotgunBallSilent : RLEliteSergeantPlasmaShotgunBall
+{
+  SeeSound ""
+  DeathSound ""
+}
+
+Actor RLEliteSergeantPlasmaShotgunShotCounter : Inventory
+{
+inventory.maxamount 10
+}
+
+ACTOR RLCCEliteSergeantPlasmaShotgun : RLEliteSergeantPlasmaShotgun
+{
+  +TOUCHY
+  States
+  {
+  See:
+    ESPS AABBCCDD 3
+    Loop
+  Missile:
+    ESPS E 10
+    ESPS F 10 Bright
+    ESPS E 15
+    Goto See
+  Death:
+    ESPS H 5
+    ESPS I 5 A_Scream
+    ESPS J 5 A_NoBlocking
+    ESPS K 5
+    ESPS L -1
+    Stop
+  }
+}

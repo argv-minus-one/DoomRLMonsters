@@ -1,0 +1,305 @@
+
+// FORMER SHOCKTROOPER
+//
+ACTOR RLFormerShocktrooper 16554
+{
+  Health 120
+  Radius 20
+  Height 56
+  Mass 500
+  Speed 6
+  PainChance 220
+  PainThreshold 6
+  DamageFactor "Crush", 10
+  DamageFactor "Bullet", 0.75
+  DamageFactor "Fire", 0.75
+  DamageFactor "Plasma", 0.75
+  Monster
+  +FLOORCLIP
+  +AVOIDMELEE
+  -SHOOTABLE
+  -SOLID
+  +BLOCKEDBYSOLIDACTORS
+  +NOTELEFRAG
+  +NOTONAUTOMAP
+  SeeSound "shocktrooper/active"
+  PainSound "eliteformer/pain"
+  DeathSound "eliteformer/death"
+  ActiveSound "shocktrooper/active"
+  CrushPainSound "rlmonsters/crush"
+  AttackSound ""
+  Obituary "%o was ambushed by a Former Shocktrooper."
+  DropItem "RLClipBox"
+  DropItem "RLHighPowerMinigunPickup" 5
+  Tag "Former Shocktrooper"
+  States
+  {
+  Spawn:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_JumpIfInventory ("RLFormerShocktrooperTeleported", 1, "Searching")
+    TNT1 A 0 A_LookEx (LOF_NOSEESOUND, 0, 0, 0, 360, "TeleportSeek")
+    TNT1 A 4 A_Wander
+    Loop
+  Searching:
+    TNT1 A 0 A_ChangeFlag ("SOLID", 1)
+    TNT1 A 0 A_ChangeFlag ("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag ("BLOCKEDBYSOLIDACTORS", 0)
+    TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 0)
+    TNT1 A 0 A_GiveInventory ("RLFormerShocktrooperTeleported", 1)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK A 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK A 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK B 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK B 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK C 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK C 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK D 4 A_Wander
+    TNT1 A 0 A_LookEx ("", 0, 0, 0, 0, "See")
+    ASHK D 4 A_Wander
+    Loop
+  TeleportSeek:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 4 A_Chase ("", "", CHF_NOPLAYACTIVE)
+    TNT1 A 0 A_Jump (3, "TeleportChanceNormal")
+    TNT1 A 0 A_JumpIfInTargetLOS ("TeleportSeek", 110, JLOSF_CLOSENOJUMP | JLOSF_DEADNOJUMP, 2048, 325)
+    TNT1 A 0 A_JumpIfCloser (325, "TeleportSeek")
+    Goto TeleportChance
+  TeleportChance:
+    TNT1 A 0 A_Jump (50, "TeleportIn")
+    Goto TeleportSeek
+  TeleportChanceNormal:
+    TNT1 A 0 A_JumpIfCloser (325, "TeleportSeek")
+    Goto TeleportIn
+  TeleportIn:
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("SOLID", 1)
+    TNT1 A 0 A_ChangeFlag ("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag ("BLOCKEDBYSOLIDACTORS", 0)
+    TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 0)
+    TNT1 A 0 A_GiveInventory ("RLFormerShocktrooperTeleported", 1)
+    Goto Missile
+  TeleportOut:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_SpawnItemEx ("TeleportFog", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("SOLID", 0)
+    TNT1 A 0 A_ChangeFlag ("SHOOTABLE", 0)
+    TNT1 A 0 A_ChangeFlag ("BLOCKEDBYSOLIDACTORS", 1)
+    TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 1)
+    TNT1 A 0 A_TakeInventory ("RLFormerShocktrooperTeleported", 1)
+    TNT1 A 0 A_TakeInventory ("RLFormerShocktrooperMinigunShotCounter", 130)
+    Goto TeleportSeek
+  See:
+    TNT1 A 0 A_ChangeFlag ("SOLID", 1)
+    TNT1 A 0 A_ChangeFlag ("SHOOTABLE", 1)
+    TNT1 A 0 A_ChangeFlag ("BLOCKEDBYSOLIDACTORS", 0)
+    TNT1 A 0 A_ChangeFlag ("NOTELEFRAG", 0)
+    TNT1 A 0 A_GiveInventory ("RLFormerShocktrooperTeleported", 1)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_JumpIfInventory ("RLFormerShocktrooperMinigunShotCounter", 130, "RetreatReload")
+    ASHK AABBCCDD 4 A_Chase
+    Loop
+  Overwatch:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_JumpIfInventory ("RLFormerShocktrooperMinigunShotCounter", 130, "RetreatReload")
+    TNT1 A 0 A_PlaySound("rlmonsters/sentinelspin", 6, 1, 1, 1.2)
+    ASHK X 0 A_Chase ("", "MissileRestartFire", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    ASHK X 4 A_FaceTarget
+    ASHK X 0 A_Chase ("", "MissileRestartFire", CHF_DONTMOVE | CHF_NOPLAYACTIVE)
+    ASHK X 4 A_FaceTarget
+    TNT1 A 0 A_Jump (240, 2)
+    TNT1 A 0 A_PlaySound("shocktrooper/radio", CHAN_VOICE, 1, 0, 1.1)
+    Loop
+    TNT1 A 0 A_Jump (8, "MissileEnd")
+    Loop
+  RetreatReload:
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 1)
+    ASHK AA 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, "TeleportOut")
+    TNT1 A 0 A_Jump (24, "Reload")
+    ASHK BB 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, "TeleportOut")
+    TNT1 A 0 A_Jump (24, "Reload")
+    ASHK CC 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, "TeleportOut")
+    TNT1 A 0 A_Jump (24, "Reload")
+    ASHK DD 3 A_Wander
+    TNT1 A 0 A_JumpIfCloser (180, "TeleportOut")
+    TNT1 A 0 A_Jump (24, "Reload")
+    TNT1 A 0
+    Goto RetreatReload+1
+  MissileRestartFire:
+    ASHK X 4 A_FaceTarget
+    TNT1 A 0 A_Jump (256, 1,2,3,4,5,6)
+    ASHK XXXXXX 4 A_FaceTarget
+    Goto MissileFire
+  Missile:
+    ASHK X 8 A_FaceTarget
+    TNT1 A 0 A_PlaySound("rlmonsters/sentinelwindup", 6)
+    ASHK XXXXXX 4 A_FaceTarget
+  MissileFire:
+    TNT1 A 0 A_PlaySound("rlmonsters/sentinelspin", 6, 1, 1, 1.2)
+    TNT1 A 0 A_JumpIfInventory ("RLFormerShocktrooperMinigunShotCounter", 130, "MissileEnd")
+    TNT1 A 0 A_GiveInventory ("RLFormerShocktrooperMinigunShotCounter", 1)
+    TNT1 A 0 A_PlaySound("rlmonsters/hpminigun", CHAN_WEAPON, 1, 1, 0.6)
+    TNT1 A 0 A_JumpIfInventory ("RLFormerShocktrooperMinigunStateCounter", 1, "MissileAlt")
+    TNT1 A 0 A_GiveInventory ("RLFormerShocktrooperMinigunStateCounter", 1)
+    ASHK F 1 Bright A_CustomBulletAttack (35, 6, 1, random(1,7) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ASHK X 0 A_MonsterRefire(2, "Overwatch")
+    Goto MissileFire
+  MissileAlt:
+    TNT1 A 0 A_TakeInventory ("RLFormerShocktrooperMinigunStateCounter", 1)
+    ASHK E 1 Bright A_CustomBulletAttack (35, 6, 1, random(1,7) * 3, "RLEnemyBulletPuff", 0, CBAF_NORANDOM)
+    ASHK X 0 A_MonsterRefire(2, "Overwatch")
+    Goto MissileFire
+  MissileEnd:
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_PlaySound("rlmonsters/sentinelwinddown", 6)
+    ASHK XXXXX 4
+    ASHK X 2
+    Goto See
+  Reload:
+    TNT1 A 0 A_StopSound(6)
+    ASHK XXXXXX 5
+    TNT1 A 0 A_PlaySound("rlmonsters/pistolreloadout", 7)
+    ASHK XX 5
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingunload", 7)
+    TNT1 A 0 A_TakeInventory ("RLFormerShocktrooperMinigunShotCounter", 130)
+    ASHK XXXXXXXX 4
+    ASHK X 2
+    TNT1 A 0 A_PlaySound("rlmonsters/chaingunwinddown", 7)
+    ASHK XXXXX 4
+    ASHK X 2 A_FaceTarget
+    Goto See
+  Pain:
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    ASHK G 3
+    ASHK G 3 A_Pain
+    Goto See
+  Death:
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 0 A_JumpIfInventory ("RLFormerShocktrooperTeleported", 1, 1)
+	Goto NeverExistedToBeginWith
+    ASHK H 4
+    ASHK I 4 A_Scream
+    ASHK J 4 A_NoBlocking
+    ASHK K 4
+    TNT1 A 0 A_SpawnItem ("RLBodyThud", 0, 0, 0, 0)
+    ASHK L 4
+    ASHK M 4
+    ASHK N -1
+    Stop
+  NeverExistedToBeginWith:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 15
+    Stop
+  XDeath:
+    TNT1 A 0 A_GiveToTarget ("RLBerserkerBloodlustBonusCheck", 1)
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    ASHK O 3
+    ASHK P 3 A_XScream
+    ASHK Q 3 A_NoBlocking
+    TNT1 A 0 A_SpawnItem ("RLGibThud", 0, 0, 0, 0)
+    ASHK RSTUV 3
+    ASHK W -1
+    Stop
+  Raise:
+    TNT1 A 0 A_ChangeFlag ("NOBLOCKMAP", 0)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1)
+    ASHK M 2
+    TNT1 A 0 A_JumpIfInventory ("RLNightmareResurrectionToken", 1, "NightmareRaise")
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, "CyberneticRaise")
+    TNT1 A 0 A_SpawnItemEx ("RLResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+  RaiseContinue:
+    TNT1 A 0 A_JumpIfInventory ("RLCyberneticResurrectionToken", 1, 2)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 0)
+    TNT1 A 0 A_ChangeFlag ("FRIGHTENED", 0)
+    TNT1 A 0 A_TakeInventory ("RLFormerShocktrooperMinigunShotCounter", 130)
+    ASHK M 5
+    ASHK L 5
+    ASHK K 5
+    ASHK J 5
+    ASHK I 5
+    ASHK H 5
+    Goto See
+  NightmareRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLNightmareResurrectionFire", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION) 
+    TNT1 A 0 A_ChangeFlag ("ALWAYSFAST", 1)
+    Goto RaiseContinue
+  CyberneticRaise:
+    TNT1 A 0 A_SpawnItemEx ("RLCyberneticResurrectionSparks", 0, 0, 20, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_ChangeFlag ("NOPAIN", 1) 
+    TNT1 A 0 A_ChangeFlag ("SEEINVISIBLE", 1)
+    TNT1 A 0 A_ChangeFlag ("MISSILEMORE", 1)
+    Goto RaiseContinue
+  Crush:
+    TNT1 A 0 A_StopSound(6)
+    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+    TNT1 A 1 A_SpawnItem("RLCrushedSmall",0,0,0,0)
+    Stop
+  Death.Massacre:
+    TNT1 A 0 A_NoBlocking
+    TNT1 A 0 A_Stop
+    TNT1 A 0 ThrustThingZ (0, 20, 0, 0)
+    ASHK N -1
+    Stop
+  }
+}
+
+Actor RLFormerShocktrooperMinigunShotCounter : Inventory
+{
+inventory.maxamount 130
+}
+
+Actor RLFormerShocktrooperMinigunStateCounter : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor RLFormerShocktrooperTeleported : Inventory
+{
+inventory.maxamount 1
+}
+
+ACTOR RLCCFormerShocktrooper : RLFormerShocktrooper
+{
+  SeeSound "shocktrooper/radio"
+  +TOUCHY
+  States
+  {
+  Spawn:
+    ASHK AB 10
+    Loop
+  See:
+    ASHK XXXXX 4
+    Loop
+  Missile:
+    ASHK E 1 Bright
+    ASHK F 1 Bright
+    Loop
+  Death:
+    ASHK H 4
+    ASHK I 4 A_Scream
+    ASHK J 4 A_NoBlocking
+    ASHK K 4
+    ASHK L 4
+    ASHK M 4
+    ASHK N -1
+    Stop
+  }
+}
