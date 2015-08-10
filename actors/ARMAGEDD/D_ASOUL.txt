@@ -140,7 +140,7 @@ actor RLTheHungrySpawner
     {
     Spawn:
 	    TNT1 A 0 NoDelay A_Jump (256, 1,2,3,4,5,6)
-	    TNT1 AAAAAAAAAAA 0 A_SpawnItemEx ("RLTheHungrySingleSpawner", random(-64,64), random(-64,64), random(0,16))
+	    TNT1 AAAAAAAAAAA 0 A_SpawnItemEx ("RLTheHungrySingleSpawner", 0, 0, 0, random(-64,64), random(-64,64), random(-64,64))
 		Stop
     }
 }
@@ -149,18 +149,19 @@ actor RLTheHungrySingleSpawner
 {
     Radius 14
     Height 30
-    Speed 15
     Species "RLTheHungry"
+    BounceType Doom
 	+SOLID
-	+NOBLOCKMAP
 	+NOTONAUTOMAP
 	+THRUSPECIES
+	+CANBOUNCEWATER
+	+NOGRAVITY
+	+CANPASS
     States
     {
     Spawn:
 	    TNT1 A 0
-	    TNT1 AAAAAAA 0 A_Wander
-	    TNT1 A 0 A_SpawnItemEx ("RLArmageddonLostSoul", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	    TNT1 A 1 A_SpawnItemEx ("RLArmageddonLostSoul")
 		Stop
     }
 }
