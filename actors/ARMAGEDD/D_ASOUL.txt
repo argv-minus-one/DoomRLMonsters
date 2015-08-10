@@ -35,6 +35,7 @@ ACTOR RLArmageddonLostSoul : LostSoul 16559
   +SPAWNFLOAT
   -CANUSEWALLS
   -NOBLOOD
+  +FIXMAPTHINGPOS
   Obituary "%o was consumed by The Hungry."
   Tag "The Hungry"
   States
